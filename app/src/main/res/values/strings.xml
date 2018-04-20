@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">one</string>
+
+    <string name="one">ONE</string>
+    <string name="all">ALL</string>
+    <string name="me">ME</string>
+</resources>
