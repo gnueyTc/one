@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,12 +8,13 @@
 
   <include layout="@layout/container"/>
 
-    <!--<com.gnuey.one.utils.BottomNavigation-->
-        <!--android:id="@+id/bottom_navigation"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_gravity="bottom"-->
-        <!--android:background="@android:color/white"-->
-        <!--app:layout_constraintTop_toTopOf="@+id/container" />-->
-</android.support.constraint.ConstraintLayout>
+    <com.gnuey.one.utils.BottomNavigation
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:background="@android:color/white"
+        app:layout_behavior = "com.gnuey.one.widget.behavior.BottomNavigationBehavior"
+        app:layout_constraintBottom_toBottomOf="@+id/container" />
+</android.support.design.widget.CoordinatorLayout>

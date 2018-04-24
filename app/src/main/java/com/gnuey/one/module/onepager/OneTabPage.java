@@ -16,9 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class OneTab extends Fragment {
+public class OneTabPage extends Fragment {
     public static final String TAG = "OneTab";
-    private static OneTab instance = null;
+    private static OneTabPage instance = null;
     private FragmentStatePagerAdapter fragmentStatePagerAdapter;
     private ViewPager viewPager;
     private List<Fragment> fragmentList;
