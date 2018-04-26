@@ -22,16 +22,42 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
     implementation "com.android.support:design:$rootProject.supportLibraryVersion"
+    //
+    implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    //butterknife
+    //    butterknife
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    //
-    implementation 'com.android.support:recyclerview-v7:26.1.0'
+
     //
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-    //
+
+    //    TwinklingRefreshLayout
     implementation 'com.lcodecorex:tkrefreshlayout:1.0.7'
+
+    //    RxJava 2
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.12'
+
+    //    AutoDispose
+    implementation 'com.uber.autodispose:autodispose:0.7.0'
+    implementation 'com.uber.autodispose:autodispose-android:0.7.0'
+    implementation 'com.uber.autodispose:autodispose-android-archcomponents:0.7.0'
+
+    //    MultitypeAdapter
+    implementation 'me.drakeet.multitype:multitype:3.4.4'
+
+    //    retrofit2
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.4.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+
+    //    dagger2
+    implementation 'com.google.dagger:dagger:2.15'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.15'
+
+    // 持久化 Cookie
+//    implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
 }

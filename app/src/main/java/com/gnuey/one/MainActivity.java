@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.FrameLayout;
 
-import com.gnuey.one.module.base.BaseActivity;
-import com.gnuey.one.module.onepager.OneTabPage;
+import com.gnuey.one.ui.base.BaseActivity;
+import com.gnuey.one.ui.onepager.OneTabPage;
 import com.gnuey.one.utils.BottomNavigation;
 import com.gnuey.one.utils.OnBottomNavigationSelectedListener;
 

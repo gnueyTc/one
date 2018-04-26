@@ -1,5 +1,6 @@
-package com.gnuey.one.module.base;
+package com.gnuey.one.ui.base;
 
+import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,7 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public abstract class BaseFragment extends Fragment implements BaseView{
+import com.uber.autodispose.AutoDispose;
+import com.uber.autodispose.AutoDisposeConverter;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
+public abstract class BaseFragment extends Fragment implements BaseContract.BaseView{
     protected Context mContext;
 
     /**
@@ -44,6 +49,14 @@ public abstract class BaseFragment extends Fragment implements BaseView{
         initView(view);
         initData();
         return view;
+    }
+
+    /**
+     * 绑定生命周期
+     */
+    @Override
+    public <K> AutoDisposeConverter<K> bindAutoDispose() {
+        return AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this, Lifecycle.Event.ON_DESTROY));
     }
 
     @Override

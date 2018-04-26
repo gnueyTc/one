@@ -1,4 +1,4 @@
-package com.gnuey.one.module.base;
+package com.gnuey.one.ui.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

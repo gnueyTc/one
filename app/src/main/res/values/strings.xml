@@ -4,4 +4,6 @@
     <string name="one">ONE</string>
     <string name="all">ALL</string>
     <string name="me">ME</string>
+    
+    <string name="network_error">网络错误</string>
 </resources>

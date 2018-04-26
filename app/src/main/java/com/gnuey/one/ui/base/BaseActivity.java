@@ -1,4 +1,4 @@
-package com.gnuey.one.module.base;
+package com.gnuey.one.ui.base;
 
 import android.content.Context;
 import android.os.Bundle;

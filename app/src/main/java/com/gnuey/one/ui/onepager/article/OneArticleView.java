@@ -1,9 +1,8 @@
-package com.gnuey.one.module.onepager.article;
+package com.gnuey.one.ui.onepager.article;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,13 +11,19 @@ import android.view.ViewGroup;
 
 import com.gnuey.one.R;
 import com.gnuey.one.adapter.ArrayAdapter;
-import com.gnuey.one.module.base.LazyLoadFragment;
+import com.gnuey.one.bean.LoadingBean;
+import com.gnuey.one.ui.base.BaseListFragment;
+import com.gnuey.one.utils.AdapterDiffCallBack;
 import com.gnuey.one.widget.SinaRefreshHeader;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class OneArticleView extends LazyLoadFragment{
+import me.drakeet.multitype.Items;
+import me.drakeet.multitype.MultiTypeAdapter;
+
+public class OneArticleView extends BaseListFragment{
     private RecyclerView recyclerView;
     private TwinklingRefreshLayout twinklingRefreshLayout;
     private int index;
@@ -26,6 +31,7 @@ public class OneArticleView extends LazyLoadFragment{
     public OneArticleView(){
 
     }
+
     @SuppressLint("ValidFragment")
     public OneArticleView(int index){
         this.index = index;
@@ -36,24 +42,21 @@ public class OneArticleView extends LazyLoadFragment{
     }
 
     @Override
-    protected int attachLayoutId() {
-        return 0;
-    }
-
-    @Override
     protected void initView(View view) {
+        super.initView(view);
+        adapter = new MultiTypeAdapter(oldItems);
 
     }
 
     @Override
-    protected void initData() throws NullPointerException {
+    protected void initData() {
 
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_one_contens,container,false);
+        View view = inflater.inflate(R.layout.fragment_list,container,false);
         recyclerView = view.findViewById(R.id.recycle_view);
         twinklingRefreshLayout = view.findViewById(R.id.ly_twinkling);
         twinklingRefreshLayout.setHeaderView(new SinaRefreshHeader(getContext()));
@@ -71,18 +74,14 @@ public class OneArticleView extends LazyLoadFragment{
 
     }
 
-    @Override
-    public void onShowLoading() {
-
-    }
 
     @Override
-    public void onHideLoading() {
-
-    }
-
-    @Override
-    public void onShowNetError() {
-
+    public void onSetAdapter(List<?> list) {
+        Items newItems = new Items(list);
+        newItems.add(new LoadingBean());
+        AdapterDiffCallBack.create(oldItems,newItems,adapter);
+        oldItems.clear();
+        oldItems.addAll(newItems);
+        recyclerView.stopScroll();
     }
 }
