@@ -8,10 +8,23 @@ import com.gnuey.one.ui.base.BaseContract;
  * Created by gnueyTc on 2018/4/26.
  */
 public interface IdListContract {
-    interface View extends BaseContract.BaseView{
-        void showList(IdListBean data);
+    interface View {
+        /**
+         *
+         */
+        void doSetData(IdListBean data);
     }
-    interface Presenter<T> extends BaseContract.BasePresenter<T>{
+    interface Presenter{
+        /**
+         * 绑定view
+         */
+        void attachView(IdListContract.View view);
+
+        /**
+         * 解除绑定view
+         */
+        void dettachview();
+
         void getIdList(String channel,String version);
     }
 }

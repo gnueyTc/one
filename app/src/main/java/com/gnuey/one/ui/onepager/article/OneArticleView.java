@@ -17,13 +17,20 @@ import com.gnuey.one.utils.AdapterDiffCallBack;
 import com.gnuey.one.widget.SinaRefreshHeader;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 
+
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
-public class OneArticleView extends BaseListFragment{
+public class OneArticleView extends BaseListFragment implements OneArticleContract.View{
+    public static final String TAG = "OneArticleView";
+
+    @Inject
+    OneArticlePresenter mPresenter;
     private RecyclerView recyclerView;
     private TwinklingRefreshLayout twinklingRefreshLayout;
     private int index;
@@ -44,13 +51,14 @@ public class OneArticleView extends BaseListFragment{
     @Override
     protected void initView(View view) {
         super.initView(view);
+        mPresenter.attachView(this);
         adapter = new MultiTypeAdapter(oldItems);
 
     }
 
     @Override
     protected void initData() {
-
+//        mPresenter.doLoadData();
     }
 
     @Nullable
@@ -83,5 +91,17 @@ public class OneArticleView extends BaseListFragment{
         oldItems.clear();
         oldItems.addAll(newItems);
         recyclerView.stopScroll();
+    }
+
+
+
+    @Override
+    public void onLoadData() {
+
+    }
+
+    @Override
+    public void onRefresh() {
+
     }
 }

@@ -11,11 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.gnuey.one.InitApp;
+import com.gnuey.one.component.AppComponent;
 import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.AutoDisposeConverter;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
-public abstract class BaseFragment extends Fragment implements BaseContract.BaseView{
+public abstract class BaseFragment extends Fragment {
     protected Context mContext;
 
     /**
@@ -41,8 +43,12 @@ public abstract class BaseFragment extends Fragment implements BaseContract.Base
     protected void initToolBar(Toolbar toolbar, String title) {
         ((BaseActivity) getActivity()).initToolBar(toolbar, title);
     }
-
+    /**
+     * 设置appcomponent
+     */
+    protected void setAppComponent(AppComponent appComponent){}
     @Nullable
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(attachLayoutId(),container,false);
@@ -51,13 +57,13 @@ public abstract class BaseFragment extends Fragment implements BaseContract.Base
         return view;
     }
 
-    /**
-     * 绑定生命周期
-     */
     @Override
-    public <K> AutoDisposeConverter<K> bindAutoDispose() {
-        return AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this, Lifecycle.Event.ON_DESTROY));
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setAppComponent(InitApp.getApplication().getAppComponent());
     }
+
+
 
     @Override
     public void onAttach(Context context) {

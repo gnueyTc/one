@@ -1,13 +1,13 @@
 package com.gnuey.one.module;
 
-import android.util.Log;
+
 
 import com.gnuey.one.api.RetrofitFactory;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import javax.inject.Singleton;
+
 
 import dagger.Module;
 import dagger.Provides;

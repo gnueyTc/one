@@ -2,7 +2,7 @@ package com.gnuey.one.bean.onepager;
 
 import java.util.List;
 
-public class OneList {
+public class OneListBean {
 
     /**
      * res : 0

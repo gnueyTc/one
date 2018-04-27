@@ -1,9 +1,6 @@
 package com.gnuey.one.api;
 
-import com.gnuey.one.bean.IdListBean;
 
-
-import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -28,7 +25,9 @@ public class RetrofitFactory {
             instance = new RetrofitFactory(okHttpClient);
         return instance;
     }
-    public Observable<IdListBean> getIdList(String channel,String version){
-        return retrofit.create(OnePagerApi.class).getIdList(channel,version);
+
+    public Retrofit getRetrofitFactory(){
+        return retrofit;
     }
+
 }

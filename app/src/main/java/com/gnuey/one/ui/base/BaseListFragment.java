@@ -1,5 +1,7 @@
 package com.gnuey.one.ui.base;
 
+import android.arch.lifecycle.Lifecycle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -8,16 +10,20 @@ import com.gnuey.one.bean.LoadingEndBean;
 import com.gnuey.one.utils.RxBus;
 import com.gnuey.one.utils.ToastUtils;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
+import com.uber.autodispose.AutoDispose;
+import com.uber.autodispose.AutoDisposeConverter;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
-public abstract class BaseListFragment extends LazyLoadFragment  {
+public abstract class BaseListFragment extends LazyLoadFragment implements BaseContract.BaseView{
 
     public static final String TAG = "BaseListFragment";
-    private TwinklingRefreshLayout refreshLayout;
+    private TwinklingRefreshLayout twinklingRefreshLayout;
     private RecyclerView recyclerView;
     protected Observable<Integer> observable;
     protected MultiTypeAdapter adapter;
@@ -31,16 +37,16 @@ public abstract class BaseListFragment extends LazyLoadFragment  {
     protected void initView(View view) {
        recyclerView = view.findViewById(R.id.recycle_view);
 
-       refreshLayout = view.findViewById(R.id.ly_twinkling);
+        twinklingRefreshLayout = view.findViewById(R.id.ly_twinkling);
 
     }
 
     @Override
     public void onShowLoading() {
-       refreshLayout.post(new Runnable() {
+        twinklingRefreshLayout.post(new Runnable() {
            @Override
            public void run() {
-               refreshLayout.startRefresh();
+               twinklingRefreshLayout.startRefresh();
            }
        });
     }
@@ -51,21 +57,28 @@ public abstract class BaseListFragment extends LazyLoadFragment  {
         observable.subscribe(new Consumer<Integer>() {
             @Override
             public void accept(Integer integer) throws Exception {
-
+                adapter.notifyDataSetChanged();
             }
         });
     }
 
     @Override
     public void onHideLoading() {
-        refreshLayout.post(new Runnable() {
+        twinklingRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
-                refreshLayout.finishRefreshing();
+                twinklingRefreshLayout.finishRefreshing();
             }
         });
     }
-
+    /**
+     * 绑定生命周期
+     */
+    @Override
+    public <X> AutoDisposeConverter<X> bindAutoDispose() {
+        return AutoDispose.autoDisposable(AndroidLifecycleScopeProvider
+                .from(this, Lifecycle.Event.ON_DESTROY));
+    }
     @Override
     public void onShowNetError() {
         ToastUtils.showSingleToast(R.string.network_error);
