@@ -3,6 +3,7 @@ package com.gnuey.one.ui.base;
 import android.arch.lifecycle.Lifecycle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.gnuey.one.R;
@@ -15,12 +16,13 @@ import com.uber.autodispose.AutoDisposeConverter;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
-public abstract class BaseListFragment extends LazyLoadFragment implements BaseContract.BaseView{
+public abstract class BaseListFragment  extends LazyLoadFragment implements IBaseListView {
 
     public static final String TAG = "BaseListFragment";
     private TwinklingRefreshLayout twinklingRefreshLayout;
@@ -28,6 +30,7 @@ public abstract class BaseListFragment extends LazyLoadFragment implements BaseC
     protected Observable<Integer> observable;
     protected MultiTypeAdapter adapter;
     protected Items oldItems = new Items();
+
     @Override
     protected int attachLayoutId() {
         return R.layout.fragment_list;
@@ -35,6 +38,7 @@ public abstract class BaseListFragment extends LazyLoadFragment implements BaseC
 
     @Override
     protected void initView(View view) {
+
        recyclerView = view.findViewById(R.id.recycle_view);
 
         twinklingRefreshLayout = view.findViewById(R.id.ly_twinkling);
@@ -53,13 +57,14 @@ public abstract class BaseListFragment extends LazyLoadFragment implements BaseC
 
     @Override
     public void fetchData() {
-        observable = RxBus.getInstance().register(BaseListFragment.TAG);
-        observable.subscribe(new Consumer<Integer>() {
-            @Override
-            public void accept(Integer integer) throws Exception {
-                adapter.notifyDataSetChanged();
-            }
-        });
+
+//        observable = RxBus.getInstance().register(BaseListFragment.TAG);
+//        observable.subscribe(new Consumer<Integer>() {
+//            @Override
+//            public void accept(Integer integer) throws Exception {
+//                adapter.notifyDataSetChanged();
+//            }
+//        });
     }
 
     @Override

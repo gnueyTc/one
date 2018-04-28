@@ -1,13 +1,14 @@
 package com.gnuey.one.ui.onepager.article;
 
 import com.gnuey.one.bean.onepager.OneListBean;
-import com.gnuey.one.ui.base.BaseContract;
+import com.gnuey.one.ui.base.IBasePresenter;
+import com.gnuey.one.ui.base.IBaseView;
 
 import java.util.List;
 
 
 public interface OneArticleContract {
-    interface View extends BaseContract.BaseView{
+    interface View extends IBaseView {
         /**
          * 请求数据
          */
@@ -17,8 +18,13 @@ public interface OneArticleContract {
          * 刷新
          */
         void onRefresh();
+
+        /**
+         * 设置数据
+         */
+        void onSetAdapter(List<?> list);
     }
-    interface Presenter<T> extends BaseContract.BasePresenter<T>{
+    interface Presenter extends IBasePresenter {
         /**
          * 请求数据
          */

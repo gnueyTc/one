@@ -23,12 +23,12 @@ public class IdListPresenter implements IdListContract.Presenter{
         this.retrofitFactory = retrofitFactory;
     }
 
-    @Override
+
     public void attachView(IdListContract.View view) {
         this.mView = view;
     }
 
-    @Override
+
     public void dettachview() {
         mView = null;
     }

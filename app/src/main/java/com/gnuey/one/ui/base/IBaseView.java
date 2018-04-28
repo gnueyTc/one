@@ -4,8 +4,7 @@ import com.uber.autodispose.AutoDisposeConverter;
 
 import java.util.List;
 
-public interface BaseContract {
-    interface BaseView{
+public interface IBaseView {
         /**
          *  显示加载动画
          */
@@ -25,18 +24,11 @@ public interface BaseContract {
          * 加载完毕
          */
         void onShowNoMore();
-        /**
-         *
-         */
-        void onSetAdapter(List<?> list);
+
+
         /**
          * 绑定生命周期
          */
         <K>AutoDisposeConverter<K> bindAutoDispose();
-    }
-    interface BasePresenter<T>{
-        void attachView(T view);
 
-        void detachView();
-    }
 }

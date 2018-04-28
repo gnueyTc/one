@@ -15,7 +15,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import me.drakeet.multitype.Items;
 
-public class OneArticlePresenter extends RxPresenter<OneArticleContract.View> implements OneArticleContract.Presenter<OneArticleContract.View> {
+public class OneArticlePresenter extends RxPresenter<OneArticleContract.View> implements OneArticleContract.Presenter{
     private RetrofitFactory retrofitFactory;
     @Inject
     public OneArticlePresenter(RetrofitFactory retrofitFactory){
@@ -50,5 +50,15 @@ public class OneArticlePresenter extends RxPresenter<OneArticleContract.View> im
         Items items = new Items();
         items.add(dataBeen);
         mView.onSetAdapter(items);
+    }
+
+    @Override
+    public void doRefresh() {
+
+    }
+
+    @Override
+    public void doShowNetError() {
+
     }
 }

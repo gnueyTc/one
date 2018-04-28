@@ -1,6 +1,6 @@
 package com.gnuey.one.ui.base;
 
-import android.arch.lifecycle.Lifecycle;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,11 +13,10 @@ import android.view.ViewGroup;
 
 import com.gnuey.one.InitApp;
 import com.gnuey.one.component.AppComponent;
-import com.uber.autodispose.AutoDispose;
-import com.uber.autodispose.AutoDisposeConverter;
-import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements IBaseView {
+
+
     protected Context mContext;
 
     /**
