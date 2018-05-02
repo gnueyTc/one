@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gnuey.one.R;
+import com.gnuey.one.Register;
 import com.gnuey.one.adapter.ArrayAdapter;
 import com.gnuey.one.bean.LoadingBean;
 import com.gnuey.one.ui.base.BaseListFragment;
@@ -43,10 +44,12 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
 
     @Inject
     OneArticlePresenter mPresenter;
+
     private RecyclerView recyclerView;
     private TwinklingRefreshLayout twinklingRefreshLayout;
     private int index;
     private Flowable<String> flowable;
+    private Flowable<Integer> flowable2;
     private String code = "default";
     public OneArticleView(){
 
@@ -66,6 +69,9 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
         super.initView(view);
         mPresenter.attachView(this);
         adapter = new MultiTypeAdapter(oldItems);
+        Register.registerOneArticleItem(adapter);
+        recyclerView.setAdapter(adapter);
+
 
     }
 
@@ -74,6 +80,8 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
 //        mPresenter.doLoadData();
     }
 
+    private boolean isShow = false;
+    private int num=-1;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -86,23 +94,37 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
         for(int  i = 0;i<5;i++){
             wha.add(new Object());
         }
-        recyclerView.setAdapter(new ArrayAdapter(getActivity(),wha,index));
-        flowable = RxBus.getInstance().register(String.class);
-        flowable.subscribe(new Consumer<String>() {
+        isShow = true;
+        flowable2 = RxBus.getInstance().register(Integer.class);
+        flowable2.subscribe(new Consumer<Integer>() {
             @Override
-            public void accept(String s) throws Exception {
-                if(code.equals("default")){
-                    code = s;
-                    Log.e(TAG, "accept: "+code );
+            public void accept(Integer integer) throws Exception {
+                if(isShow){
+                    num = integer;
+                    Log.e(TAG, "accept: num = "+integer );
+                    isShow = false;
                 }
 
             }
         });
+        recyclerView.setAdapter(new ArrayAdapter(getActivity(),wha,index));
         return view;
     }
 
+
     @Override
     public void fetchData() {
+//        flowable = RxBus.getInstance().register(String.class);
+//        flowable.subscribe(new Consumer<String>() {
+//            @Override
+//            public void accept(String s) throws Exception {
+//                if(code.equals("default")){
+//                    code = s;
+//                    Log.e(TAG, "accept: "+code );
+//                }
+//
+//            }
+//        });
 
     }
 
@@ -131,7 +153,7 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
 
     @Override
     public void onDestroy() {
-        Log.e(TAG, "onDestroy: code = "+code );
         super.onDestroy();
+        Log.e(TAG, "onDestroy: code = "+num );
     }
 }

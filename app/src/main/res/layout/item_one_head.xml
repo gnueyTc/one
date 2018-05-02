@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+<ImageView
+    android:id="@+id/iv_image"
+    android:layout_width="match_parent"
+    android:layout_height="240dp" />
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginRight="5dp"
+            android:id="@+id/tv_title"
+            android:text="插画"
+            android:textColor="@color/colorGray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <view
+            android:id="@+id/hint"
+            android:layout_toRightOf="@id/tv_title"
+            android:background="@color/colorGray"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/colorGray"
+            android:layout_toRightOf="@id/hint"
+            android:text="花芍子"
+            android:id="@+id/tv_pic_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <TextView
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="40dp"
+        android:textColor="@color/colorBlack"
+        android:text="先是太胆小，明知不该做的事却不敢不做；后来也还是太胆小，明知该做的事却不敢去做。"
+        android:id="@+id/iv_forward"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/tv_words_info"
+        android:text="狄更斯"
+        android:textColor="@color/colorGray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_descovery"
+            android:src="@drawable/discovery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/iv_descovery"
+            android:text="发现"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@+id/iv_bubble_collect"
+            android:id="@+id/iv_diary"
+            android:src="@drawable/bubble_diary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@+id/iv_buble_share"
+            android:id="@+id/iv_bubble_collect"
+            android:src="@drawable/bubble_collect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@+id/iv_buble_like"
+            android:id="@+id/iv_buble_share"
+            android:src="@drawable/bubble_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_marginEnd="20dp"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/iv_buble_like"
+            android:src="@drawable/bubble_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</LinearLayout>

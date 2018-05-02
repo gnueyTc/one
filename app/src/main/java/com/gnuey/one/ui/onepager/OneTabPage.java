@@ -26,7 +26,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 
-public class OneTabPage extends Fragment implements IdListContract.View,ViewPager.OnPageChangeListener{
+public class OneTabPage extends Fragment implements IdListContract.View, ViewPager.OnPageChangeListener {
     public static final String TAG = "OneTab";
 
     @Inject
@@ -40,10 +40,11 @@ public class OneTabPage extends Fragment implements IdListContract.View,ViewPage
     private int viewPageSelectedPosition = 0;
     private boolean isPosted = true;
     private int mViewPagerIndex = -1;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(attachLayoutId(),container,false);
+        View view = inflater.inflate(attachLayoutId(), container, false);
         initView(view);
         initData();
         return view;
@@ -80,16 +81,18 @@ public class OneTabPage extends Fragment implements IdListContract.View,ViewPage
 
     protected void initData() throws NullPointerException {
         initChildView();
-        adapter = new BasePagerAdapter(getFragmentManager(),fragmentList);
+        adapter = new BasePagerAdapter(getFragmentManager(), fragmentList);
         viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(5);
+        viewPager.setOffscreenPageLimit(15);
 
 
-        mPresenter.getIdList("wdj","4.0.2");
+        mPresenter.getIdList("wdj", "4.0.2");
 
     }
+
     private OneArticleView oneArticleView;
-    private void initChildView(){
+
+    private void initChildView() {
         fragmentList = new ArrayList<>();
         oneArticleView = new OneArticleView();
         fragmentList.add(oneArticleView);
@@ -97,12 +100,12 @@ public class OneTabPage extends Fragment implements IdListContract.View,ViewPage
 
     @Override
     public void doSetData(IdListBean data) {
-        if(data==null){
+        if (data == null) {
             return;
         }
         idList = data.getData();
-        RxBus.getInstance().post(idList.get(0));
-        Log.e(TAG, "showList: "+data.getData().size() );
+        RxBus.getInstance().post(num);
+        Log.e(TAG, "showList: " + data.getData().size());
     }
 
     @Override
@@ -110,40 +113,51 @@ public class OneTabPage extends Fragment implements IdListContract.View,ViewPage
         super.onDestroy();
         mPresenter.dettachview();
     }
+
     private boolean isLeft = false;
+
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 //        Log.e(TAG, "onPageScrolled: position = "+position );
-        if(mViewPagerIndex ==position){
+        if (mViewPagerIndex == position) {
             isLeft = true;
-            Log.d(TAG,"正在向左滑动");
-        }else{
+            Log.d(TAG, "正在向左滑动");
+        } else {
             isLeft = false;
-            Log.d(TAG,"正在向右滑动");
+            Log.d(TAG, "正在向右滑动");
         }
     }
 
     @Override
     public void onPageSelected(int position) {
         viewPageSelectedPosition = position;
-        Log.e(TAG, "onPageSelected: position = "+position );
+//        Log.e(TAG, "onPageSelected: position = " + position);
     }
 
+    private int num = 0;
     @Override
     public void onPageScrollStateChanged(int state) {
-        if(idList==null||idList.size()==0){
+        if (idList == null || idList.size() == 0) {
             return;
         }
-        if(state==ViewPager.SCROLL_STATE_DRAGGING){
+        if (state == ViewPager.SCROLL_STATE_DRAGGING) {
             mViewPagerIndex = viewPager.getCurrentItem();
-            if(!isLeft){
+            if (!isLeft) {
+//                Log.e(TAG, "onPageScrollStateChanged: IS_ R");
                 fragmentList.add(new OneArticleView());
                 adapter.recreateItems(fragmentList);
             }
-            Log.e(TAG, "onPageScrollStateChanged: SelectedPosition = "+viewPageSelectedPosition );
-        }else if(state==ViewPager.SCROLL_STATE_SETTLING){
-                RxBus.getInstance().post(idList.get(viewPageSelectedPosition+1));
-        }else if(state==ViewPager.SCROLL_STATE_IDLE){
+//            Log.e(TAG, "onPageScrollStateChanged: SelectedPosition = "+viewPageSelectedPosition );
+//            Log.e(TAG, "onPageScrollStateChanged: IS_ L");
+        } else if (state == ViewPager.SCROLL_STATE_SETTLING) {
+            if(isLeft){
+                num++;
+            }else {
+                num--;
+            }
+            RxBus.getInstance().post(num);
+            //RxBus.getInstance().post(idList.get(viewPageSelectedPosition + 1));
+        } else if (state == ViewPager.SCROLL_STATE_IDLE) {
 
         }
 //

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 
-public abstract class LazyLoadFragment  extends BaseFragment  {
+public abstract class LazyLoadFragment extends BaseFragment  {
     /**
      * 是否初始化过布局
      */

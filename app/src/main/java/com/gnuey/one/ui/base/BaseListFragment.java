@@ -16,13 +16,11 @@ import com.uber.autodispose.AutoDisposeConverter;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
-import io.reactivex.functions.Consumer;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
-public abstract class BaseListFragment  extends LazyLoadFragment implements IBaseListView {
+public abstract class BaseListFragment extends LazyLoadFragment implements IBaseListView {
 
     public static final String TAG = "BaseListFragment";
     private TwinklingRefreshLayout twinklingRefreshLayout;
@@ -39,7 +37,7 @@ public abstract class BaseListFragment  extends LazyLoadFragment implements IBas
     @Override
     protected void initView(View view) {
 
-       recyclerView = view.findViewById(R.id.recycle_view);
+        recyclerView = view.findViewById(R.id.recycle_view);
 
         twinklingRefreshLayout = view.findViewById(R.id.ly_twinkling);
 
@@ -48,11 +46,11 @@ public abstract class BaseListFragment  extends LazyLoadFragment implements IBas
     @Override
     public void onShowLoading() {
         twinklingRefreshLayout.post(new Runnable() {
-           @Override
-           public void run() {
-               twinklingRefreshLayout.startRefresh();
-           }
-       });
+            @Override
+            public void run() {
+                twinklingRefreshLayout.startRefresh();
+            }
+        });
     }
 
     @Override
@@ -76,6 +74,7 @@ public abstract class BaseListFragment  extends LazyLoadFragment implements IBas
             }
         });
     }
+
     /**
      * 绑定生命周期
      */
@@ -84,6 +83,7 @@ public abstract class BaseListFragment  extends LazyLoadFragment implements IBas
         return AutoDispose.autoDisposable(AndroidLifecycleScopeProvider
                 .from(this, Lifecycle.Event.ON_DESTROY));
     }
+
     @Override
     public void onShowNetError() {
         ToastUtils.showSingleToast(R.string.network_error);
@@ -94,13 +94,13 @@ public abstract class BaseListFragment  extends LazyLoadFragment implements IBas
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(oldItems.size() > 0){
+                if (oldItems.size() > 0) {
                     Items newItems = new Items(oldItems);
                     newItems.remove(newItems.size() - 1);
                     newItems.add(new LoadingEndBean());
                     adapter.setItems(newItems);
                     adapter.notifyDataSetChanged();
-                }else if(oldItems.size()==0){
+                } else if (oldItems.size() == 0) {
                     oldItems.add(new LoadingEndBean());
                     adapter.setItems(oldItems);
                     adapter.notifyDataSetChanged();

@@ -27,14 +27,14 @@
         <TextView
             android:textColor="@color/colorGray"
             android:text="文/"
-            android:id="@+id/tv_auther"
+            android:id="@+id/tv_author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
             android:textColor="@color/colorGray"
             android:layout_toRightOf="@+id/tv_auther"
             android:text="gnuey"
-            android:id="@+id/tv_autherName"
+            android:id="@+id/tv_authorName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -46,6 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp" />
     <TextView
+        android:id="@+id/tv_forward"
         android:textColor="@color/colorGray"
         android:layout_marginTop="10dp"
         android:text="无论一个家多么容易破碎，还是需要一个家的，无论一份哎多么容易疲倦，还是一份爱的。"
