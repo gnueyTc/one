@@ -28,7 +28,7 @@ public interface OneArticleContract {
         /**
          * 请求数据
          */
-        void doLoadData(String code,String channel,String version);
+        void doLoadData(int code);
 
         /**
          * 再起请求数据
@@ -38,7 +38,7 @@ public interface OneArticleContract {
         /**
          * 设置适配器
          */
-        void doSetAdapter(OneListBean dataBeen);
+        void doSetAdapter(List<OneListBean.DataBean.ContentListBean> list);
 
         /**
          * 加载完毕

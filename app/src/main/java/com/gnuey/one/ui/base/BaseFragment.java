@@ -1,6 +1,7 @@
 package com.gnuey.one.ui.base;
 
 
+import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +14,9 @@ import android.view.ViewGroup;
 
 import com.gnuey.one.InitApp;
 import com.gnuey.one.component.AppComponent;
+import com.uber.autodispose.AutoDispose;
+import com.uber.autodispose.AutoDisposeConverter;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 public abstract class BaseFragment extends Fragment implements IBaseView {
 
@@ -46,11 +50,18 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
      * 设置appcomponent
      */
     protected void setAppComponent(AppComponent appComponent){}
-    @Nullable
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(attachLayoutId(),container,false);
+        setAppComponent(InitApp.getApplication().getAppComponent());
         initView(view);
         initData();
         return view;
@@ -59,9 +70,16 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setAppComponent(InitApp.getApplication().getAppComponent());
     }
 
+    /**
+     * 绑定生命周期
+     */
+    @Override
+    public <X> AutoDisposeConverter<X> bindAutoDispose() {
+        return AutoDispose.autoDisposable(AndroidLifecycleScopeProvider
+                .from(this, Lifecycle.Event.ON_DESTROY));
+    }
 
 
     @Override

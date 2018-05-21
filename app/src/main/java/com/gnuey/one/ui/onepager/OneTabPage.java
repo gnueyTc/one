@@ -17,6 +17,7 @@ import com.gnuey.one.bean.IdListBean;
 import com.gnuey.one.component.AppComponent;
 import com.gnuey.one.component.DaggerFragmentComponent;
 import com.gnuey.one.ui.onepager.article.OneArticleView;
+import com.gnuey.one.utils.CustomViewPager;
 import com.gnuey.one.utils.RxBus;
 
 
@@ -26,7 +27,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 
-public class OneTabPage extends Fragment implements IdListContract.View, ViewPager.OnPageChangeListener {
+public class OneTabPage extends Fragment implements IdListContract.View,ViewPager.OnPageChangeListener {
     public static final String TAG = "OneTab";
 
     @Inject
@@ -37,10 +38,10 @@ public class OneTabPage extends Fragment implements IdListContract.View, ViewPag
     private ViewPager viewPager;
     private List<Fragment> fragmentList;
     private List<String> idList;
-    private int viewPageSelectedPosition = 0;
+    private int viewPageSelectedPosition;
     private boolean isPosted = true;
     private int mViewPagerIndex = -1;
-
+    private int num = 0;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,12 +51,6 @@ public class OneTabPage extends Fragment implements IdListContract.View, ViewPag
         return view;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-
-    }
 
     protected int attachLayoutId() {
         return R.layout.item_viewpager;
@@ -71,6 +66,7 @@ public class OneTabPage extends Fragment implements IdListContract.View, ViewPag
 
 
     protected void initView(View view) {
+
         setAppComponent(InitApp.getApplication().getAppComponent());
         viewPager = view.findViewById(R.id.view_pager);
         viewPager.addOnPageChangeListener(this);
@@ -78,15 +74,16 @@ public class OneTabPage extends Fragment implements IdListContract.View, ViewPag
 
     }
 
-
     protected void initData() throws NullPointerException {
-        initChildView();
-        adapter = new BasePagerAdapter(getFragmentManager(), fragmentList);
-        viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(15);
-
-
         mPresenter.getIdList("wdj", "4.0.2");
+
+//        initChildView();
+
+
+//        viewPager.setOffscreenPageLimit(10);
+
+
+
 
     }
 
@@ -94,8 +91,11 @@ public class OneTabPage extends Fragment implements IdListContract.View, ViewPag
 
     private void initChildView() {
         fragmentList = new ArrayList<>();
-        oneArticleView = new OneArticleView();
-        fragmentList.add(oneArticleView);
+        for(int i = 0;i<2;i++){
+            oneArticleView = OneArticleView.setArguments(idList.get(i));
+            fragmentList.add(oneArticleView);
+        }
+
     }
 
     @Override
@@ -104,8 +104,11 @@ public class OneTabPage extends Fragment implements IdListContract.View, ViewPag
             return;
         }
         idList = data.getData();
-        RxBus.getInstance().post(num);
-        Log.e(TAG, "showList: " + data.getData().size());
+//        RxBus.getInstance().post(idList.get(viewPageSelectedPosition));
+        initChildView();
+        adapter = new BasePagerAdapter(getFragmentManager(), fragmentList);
+        viewPager.setAdapter(adapter);
+        Log.e(TAG, "showList: " + idList.get(viewPageSelectedPosition));
     }
 
     @Override
@@ -114,53 +117,21 @@ public class OneTabPage extends Fragment implements IdListContract.View, ViewPag
         mPresenter.dettachview();
     }
 
-    private boolean isLeft = false;
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//        Log.e(TAG, "onPageScrolled: position = "+position );
-        if (mViewPagerIndex == position) {
-            isLeft = true;
-            Log.d(TAG, "正在向左滑动");
-        } else {
-            isLeft = false;
-            Log.d(TAG, "正在向右滑动");
-        }
+
     }
 
     @Override
     public void onPageSelected(int position) {
         viewPageSelectedPosition = position;
-//        Log.e(TAG, "onPageSelected: position = " + position);
+//        RxBus.getInstance().post(idList.get(position));
+        Log.e(TAG, "onPageSelected: " );
     }
 
-    private int num = 0;
     @Override
     public void onPageScrollStateChanged(int state) {
-        if (idList == null || idList.size() == 0) {
-            return;
-        }
-        if (state == ViewPager.SCROLL_STATE_DRAGGING) {
-            mViewPagerIndex = viewPager.getCurrentItem();
-            if (!isLeft) {
-//                Log.e(TAG, "onPageScrollStateChanged: IS_ R");
-                fragmentList.add(new OneArticleView());
-                adapter.recreateItems(fragmentList);
-            }
-//            Log.e(TAG, "onPageScrollStateChanged: SelectedPosition = "+viewPageSelectedPosition );
-//            Log.e(TAG, "onPageScrollStateChanged: IS_ L");
-        } else if (state == ViewPager.SCROLL_STATE_SETTLING) {
-            if(isLeft){
-                num++;
-            }else {
-                num--;
-            }
-            RxBus.getInstance().post(num);
-            //RxBus.getInstance().post(idList.get(viewPageSelectedPosition + 1));
-        } else if (state == ViewPager.SCROLL_STATE_IDLE) {
-
-        }
-//
 
     }
 }

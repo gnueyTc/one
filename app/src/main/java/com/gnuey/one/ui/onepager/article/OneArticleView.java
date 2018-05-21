@@ -2,71 +2,56 @@ package com.gnuey.one.ui.onepager.article;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import com.gnuey.one.R;
+
 import com.gnuey.one.Register;
-import com.gnuey.one.adapter.ArrayAdapter;
 import com.gnuey.one.bean.LoadingBean;
+import com.gnuey.one.component.AppComponent;
+import com.gnuey.one.component.DaggerFragmentComponent;
 import com.gnuey.one.ui.base.BaseListFragment;
 import com.gnuey.one.utils.AdapterDiffCallBack;
-import com.gnuey.one.utils.RxBus;
-import com.gnuey.one.widget.SinaRefreshHeader;
-import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import io.reactivex.Flowable;
-import io.reactivex.functions.Consumer;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
-public class OneArticleView extends BaseListFragment implements OneArticleContract.View{
+public class OneArticleView extends BaseListFragment implements OneArticleContract.View {
+    @Inject
+    OneArticlePresenter mPresenter;
+
     public static final String TAG = "OneArticleView";
 
-    public static OneArticleView setArguments(String code){
+    public static OneArticleView setArguments(String code) {
         Bundle bundle = new Bundle();
-        bundle.putString(TAG,code);
+        bundle.putString(TAG, code);
         OneArticleView view = new OneArticleView();
         view.setArguments(bundle);
         return view;
     }
 
-    @Inject
-    OneArticlePresenter mPresenter;
 
-    private RecyclerView recyclerView;
-    private TwinklingRefreshLayout twinklingRefreshLayout;
     private int index;
     private Flowable<String> flowable;
-    private Flowable<Integer> flowable2;
-    private String code = "default";
-    public OneArticleView(){
+
+    public OneArticleView() {
 
     }
 
     @SuppressLint("ValidFragment")
-    public OneArticleView(int index){
+    public OneArticleView(int index) {
         this.index = index;
-    }
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
     protected void initView(View view) {
         super.initView(view);
+        Log.e(TAG, "initView: ");
         mPresenter.attachView(this);
         adapter = new MultiTypeAdapter(oldItems);
         Register.registerOneArticleItem(adapter);
@@ -77,43 +62,38 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
 
     @Override
     protected void initData() {
+        Log.e(TAG, "initData: ");
 //        mPresenter.doLoadData();
     }
 
-    private boolean isShow = false;
-    private int num=-1;
-    @Nullable
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list,container,false);
-        recyclerView = view.findViewById(R.id.recycle_view);
-        twinklingRefreshLayout = view.findViewById(R.id.ly_twinkling);
-        twinklingRefreshLayout.setHeaderView(new SinaRefreshHeader(getContext()));
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        ArrayList wha = new ArrayList();
-        for(int  i = 0;i<5;i++){
-            wha.add(new Object());
-        }
-        isShow = true;
-        flowable2 = RxBus.getInstance().register(Integer.class);
-        flowable2.subscribe(new Consumer<Integer>() {
-            @Override
-            public void accept(Integer integer) throws Exception {
-                if(isShow){
-                    num = integer;
-                    Log.e(TAG, "accept: num = "+integer );
-                    isShow = false;
-                }
+    protected void setAppComponent(AppComponent appComponent) {
+        DaggerFragmentComponent.builder()
+                .appComponent(appComponent)
+                .build()
+                .inject(this);
 
-            }
-        });
-        recyclerView.setAdapter(new ArrayAdapter(getActivity(),wha,index));
-        return view;
     }
-
 
     @Override
     public void fetchData() {
+        super.fetchData();
+        onShowLoading();
+        onLoadData();
+//        observable = RxBus.getInstance().register(String.class);
+//        observable.subscribe(new Consumer<String>() {
+//            @Override
+//            public void accept(String string) throws Exception {
+//                Log.e(TAG, "accept: num = " + string);
+//                mPresenter.doLoadData(Integer.valueOf(string));
+//                adapter.notifyDataSetChanged();
+////                RxBus.getInstance().unregister(String.class,observable);
+//
+//            }
+//        });
+//        Log.e(TAG, "fetchData: " );
+
 //        flowable = RxBus.getInstance().register(String.class);
 //        flowable.subscribe(new Consumer<String>() {
 //            @Override
@@ -130,20 +110,20 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
 
 
     @Override
-    public void onSetAdapter(List<?> list) {
+    public void onSetAdapter(final List<?> list) {
         Items newItems = new Items(list);
         newItems.add(new LoadingBean());
-        AdapterDiffCallBack.create(oldItems,newItems,adapter);
+        AdapterDiffCallBack.create(oldItems, newItems, adapter);
         oldItems.clear();
         oldItems.addAll(newItems);
         recyclerView.stopScroll();
     }
 
 
-
     @Override
     public void onLoadData() {
-
+        String code = getArguments().getString(OneArticleView.TAG);
+        mPresenter.doLoadData(Integer.valueOf(code));
     }
 
     @Override
@@ -153,7 +133,8 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
 
     @Override
     public void onDestroy() {
+//        RxBus.getInstance().unregisterAll();
         super.onDestroy();
-        Log.e(TAG, "onDestroy: code = "+num );
+//        Log.e(TAG, "onDestroy: code = "+num );
     }
 }

@@ -2,6 +2,7 @@ package com.gnuey.one.ui.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 
 public abstract class LazyLoadFragment extends BaseFragment  {
@@ -22,14 +23,14 @@ public abstract class LazyLoadFragment extends BaseFragment  {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         isViewInitiated = true;
-
+        prepareFetchData();
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        this.isViewInitiated = isVisibleToUser;
-        if(isViewInitiated){
+        this.isVisibleToUser = isVisibleToUser;
+        if(isVisibleToUser){
             prepareFetchData();
         }
     }

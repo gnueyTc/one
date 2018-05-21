@@ -3,10 +3,16 @@ package com.gnuey.one.utils;
 import android.support.annotation.NonNull;
 
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.processors.FlowableProcessor;
 import io.reactivex.processors.PublishProcessor;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 
 /**
  * https://juejin.im/entry/58ff2e26a0bb9f0065d2c5f2
@@ -15,34 +21,66 @@ import io.reactivex.processors.PublishProcessor;
 
 public class RxBus {
 
-    private final FlowableProcessor<Object> mBus;
+    private ConcurrentHashMap<Object, List<Subject>> subjectMapper = new ConcurrentHashMap<>();
 
     private RxBus() {
-        mBus = PublishProcessor.create().toSerialized();
+
     }
 
-    private static class Holder {
-        private static RxBus instance = new RxBus();
-    }
-
+    @NonNull
     public static RxBus getInstance() {
         return Holder.instance;
     }
 
-    public void post(@NonNull Object obj) {
-        mBus.onNext(obj);
+    @NonNull
+    public <T> Observable<T> register(@NonNull Class<T> clz) {
+        return register(clz.getName());
     }
 
-    public <T> Flowable<T> register(Class<T> clz) {
-        return mBus.ofType(clz);
+    @NonNull
+    public <T> Observable<T> register(@NonNull Object tag) {
+        List<Subject> subjectList = subjectMapper.get(tag);
+        if (null == subjectList) {
+            subjectList = new ArrayList<>();
+            subjectMapper.put(tag, subjectList);
+        }
+
+        Subject<T> subject = PublishSubject.create();
+        subjectList.add(subject);
+
+        //System.out.println("注册到rxbus");
+        return subject;
     }
 
-    public void unregisterAll() {
-        //会将所有由mBus 生成的 Flowable 都置  completed 状态  后续的 所有消息  都收不到了
-        mBus.onComplete();
+    public <T> void unregister(@NonNull Class<T> clz, @NonNull Observable observable) {
+        unregister(clz.getName(), observable);
     }
 
-    public boolean hasSubscribers() {
-        return mBus.hasSubscribers();
+    public void unregister(@NonNull Object tag, @NonNull Observable observable) {
+        List<Subject> subjects = subjectMapper.get(tag);
+        if (null != subjects) {
+            subjects.remove(observable);
+            if (subjects.isEmpty()) {
+                subjectMapper.remove(tag);
+                //System.out.println("从rxbus取消注册");
+            }
+        }
+    }
+
+    public void post(@NonNull Object content) {
+        post(content.getClass().getName(), content);
+    }
+
+    public void post(@NonNull Object tag, @NonNull Object content) {
+        List<Subject> subjects = subjectMapper.get(tag);
+        if (!subjects.isEmpty()) {
+            for (Subject subject : subjects) {
+                subject.onNext(content);
+            }
+        }
+    }
+
+    private static class Holder {
+        private static RxBus instance = new RxBus();
     }
 }

@@ -29,7 +29,7 @@ public class OneArticleViewHeadBinder extends ItemViewBinder<OneListBean.DataBea
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull OneListBean.DataBean.ContentListBean item) {
         final Context context = holder.itemView.getContext();
-        Glide.with(context).load(item.getImg_url());
+        Glide.with(context).load(item.getImg_url()).into(holder.iv_image);
         holder.tv_title.setText(item.getTitle());
         holder.tv_pic_info.setText(item.getPic_info());
         holder.tv_forward.setText(item.getForward());

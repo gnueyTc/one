@@ -1,22 +1,29 @@
 package com.gnuey.one.ui.base;
 
 import android.arch.lifecycle.Lifecycle;
-import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
 import com.gnuey.one.R;
+import com.gnuey.one.adapter.ArrayAdapter;
 import com.gnuey.one.bean.LoadingEndBean;
+import com.gnuey.one.component.AppComponent;
 import com.gnuey.one.utils.RxBus;
 import com.gnuey.one.utils.ToastUtils;
+import com.gnuey.one.widget.SinaRefreshHeader;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.AutoDisposeConverter;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 
+import java.util.ArrayList;
+
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
+import io.reactivex.functions.Consumer;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
@@ -24,11 +31,11 @@ public abstract class BaseListFragment extends LazyLoadFragment implements IBase
 
     public static final String TAG = "BaseListFragment";
     private TwinklingRefreshLayout twinklingRefreshLayout;
-    private RecyclerView recyclerView;
-    protected Observable<Integer> observable;
+    protected RecyclerView recyclerView;
+    protected Observable<String> observable;
     protected MultiTypeAdapter adapter;
     protected Items oldItems = new Items();
-
+    private int index;
     @Override
     protected int attachLayoutId() {
         return R.layout.fragment_list;
@@ -36,10 +43,13 @@ public abstract class BaseListFragment extends LazyLoadFragment implements IBase
 
     @Override
     protected void initView(View view) {
-
+        Log.e(TAG, "initView: " );
         recyclerView = view.findViewById(R.id.recycle_view);
-
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setHasFixedSize(true);
         twinklingRefreshLayout = view.findViewById(R.id.ly_twinkling);
+        twinklingRefreshLayout.setHeaderView(new SinaRefreshHeader(getContext()));
+
 
     }
 
@@ -53,18 +63,12 @@ public abstract class BaseListFragment extends LazyLoadFragment implements IBase
         });
     }
 
+
     @Override
     public void fetchData() {
+        Log.e(TAG, "fetchData: ");
 
-//        observable = RxBus.getInstance().register(BaseListFragment.TAG);
-//        observable.subscribe(new Consumer<Integer>() {
-//            @Override
-//            public void accept(Integer integer) throws Exception {
-//                adapter.notifyDataSetChanged();
-//            }
-//        });
     }
-
     @Override
     public void onHideLoading() {
         twinklingRefreshLayout.post(new Runnable() {
@@ -75,14 +79,6 @@ public abstract class BaseListFragment extends LazyLoadFragment implements IBase
         });
     }
 
-    /**
-     * 绑定生命周期
-     */
-    @Override
-    public <X> AutoDisposeConverter<X> bindAutoDispose() {
-        return AutoDispose.autoDisposable(AndroidLifecycleScopeProvider
-                .from(this, Lifecycle.Event.ON_DESTROY));
-    }
 
     @Override
     public void onShowNetError() {
