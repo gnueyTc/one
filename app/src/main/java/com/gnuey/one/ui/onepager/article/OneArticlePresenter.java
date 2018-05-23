@@ -1,5 +1,7 @@
 package com.gnuey.one.ui.onepager.article;
 
+import android.util.Log;
+
 import com.gnuey.one.api.OnePagerApi;
 import com.gnuey.one.api.RetrofitFactory;
 import com.gnuey.one.bean.onepager.OneListBean;
@@ -17,6 +19,7 @@ import io.reactivex.schedulers.Schedulers;
 import me.drakeet.multitype.Items;
 
 public class OneArticlePresenter extends RxPresenter<OneArticleContract.View> implements OneArticleContract.Presenter{
+    private static final String TAG = "OneArticlePresenter";
     private RetrofitFactory retrofitFactory;
     private List<OneListBean.DataBean.ContentListBean> dataList = new ArrayList<>();
     @Inject
@@ -33,6 +36,11 @@ public class OneArticlePresenter extends RxPresenter<OneArticleContract.View> im
                     @Override
                     public void accept(OneListBean oneListBean) throws Exception {
                         OneArticlePresenter.this.doSetAdapter(oneListBean.getData().getContent_list());
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.e(TAG, "accept: throwable = "+throwable );
                     }
                 });
     }

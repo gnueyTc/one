@@ -7,23 +7,12 @@ import android.util.Log;
 import android.view.View;
 
 import com.gnuey.one.R;
-import com.gnuey.one.adapter.ArrayAdapter;
 import com.gnuey.one.bean.LoadingEndBean;
-import com.gnuey.one.component.AppComponent;
-import com.gnuey.one.utils.RxBus;
 import com.gnuey.one.utils.ToastUtils;
 import com.gnuey.one.widget.SinaRefreshHeader;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
-import com.uber.autodispose.AutoDispose;
-import com.uber.autodispose.AutoDisposeConverter;
-import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
-
-import java.util.ArrayList;
-
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
-import io.reactivex.functions.Consumer;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 

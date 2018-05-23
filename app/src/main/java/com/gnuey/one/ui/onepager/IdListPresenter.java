@@ -1,5 +1,7 @@
 package com.gnuey.one.ui.onepager;
 
+import android.util.Log;
+
 import com.gnuey.one.api.OnePagerApi;
 import com.gnuey.one.api.RetrofitFactory;
 import com.gnuey.one.bean.IdListBean;
@@ -16,6 +18,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by gnueyTc on 2018/4/26.
  */
 public class IdListPresenter implements IdListContract.Presenter{
+    private static final String TAG = "IdListPresenter";
     private RetrofitFactory retrofitFactory;
     private IdListContract.View mView;
     @Inject
@@ -43,6 +46,11 @@ public class IdListPresenter implements IdListContract.Presenter{
                     @Override
                     public void accept(IdListBean idListBean) throws Exception {
                         mView.doSetData(idListBean);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.e(TAG, "accept: throwable = "+throwable );
                     }
                 });
     }
