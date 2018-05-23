@@ -81,30 +81,6 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
         super.fetchData();
         onShowLoading();
         onLoadData();
-//        observable = RxBus.getInstance().register(String.class);
-//        observable.subscribe(new Consumer<String>() {
-//            @Override
-//            public void accept(String string) throws Exception {
-//                Log.e(TAG, "accept: num = " + string);
-//                mPresenter.doLoadData(Integer.valueOf(string));
-//                adapter.notifyDataSetChanged();
-////                RxBus.getInstance().unregister(String.class,observable);
-//
-//            }
-//        });
-//        Log.e(TAG, "fetchData: " );
-
-//        flowable = RxBus.getInstance().register(String.class);
-//        flowable.subscribe(new Consumer<String>() {
-//            @Override
-//            public void accept(String s) throws Exception {
-//                if(code.equals("default")){
-//                    code = s;
-//                    Log.e(TAG, "accept: "+code );
-//                }
-//
-//            }
-//        });
 
     }
 
