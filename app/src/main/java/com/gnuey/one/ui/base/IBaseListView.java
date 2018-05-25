@@ -10,4 +10,10 @@ public interface IBaseListView extends IBaseView  {
      * 设置适配器
      */
     void onSetAdapter(List<?> list);
+
+
+    /**
+     * 刷新
+     */
+    void doOnRefresh();
 }

@@ -9,15 +9,6 @@ import java.util.List;
 
 public interface OneArticleContract {
     interface View extends IBaseView {
-        /**
-         * 请求数据
-         */
-        void onLoadData();
-
-        /**
-         * 刷新
-         */
-        void onRefresh();
 
         /**
          * 设置数据

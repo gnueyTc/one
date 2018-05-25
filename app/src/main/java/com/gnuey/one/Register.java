@@ -2,11 +2,7 @@ package com.gnuey.one;
 
 import android.support.annotation.NonNull;
 
-import com.gnuey.one.bean.LoadingBean;
-import com.gnuey.one.bean.LoadingEndBean;
 import com.gnuey.one.bean.onepager.OneListBean;
-import com.gnuey.one.binder.LoadingEndViewBinder;
-import com.gnuey.one.binder.LoadingViewBinder;
 import com.gnuey.one.binder.onepager.OneArticleViewBinder;
 import com.gnuey.one.binder.onepager.OneArticleViewHeadBinder;
 
@@ -33,7 +29,5 @@ public class Register {
                         }
                     }
                 });
-        adapter.register(LoadingBean.class, new LoadingViewBinder());
-        adapter.register(LoadingEndBean.class, new LoadingEndViewBinder());
     }
 }

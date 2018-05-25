@@ -16,6 +16,7 @@ public interface OnePagerApi {
     String HOST = "http://v3.wufazhuce.com:8000/api/";
 
     /**
+     * 获取最新 idlist
      * http://v3.wufazhuce.com:8000/api/onelist/idlist/?channel=wdj&version=4.0.2&uuid=ffffffff-a90e-706a-63f7-ccf973aae5ee&platform=android
      *
      * @param
@@ -27,6 +28,7 @@ public interface OnePagerApi {
             @Query("version") String version
     );
     /**
+     * 获取 onelist
      * http://v3.wufazhuce.com:8000/api/onelist/3528/0?channel=wdj&version=4.0.2&uuid=ffffffff-a90e-706a-63f7-ccf973aae5ee&platform=android
      *
      * @param

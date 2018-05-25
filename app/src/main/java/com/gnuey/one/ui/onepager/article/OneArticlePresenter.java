@@ -1,5 +1,6 @@
 package com.gnuey.one.ui.onepager.article;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.gnuey.one.api.OnePagerApi;
@@ -21,25 +22,34 @@ import me.drakeet.multitype.Items;
 public class OneArticlePresenter extends RxPresenter<OneArticleContract.View> implements OneArticleContract.Presenter{
     private static final String TAG = "OneArticlePresenter";
     private RetrofitFactory retrofitFactory;
+    private int code;
     private List<OneListBean.DataBean.ContentListBean> dataList = new ArrayList<>();
     @Inject
     public OneArticlePresenter(RetrofitFactory retrofitFactory){
         this.retrofitFactory = retrofitFactory;
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void doLoadData(int code) {
+        this.code = code;
         retrofitFactory.getRetrofitFactory().create(OnePagerApi.class).getOneList(code)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<OneListBean>() {
                     @Override
                     public void accept(OneListBean oneListBean) throws Exception {
-                        OneArticlePresenter.this.doSetAdapter(oneListBean.getData().getContent_list());
+                        if(oneListBean.getData().getContent_list()!=null&&oneListBean.getData().getContent_list().size()>0){
+                            OneArticlePresenter.this.doSetAdapter(oneListBean.getData().getContent_list());
+                        }else {
+                            OneArticlePresenter.this.doShowNoMore();
+                        }
+
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
+                        OneArticlePresenter.this.doShowNetError();
                         Log.e(TAG, "accept: throwable = "+throwable );
                     }
                 });
@@ -47,24 +57,29 @@ public class OneArticlePresenter extends RxPresenter<OneArticleContract.View> im
 
     @Override
     public void doLoadMoreData() {
-
+//            doLoadData(code);
     }
 
     @Override
     public void doShowNoMore() {
-
+        mView.onHideLoading();
+        mView.onShowNoMore();
     }
 
     @Override
     public void doSetAdapter(List<OneListBean.DataBean.ContentListBean> list) {
         dataList.addAll(list);
-        mView.onSetAdapter(dataList);
+        mView.onSetAdapter(list);
         mView.onHideLoading();
     }
 
     @Override
     public void doRefresh() {
-
+        if(dataList.size()!=0){
+            dataList.clear();
+        }
+        mView.onShowLoading();
+        doLoadData(code);
     }
 
     @Override

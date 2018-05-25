@@ -33,15 +33,12 @@ public class OneTabPage extends Fragment implements IdListContract.View,ViewPage
     @Inject
     IdListPresenter mPresenter;
 
-    private static OneTabPage instance = null;
     private BasePagerAdapter adapter;
     private ViewPager viewPager;
     private List<Fragment> fragmentList;
     private List<String> idList;
     private int viewPageSelectedPosition;
-    private boolean isPosted = true;
-    private int mViewPagerIndex = -1;
-    private int num = 0;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -70,6 +67,7 @@ public class OneTabPage extends Fragment implements IdListContract.View,ViewPage
         setAppComponent(InitApp.getApplication().getAppComponent());
         viewPager = view.findViewById(R.id.view_pager);
         viewPager.addOnPageChangeListener(this);
+        viewPager.setOffscreenPageLimit(5);
         mPresenter.attachView(this);
 
     }
@@ -104,7 +102,6 @@ public class OneTabPage extends Fragment implements IdListContract.View,ViewPage
             return;
         }
         idList = data.getData();
-//        RxBus.getInstance().post(idList.get(viewPageSelectedPosition));
         initChildView();
         adapter = new BasePagerAdapter(getFragmentManager(), fragmentList);
         viewPager.setAdapter(adapter);
@@ -126,7 +123,11 @@ public class OneTabPage extends Fragment implements IdListContract.View,ViewPage
     @Override
     public void onPageSelected(int position) {
         viewPageSelectedPosition = position;
-//        RxBus.getInstance().post(idList.get(position));
+        if(position==fragmentList.size()-1&&position!=idList.size()-1){
+            oneArticleView = OneArticleView.setArguments(idList.get(position+1));
+            fragmentList.add(oneArticleView);
+            adapter.notifyDataSetChanged();
+        }
         Log.e(TAG, "onPageSelected: " );
     }
 
