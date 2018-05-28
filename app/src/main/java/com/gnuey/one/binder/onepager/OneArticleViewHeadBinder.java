@@ -34,6 +34,7 @@ public class OneArticleViewHeadBinder extends ItemViewBinder<OneListBean.DataBea
         holder.tv_pic_info.setText(item.getPic_info());
         holder.tv_forward.setText(item.getForward());
         holder.tv_words_info.setText(item.getWords_info());
+        holder.tv_hint.setText("|");
     }
 
 
@@ -44,6 +45,7 @@ public class OneArticleViewHeadBinder extends ItemViewBinder<OneListBean.DataBea
             private TextView tv_pic_info;
             private TextView tv_forward;
             private TextView tv_words_info;
+            private TextView tv_hint;
         public ViewHolder(View itemView) {
                 super(itemView);
                 this.iv_image = itemView.findViewById(R.id.iv_image);
@@ -51,6 +53,7 @@ public class OneArticleViewHeadBinder extends ItemViewBinder<OneListBean.DataBea
                 this.tv_pic_info = itemView.findViewById(R.id.tv_pic_info);
                 this.tv_forward = itemView.findViewById(R.id.tv_forward);
                 this.tv_words_info = itemView.findViewById(R.id.tv_words_info);
+                this.tv_hint = itemView.findViewById(R.id.tv_hint);
 
             }
         }

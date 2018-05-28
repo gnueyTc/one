@@ -52,7 +52,6 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
 
     @Override
     protected void initData() {
-        Log.e(TAG, "initData: ");
         code = getArguments().getString(OneArticleView.TAG);
     }
 
@@ -80,6 +79,7 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
     @Override
     public void doOnRefresh() {
         mPresenter.doLoadData(Integer.valueOf(code));
+        Log.e(TAG, "doOnRefresh: "+code);
     }
 
     @Override

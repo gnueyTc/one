@@ -17,9 +17,6 @@ import com.gnuey.one.bean.IdListBean;
 import com.gnuey.one.component.AppComponent;
 import com.gnuey.one.component.DaggerFragmentComponent;
 import com.gnuey.one.ui.onepager.article.OneArticleView;
-import com.gnuey.one.utils.CustomViewPager;
-import com.gnuey.one.utils.RxBus;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,26 +60,15 @@ public class OneTabPage extends Fragment implements IdListContract.View,ViewPage
 
 
     protected void initView(View view) {
-
         setAppComponent(InitApp.getApplication().getAppComponent());
         viewPager = view.findViewById(R.id.view_pager);
         viewPager.addOnPageChangeListener(this);
         viewPager.setOffscreenPageLimit(5);
         mPresenter.attachView(this);
-
     }
 
     protected void initData() throws NullPointerException {
         mPresenter.getIdList("wdj", "4.0.2");
-
-//        initChildView();
-
-
-//        viewPager.setOffscreenPageLimit(10);
-
-
-
-
     }
 
     private OneArticleView oneArticleView;
