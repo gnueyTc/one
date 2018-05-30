@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.gnuey.one.R;
 import com.gnuey.one.bean.onepager.OneListBean;
+import com.gnuey.one.utils.DateUtils;
+import com.gnuey.one.utils.EnumType;
 
 import me.drakeet.multitype.ItemViewBinder;
 
@@ -29,12 +31,37 @@ public class OneArticleViewBinder extends ItemViewBinder<OneListBean.DataBean.Co
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull OneListBean.DataBean.ContentListBean item) {
         final Context context = holder.itemView.getContext();
-        holder.tv_mainTitle.setText("");
+        String title = item.getTag_list().size()==0?"":item.getTag_list().get(0).getTitle();
+        if(!title.equals("")){
+            holder.tv_mainTitle.setText("-"+title+"-");
+        }else {
+            switch (item.getContent_type()){
+
+                case "1":
+                    holder.tv_mainTitle.setText("-"+EnumType.READ.getValue()+"-");
+                    break;
+                case "2":
+                    holder.tv_mainTitle.setText("-"+EnumType.SERIALIZE.getValue()+"-");
+                    break;
+                case "3":
+                    holder.tv_mainTitle.setText("-"+EnumType.QA.getValue()+"-");
+                    break;
+                case "4":
+                    holder.tv_mainTitle.setText("-"+EnumType.MUSIC.getValue()+"-");
+                    break;
+                case "5":
+                    holder.tv_mainTitle.setText("-"+EnumType.MOVIE.getValue()+"-");
+                    break;
+
+            }
+
+        }
+
         holder.tv_title.setText(item.getTitle());
         holder.tv_author.setText(item.getAuthor().getUser_name());
         Glide.with(context).load(item.getImg_url()).into( holder.iv_image);
         holder.tv_forward.setText(item.getForward());
-
+        holder.tv_date.setText(DateUtils.getTodayDate(item.getPost_date()));
 
     }
 
@@ -45,6 +72,7 @@ public class OneArticleViewBinder extends ItemViewBinder<OneListBean.DataBean.Co
         private TextView tv_author;
         private ImageView iv_image;
         private TextView tv_forward;
+        private TextView tv_date;
         public ViewHolder(View itemView) {
             super(itemView);
             this.tv_mainTitle = itemView.findViewById(R.id.tv_mainTitle);
@@ -52,6 +80,7 @@ public class OneArticleViewBinder extends ItemViewBinder<OneListBean.DataBean.Co
             this.tv_author = itemView.findViewById(R.id.tv_authorName);
             this.iv_image = itemView.findViewById(R.id.iv_image);
             this.tv_forward = itemView.findViewById(R.id.tv_forward);
+            this.tv_date = itemView.findViewById(R.id.tv_date);
         }
     }
 }

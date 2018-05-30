@@ -64,7 +64,7 @@
         android:layout_gravity="center_horizontal"
         android:text="狄更斯"
         android:textColor="@color/colorGray"
-        android:textSize="15dp" />
+        android:textSize="@dimen/one_text_midle_size" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -72,15 +72,17 @@
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="40dp">
 
         <ImageView
+            android:layout_centerVertical="true"
             android:id="@+id/iv_descovery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/discovery" />
 
         <TextView
+            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -89,32 +91,32 @@
 
         <ImageView
             android:id="@+id/iv_diary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:layout_marginRight="20dp"
             android:layout_toLeftOf="@+id/iv_bubble_collect"
             android:src="@drawable/bubble_diary" />
 
         <ImageView
             android:id="@+id/iv_bubble_collect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:layout_marginRight="20dp"
             android:layout_toLeftOf="@+id/iv_buble_share"
             android:src="@drawable/bubble_collect" />
 
         <ImageView
             android:id="@+id/iv_buble_share"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:layout_marginRight="20dp"
             android:layout_toLeftOf="@+id/iv_buble_like"
             android:src="@drawable/bubble_share" />
 
         <ImageView
             android:id="@+id/iv_buble_like"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="20dp"
             android:src="@drawable/bubble_like" />

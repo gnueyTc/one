@@ -6,8 +6,10 @@
     android:orientation="vertical"
     android:background="@color/colorWhite">
     <TextView
+        android:layout_marginTop="10dp"
         android:textColor="@color/colorGray"
         android:text="-连载-"
+        android:textSize="@dimen/one_text_midle_size"
         android:layout_gravity="center"
         android:id="@+id/tv_mainTitle"
         android:layout_width="wrap_content"
@@ -32,6 +34,7 @@
         <TextView
             android:textColor="@color/colorGray"
             android:text="文/"
+            android:textSize="@dimen/one_text_mini_size"
             android:id="@+id/tv_author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -39,6 +42,7 @@
             android:textColor="@color/colorGray"
             android:layout_toRightOf="@+id/tv_author"
             android:text="gnuey"
+            android:textSize="@dimen/one_text_mini_size"
             android:id="@+id/tv_authorName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -58,33 +62,42 @@
         android:id="@+id/tv_forward"
         android:textColor="@color/colorGray"
         android:layout_marginTop="10dp"
+        android:lineSpacingExtra="5dp"
         android:text="无论一个家多么容易破碎，还是需要一个家的，无论一份哎多么容易疲倦，还是一份爱的。"
+        android:textSize="@dimen/one_text_midle_size"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <RelativeLayout
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/tv_date"
             android:text="4月21日"
+            android:textSize="@dimen/one_text_mini_size"
+            android:textColor="@color/colorGray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <ImageView
+
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/iv_buble_share"
             android:id="@+id/iv_bubble_like"
             android:layout_gravity="right"
             android:src="@drawable/bubble_like"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="15dp"
+            android:layout_height="15dp" />
         <ImageView
             android:id="@+id/iv_buble_share"
             android:layout_alignParentEnd="true"
             android:foregroundGravity="right"
             android:layout_gravity="right"
             android:src="@drawable/bubble_share"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="15dp"
+            android:layout_height="15dp" />
     </RelativeLayout>
 </LinearLayout>

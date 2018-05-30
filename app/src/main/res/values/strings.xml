@@ -8,4 +8,12 @@
     <string name="network_error">网络错误</string>
     <string name="loading">加载中</string>
     <string name="no_more_content">暂无更多内容</string>
+    
+    <!--content_type-->
+    <string name="read">阅读</string>
+    <string name="serialize">连载</string>
+    <string name="qa">问答</string>
+    <string name="music">音乐</string>
+    <string name="movie">影视</string>
+    <string name="radio">电台</string>
 </resources>

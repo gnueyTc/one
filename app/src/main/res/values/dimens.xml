@@ -1,3 +1,4 @@
 <resources>
+    <dimen name="one_text_midle_size">13dp</dimen>
     <dimen name="one_text_mini_size">12dp</dimen>
 </resources>
