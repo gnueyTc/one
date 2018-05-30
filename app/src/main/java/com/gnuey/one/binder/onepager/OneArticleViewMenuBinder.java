@@ -18,7 +18,7 @@ public class OneArticleViewMenuBinder extends ItemViewBinder {
     @NonNull
     @Override
     protected RecyclerView.ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View view = inflater.inflate(R.layout.test,parent,false);
+        View view = inflater.inflate(R.layout.item_one_menu,parent,false);
         return new OneArticleViewMenuBinder.ViewHolder(view);
     }
 
