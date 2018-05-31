@@ -1,6 +1,5 @@
 package com.gnuey.one.utils;
 
-import com.gnuey.one.R;
 
 /**
  * Created by gnueyTc on 2018/5/30.
