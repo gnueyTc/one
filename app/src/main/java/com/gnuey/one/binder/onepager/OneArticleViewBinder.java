@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.gnuey.one.R;
+import com.gnuey.one.bean.onepager.OneFlattenBean;
 import com.gnuey.one.bean.onepager.OneListBean;
 import com.gnuey.one.utils.DateUtils;
 import com.gnuey.one.utils.EnumType;
@@ -20,7 +21,7 @@ import me.drakeet.multitype.ItemViewBinder;
 /**
  * Created by gnueyTc on 2018/5/2.
  */
-public class OneArticleViewBinder extends ItemViewBinder<OneListBean.DataBean.ContentListBean,OneArticleViewBinder.ViewHolder>{
+public class OneArticleViewBinder extends ItemViewBinder<OneFlattenBean,OneArticleViewBinder.ViewHolder>{
     @NonNull
     @Override
     protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
@@ -29,7 +30,7 @@ public class OneArticleViewBinder extends ItemViewBinder<OneListBean.DataBean.Co
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull OneListBean.DataBean.ContentListBean item) {
+    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull OneFlattenBean item) {
         final Context context = holder.itemView.getContext();
         String title = item.getTag_list().size()==0?"":item.getTag_list().get(0).getTitle();
         if(!title.equals("")){

@@ -1,5 +1,6 @@
 package com.gnuey.one.ui.onepager.article;
 
+import com.gnuey.one.bean.onepager.OneFlattenBean;
 import com.gnuey.one.bean.onepager.OneListBean;
 import com.gnuey.one.ui.base.IBasePresenter;
 import com.gnuey.one.ui.base.IBaseView;
@@ -29,7 +30,7 @@ public interface OneArticleContract {
         /**
          * 设置适配器
          */
-        void doSetAdapter(List<OneListBean.DataBean.ContentListBean> list);
+        void doSetAdapter(List<OneFlattenBean> list);
 
         /**
          * 加载完毕
