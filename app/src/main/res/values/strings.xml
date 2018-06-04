@@ -4,10 +4,12 @@
     <string name="one">ONE</string>
     <string name="all">ALL</string>
     <string name="me">ME</string>
-    
+
+    <!--view message-->
     <string name="network_error">网络错误</string>
     <string name="loading">加载中</string>
     <string name="no_more_content">暂无更多内容</string>
+    <string name="pause">配图</string>
     
     <!--content_type-->
     <string name="read">阅读</string>

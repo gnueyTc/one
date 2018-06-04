@@ -24,7 +24,6 @@ import me.drakeet.multitype.Items;
 public class OneArticlePresenter extends RxPresenter<OneArticleContract.View> implements OneArticleContract.Presenter{
     private static final String TAG = "OneArticlePresenter";
     private RetrofitFactory retrofitFactory;
-    private int code;
     private List<OneFlattenBean> dataList = new ArrayList<>();
     @Inject
     public OneArticlePresenter(RetrofitFactory retrofitFactory){
@@ -34,7 +33,6 @@ public class OneArticlePresenter extends RxPresenter<OneArticleContract.View> im
     @SuppressLint("CheckResult")
     @Override
     public void doLoadData(int code) {
-        this.code = code;
         retrofitFactory.getRetrofitFactory().create(OnePagerApi.class).getOneList(code)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -77,7 +75,7 @@ public class OneArticlePresenter extends RxPresenter<OneArticleContract.View> im
     }
 
     @Override
-    public void doRefresh() {
+    public void doRefresh(int code) {
         if(dataList.size()!=0){
             dataList.clear();
         }
@@ -87,6 +85,7 @@ public class OneArticlePresenter extends RxPresenter<OneArticleContract.View> im
 
     @Override
     public void doShowNetError() {
-
+        mView.onShowNetError();
+        mView.onHideLoading();
     }
 }

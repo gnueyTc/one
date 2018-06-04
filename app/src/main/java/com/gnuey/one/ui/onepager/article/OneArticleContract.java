@@ -18,6 +18,11 @@ public interface OneArticleContract {
     }
     interface Presenter extends IBasePresenter {
         /**
+         * 刷新数据
+         */
+        void doRefresh(int code);
+
+        /**
          * 请求数据
          */
         void doLoadData(int code);

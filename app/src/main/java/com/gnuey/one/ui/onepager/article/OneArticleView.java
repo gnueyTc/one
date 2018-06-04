@@ -24,7 +24,7 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
     OneArticlePresenter mPresenter;
 
     public static final String TAG = "OneArticleView";
-    private String code;
+    private int code;
     public static OneArticleView setArguments(String code) {
         Bundle bundle = new Bundle();
         bundle.putString(TAG, code);
@@ -52,7 +52,7 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
 
     @Override
     protected void initData() {
-        code = getArguments().getString(OneArticleView.TAG);
+        code = Integer.valueOf(getArguments().getString(OneArticleView.TAG));
     }
 
 
@@ -78,7 +78,7 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
 
     @Override
     public void doOnRefresh() {
-        mPresenter.doLoadData(Integer.valueOf(code));
+        mPresenter.doRefresh(code);
         Log.e(TAG, "doOnRefresh: "+code);
     }
 
