@@ -7,12 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.gnuey.one.R;
 import com.gnuey.one.bean.onepager.OneFlattenBean;
-import com.gnuey.one.bean.onepager.OneListBean;
 import com.gnuey.one.utils.DateUtils;
 import com.gnuey.one.utils.EnumType;
 
@@ -52,6 +52,10 @@ public class OneArticleViewBinder extends ItemViewBinder<OneFlattenBean,OneArtic
                     break;
                 case "5":
                     holder.tv_mainTitle.setText("-"+EnumType.MOVIE.getValue()+"-");
+                    holder.tv_subtitle.setVisibility(View.VISIBLE);
+                    holder.tv_subtitle.setText("——《"+item.getSubtitle()+"》");
+                    holder.layout_move.setBackgroundResource(R.drawable.feeds_movie);
+                    holder.iv_image.setLayoutParams(holder.layoutParams);
                     break;
 
             }
@@ -74,6 +78,9 @@ public class OneArticleViewBinder extends ItemViewBinder<OneFlattenBean,OneArtic
         private ImageView iv_image;
         private TextView tv_forward;
         private TextView tv_date;
+        private TextView tv_subtitle;
+        private RelativeLayout layout_move;
+        private RelativeLayout.LayoutParams layoutParams;
         public ViewHolder(View itemView) {
             super(itemView);
             this.tv_mainTitle = itemView.findViewById(R.id.tv_mainTitle);
@@ -82,6 +89,10 @@ public class OneArticleViewBinder extends ItemViewBinder<OneFlattenBean,OneArtic
             this.iv_image = itemView.findViewById(R.id.iv_image);
             this.tv_forward = itemView.findViewById(R.id.tv_forward);
             this.tv_date = itemView.findViewById(R.id.tv_date);
+            this.tv_subtitle = itemView.findViewById(R.id.tv_subtitle);
+            this.layout_move = itemView.findViewById(R.id.layout_movie);
+            this.layoutParams = (RelativeLayout.LayoutParams)iv_image.getLayoutParams();
+            this.layoutParams.setMargins(0,50,0,50);
         }
     }
 }

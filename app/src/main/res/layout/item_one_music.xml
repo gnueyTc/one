@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_marginTop="5dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@color/colorWhite">
-    <include layout="@layout/item_one_top"/>
-    <RelativeLayout
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
-        android:id="@+id/layout_movie"
+
+    <FrameLayout
+        android:id="@+id/frame_music"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center">
-        <ImageView
-            android:contentDescription="@string/pause"
-            android:id="@+id/iv_image"
-            android:adjustViewBounds="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
+        android:layout_below="@+id/layout_line0"
+        android:layout_centerHorizontal="true">
 
+        <ImageView
+            android:id="@+id/iv_cover"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/iv_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/play" />
+    </FrameLayout>
     <TextView
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
@@ -33,16 +36,5 @@
         android:textSize="@dimen/one_text_midle_size"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/tv_subtitle"
-        android:visibility="gone"
-        android:layout_gravity="end"
-        android:text="《》"
-        android:textSize="@dimen/one_text_midle_size"
-        android:textColor="@color/colorGray"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <include layout="@layout/item_one_bottom"/>
+
 </LinearLayout>
