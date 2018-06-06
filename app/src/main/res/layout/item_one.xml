@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_marginTop="5dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@color/colorWhite">
     <include layout="@layout/item_one_top"/>
+    <include layout="@layout/item_one_music" android:visibility="gone"/>
     <RelativeLayout
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
-        android:id="@+id/layout_movie"
+        android:id="@+id/layout_default"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center">
@@ -23,8 +24,6 @@
     </RelativeLayout>
 
     <TextView
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:id="@+id/tv_forward"
         android:textColor="@color/colorGray"
         android:layout_marginTop="10dp"
@@ -40,8 +39,6 @@
         android:text="《》"
         android:textSize="@dimen/one_text_midle_size"
         android:textColor="@color/colorGray"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <include layout="@layout/item_one_bottom"/>

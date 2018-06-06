@@ -14,8 +14,6 @@
         android:layout_height="wrap_content" />
     <TextView
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:textSize="20dp"
         android:typeface="monospace"
         android:textColor="@color/colorBlack"
@@ -24,15 +22,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <RelativeLayout
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
             android:textColor="@color/colorGray"
             android:text="文/"
-            android:textSize="@dimen/one_text_mini_size"
+            android:textSize="@dimen/one_text_midle_size"
             android:id="@+id/tv_author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -40,7 +36,7 @@
             android:textColor="@color/colorGray"
             android:layout_toRightOf="@+id/tv_author"
             android:text="gnuey"
-            android:textSize="@dimen/one_text_mini_size"
+            android:textSize="@dimen/one_text_midle_size"
             android:id="@+id/tv_authorName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

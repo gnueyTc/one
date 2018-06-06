@@ -3,19 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@color/colorWhite">
+    android:background="@color/colorWhite"
+    android:id="@+id/layout_music">
 
     <FrameLayout
         android:id="@+id/frame_music"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/layout_line0"
-        android:layout_centerHorizontal="true">
+        android:layout_gravity="center">
 
         <ImageView
             android:id="@+id/iv_cover"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:scaleType="centerCrop" />
 
         <ImageView
@@ -23,18 +23,44 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/play" />
+            android:clickable="true"
+            android:src="@drawable/item_one_music_play_selector" />
     </FrameLayout>
-    <TextView
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:id="@+id/tv_forward"
-        android:textColor="@color/colorGray"
-        android:layout_marginTop="10dp"
-        android:lineSpacingExtra="5dp"
-        android:text="无论一个家多么容易破碎，还是需要一个家的，无论一份哎多么容易疲倦，还是一份爱的。"
-        android:textSize="@dimen/one_text_midle_size"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
+    <ImageView
+        android:id="@+id/iv_audio_platform_icom"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginBottom="8dp" />
+
+    <LinearLayout
+        android:id="@+id/layout_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/frame_music"
+        android:orientation="horizontal">
+
+        <View
+            style="@style/view_line"
+            android:layout_width="0dp"
+            android:layout_weight="1" />
+
+        <View
+            style="@style/view_line"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:visibility="invisible" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_music_name"
+            android:text="musice name"
+            android:textSize="@dimen/one_text_mini_size"
+            android:textColor="@color/colorGray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 </LinearLayout>
