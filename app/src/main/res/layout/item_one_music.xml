@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:clickable="true"
-            android:src="@drawable/item_one_music_play_selector" />
+            android:src="@drawable/play" />
     </FrameLayout>
 
     <ImageView

@@ -19,7 +19,6 @@ public class BottomNavigation extends RelativeLayout {
     private RadioButton mRadioButton1;
     private RadioButton mRadioButton2;
     private RadioButton mRadioButton3;
-    private RadioButton mRadioButton4;
     private RadioButton[] radioButtonsArrays;
 
     public BottomNavigation(Context context) {

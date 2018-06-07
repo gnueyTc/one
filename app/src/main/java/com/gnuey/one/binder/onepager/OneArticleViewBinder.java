@@ -26,6 +26,7 @@ import me.drakeet.multitype.ItemViewBinder;
  */
 public class OneArticleViewBinder extends ItemViewBinder<OneFlattenBean,OneArticleViewBinder.ViewHolder>{
     private static final String TAG = "OneArticleViewBinder";
+    private boolean isPlay = true;//是否点击播放
     @NonNull
     @Override
     protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
@@ -66,6 +67,7 @@ public class OneArticleViewBinder extends ItemViewBinder<OneFlattenBean,OneArtic
 
         }
         if(item.getContent_type().equals("4")){
+
             holder.layout_default.setVisibility(View.GONE);//默认布局
             holder.layout_music.setVisibility(View.VISIBLE);//music布局
             ImageLoader.displayImage(context,item.getImg_url(),holder.iv_cover);//加载圆形图片
@@ -74,7 +76,8 @@ public class OneArticleViewBinder extends ItemViewBinder<OneFlattenBean,OneArtic
             holder.iv_play.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ToastUtils.showSingleToast("play");
+                    holder.iv_play.setImageResource(isPlay?R.drawable.pause:R.drawable.play);
+                    isPlay = isPlay?false:true;
                 }
             });
         }else {

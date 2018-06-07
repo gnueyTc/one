@@ -118,7 +118,7 @@ public class CustomViewPager extends ViewPager {
      * 滑动状态改变回调
      */
     public interface PageStateChangeListener {
-                void onPageScrolled(int position, float positionOffset, int positionOffsetPixels);
+        void onPageScrolled(int position, float positionOffset, int positionOffsetPixels);
         void onPageSelected(int position);
         void onPageScrollStateChanged(int state);
         void onSlideDirection(int slideState);
