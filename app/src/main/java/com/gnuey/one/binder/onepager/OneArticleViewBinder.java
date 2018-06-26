@@ -3,7 +3,6 @@ package com.gnuey.one.binder.onepager;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,7 @@ import com.gnuey.one.bean.onepager.OneFlattenBean;
 import com.gnuey.one.utils.DateUtils;
 import com.gnuey.one.utils.EnumType;
 import com.gnuey.one.utils.ImageLoader;
-import com.gnuey.one.utils.ToastUtils;
+
 
 import me.drakeet.multitype.ItemViewBinder;
 
