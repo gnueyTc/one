@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.gnuey.one.R;
 import com.gnuey.one.bean.onepager.OneFlattenBean;
 import com.gnuey.one.utils.Constant;
-import com.gnuey.one.utils.EnumType;
 import com.gnuey.one.utils.ToastUtils;
 
 import me.drakeet.multitype.ItemViewBinder;

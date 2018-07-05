@@ -15,7 +15,6 @@ import com.gnuey.one.R;
 import com.gnuey.one.bean.onepager.OneFlattenBean;
 import com.gnuey.one.utils.Constant;
 import com.gnuey.one.utils.DateUtils;
-import com.gnuey.one.utils.EnumType;
 import com.gnuey.one.utils.ImageLoader;
 
 
@@ -66,7 +65,7 @@ public class OneArticleViewBinder extends ItemViewBinder<OneFlattenBean,OneArtic
             }
 
         }
-        if(item.getContent_type().equals("4")){
+        if(item.getContent_type().equals(Constant.TYPE_MUSIC)){
 
             holder.layout_default.setVisibility(View.GONE);//默认布局
             holder.layout_music.setVisibility(View.VISIBLE);//music布局
