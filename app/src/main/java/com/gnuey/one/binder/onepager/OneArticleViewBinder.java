@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.gnuey.one.R;
 import com.gnuey.one.bean.onepager.OneFlattenBean;
+import com.gnuey.one.utils.Constant;
 import com.gnuey.one.utils.DateUtils;
 import com.gnuey.one.utils.EnumType;
 import com.gnuey.one.utils.ImageLoader;
@@ -41,20 +42,20 @@ public class OneArticleViewBinder extends ItemViewBinder<OneFlattenBean,OneArtic
             holder.tv_mainTitle.setText("-"+title+"-");
         }else {
             switch (item.getContent_type()){
-                case "1":
-                    holder.tv_mainTitle.setText("-"+EnumType.READ.getValue()+"-");
+                case Constant.TYPE_READ:
+                    holder.tv_mainTitle.setText(R.string.read_);
                     break;
-                case "2":
-                    holder.tv_mainTitle.setText("-"+EnumType.SERIALIZE.getValue()+"-");
+                case Constant.TYPE_SERIALIZE:
+                    holder.tv_mainTitle.setText(R.string.serialize_);
                     break;
-                case "3":
-                    holder.tv_mainTitle.setText("-"+EnumType.QA.getValue()+"-");
+                case Constant.TYPE_QA:
+                    holder.tv_mainTitle.setText(R.string.qa_);
                     break;
-                case "4":
-                    holder.tv_mainTitle.setText("-"+EnumType.MUSIC.getValue()+"-");
+                case Constant.TYPE_MUSIC:
+                    holder.tv_mainTitle.setText(R.string.music_);
                     break;
-                case "5":
-                    holder.tv_mainTitle.setText("-"+EnumType.MOVIE.getValue()+"-");
+                case Constant.TYPE_MOVIE:
+                    holder.tv_mainTitle.setText(R.string.movie_);
                     holder.tv_subtitle.setVisibility(View.VISIBLE);
                     holder.tv_subtitle.setText("——《"+item.getSubtitle()+"》");
                     holder.layout_default.setBackgroundResource(R.drawable.feeds_movie);

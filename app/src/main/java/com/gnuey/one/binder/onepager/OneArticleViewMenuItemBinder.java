@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.gnuey.one.R;
 import com.gnuey.one.bean.onepager.OneFlattenBean;
+import com.gnuey.one.utils.Constant;
 import com.gnuey.one.utils.EnumType;
 import com.gnuey.one.utils.ToastUtils;
 
@@ -41,20 +42,20 @@ public class OneArticleViewMenuItemBinder extends ItemViewBinder<OneFlattenBean.
         }
         switch (item.getContent_type()){
 
-            case "1":
-                holder.tv_title.setText(EnumType.READ.getValue());
+            case Constant.TYPE_READ:
+                holder.tv_title.setText(R.string.read);
                 break;
-            case "2":
-                holder.tv_title.setText(EnumType.SERIALIZE.getValue());
+            case Constant.TYPE_SERIALIZE:
+                holder.tv_title.setText(R.string.serialize);
                 break;
-            case "3":
-                holder.tv_title.setText(EnumType.QA.getValue());
+            case Constant.TYPE_QA:
+                holder.tv_title.setText(R.string.qa);
                 break;
-            case "4":
-                holder.tv_title.setText(EnumType.MUSIC.getValue());
+            case Constant.TYPE_MUSIC:
+                holder.tv_title.setText(R.string.music);
                 break;
-            case "5":
-                holder.tv_title.setText(EnumType.MOVIE.getValue());
+            case Constant.TYPE_MOVIE:
+                holder.tv_title.setText(R.string.movie);
                 break;
 
         }
