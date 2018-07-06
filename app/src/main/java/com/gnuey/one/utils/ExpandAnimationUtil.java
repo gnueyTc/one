@@ -17,6 +17,8 @@ public class ExpandAnimationUtil {
     private View mTagerView;
     private View mSwitcher;
     private float mDensity;
+    private ValueAnimator expandAnimator;
+    private ValueAnimator closeAnimator;
     public static ExpandAnimationUtil getIntance(Context context,View tagerView,View switcher){
         return new ExpandAnimationUtil(context,tagerView,switcher);
     }
@@ -33,49 +35,53 @@ public class ExpandAnimationUtil {
     }
     /**
      *
-     * @param up 旋转动画
-     * @param down 旋转动画
+     * @param up 向上旋转动画
+     * @param down 向下旋转动画
      * @param height 需要展开的高度
      */
     public void taggle(Animation up,Animation down,int height){
         mHeight = (int) (mDensity*height+0.5);
         if (mTagerView.getVisibility()== View.VISIBLE){
-            switchAnimation(up);
+            switchRotariesAnimation(up);
             closeView(mTagerView);
         }else {
-            switchAnimation(down);
+            switchRotariesAnimation(down);
             expandView(mTagerView);
         }
     }
-    private void switchAnimation(Animation animation){
+    /**
+     * 开始动画
+     * @param animation 需要操作的动画
+    */
+    private void switchRotariesAnimation(Animation animation){
         mSwitcher.startAnimation(animation);
     }
     private void expandView(View view){
         view.setVisibility(View.VISIBLE);
-        ValueAnimator animator = creatAnimation(view,0,mHeight);
-        animator.start();
+        if(expandAnimator==null){
+            expandAnimator = creatAnimation(view,0,mHeight);//mHeight 需要展开的高度
+        }
+        expandAnimator.start();
     }
     private void closeView(View view){
-        int origHeight = view.getHeight();
-        ValueAnimator animator = creatAnimation(view,origHeight,0);
-        animator.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                view.setVisibility(View.GONE);
-            }
-        });
-        animator.start();
+        if(closeAnimator==null){
+            closeAnimator = creatAnimation(view,mHeight,0);
+            closeAnimator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    view.setVisibility(View.GONE);
+                }
+            });
+        }
+        closeAnimator.start();
     }
     private ValueAnimator creatAnimation(View view,int start,int end){
         ValueAnimator animator = ValueAnimator.ofInt(start,end);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                int value = (int) animation.getAnimatedValue();
-                ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-                layoutParams.height = value;
-                view.setLayoutParams(layoutParams);
-            }
+        animator.addUpdateListener(animation -> {
+            int value = (int) animation.getAnimatedValue();
+            ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+            layoutParams.height = value;
+            view.setLayoutParams(layoutParams);
         });
         return animator;
     }

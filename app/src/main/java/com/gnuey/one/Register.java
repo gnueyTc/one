@@ -23,19 +23,15 @@ public class Register {
                 .to(new OneArticleViewHeadBinder(),
                         new OneArticleViewBinder(),
                         new OneArticleViewMenuBinder())
-                .withClassLinker(new ClassLinker<OneFlattenBean>() {
-                    @NonNull
-                    @Override
-                    public Class<? extends ItemViewBinder<OneFlattenBean, ?>> index(int position, @NonNull OneFlattenBean oneFlattenBean) {
-                        if(oneFlattenBean.getContent_type().equals("0")){
-                            return OneArticleViewHeadBinder.class;
-                        }else if(oneFlattenBean.getContent_type().equals("-1")){
-                            return OneArticleViewMenuBinder.class;
-                        }else{
-                            return OneArticleViewBinder.class;
-                        }
-
+                .withClassLinker((position, oneFlattenBean) -> {
+                    if(oneFlattenBean.getContent_type().equals("0")){
+                        return OneArticleViewHeadBinder.class;
+                    }else if(oneFlattenBean.getContent_type().equals("-1")){
+                        return OneArticleViewMenuBinder.class;
+                    }else{
+                        return OneArticleViewBinder.class;
                     }
+
                 });
 
     }

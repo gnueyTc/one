@@ -42,16 +42,6 @@ public class IdListPresenter implements IdListContract.Presenter{
                 .getIdList(channel,version)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<IdListBean>() {
-                    @Override
-                    public void accept(IdListBean idListBean) throws Exception {
-                        mView.doSetData(idListBean);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        Log.e(TAG, "accept: throwable = "+throwable );
-                    }
-                });
+                .subscribe(idListBean -> mView.doSetData(idListBean), throwable -> Log.e(TAG, "accept: throwable = "+throwable ));
     }
 }

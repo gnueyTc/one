@@ -53,12 +53,7 @@ public abstract class BaseListFragment extends LazyLoadFragment implements IBase
 
     @Override
     public void onShowLoading() {
-        twinklingRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                twinklingRefreshLayout.startRefresh();
-            }
-        });
+        twinklingRefreshLayout.post(() -> twinklingRefreshLayout.startRefresh());
     }
 
 
@@ -70,12 +65,7 @@ public abstract class BaseListFragment extends LazyLoadFragment implements IBase
     }
     @Override
     public void onHideLoading() {
-        twinklingRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                twinklingRefreshLayout.finishRefreshing();
-            }
-        });
+        twinklingRefreshLayout.post(() -> twinklingRefreshLayout.finishRefreshing());
     }
 
 
@@ -86,18 +76,15 @@ public abstract class BaseListFragment extends LazyLoadFragment implements IBase
 
     @Override
     public void onShowNoMore() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (oldItems.size() > 0) {
-                    Items newItems = new Items(oldItems);
-                    newItems.remove(newItems.size() - 1);
-                    adapter.setItems(newItems);
-                    adapter.notifyDataSetChanged();
-                } else if (oldItems.size() == 0) {
-                    adapter.setItems(oldItems);
-                    adapter.notifyDataSetChanged();
-                }
+        getActivity().runOnUiThread(() -> {
+            if (oldItems.size() > 0) {
+                Items newItems = new Items(oldItems);
+                newItems.remove(newItems.size() - 1);
+                adapter.setItems(newItems);
+                adapter.notifyDataSetChanged();
+            } else if (oldItems.size() == 0) {
+                adapter.setItems(oldItems);
+                adapter.notifyDataSetChanged();
             }
         });
     }

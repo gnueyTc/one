@@ -36,23 +36,17 @@ public class OneArticlePresenter extends RxPresenter<OneArticleContract.View> im
         retrofitFactory.getRetrofitFactory().create(OnePagerApi.class).getOneList(code)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<OneListBean>() {
-                    @Override
-                    public void accept(OneListBean oneListBean) throws Exception {
-                        if(oneListBean.getData().getContent_list()!=null&&oneListBean.getData().getContent_list().size()>0){
-                            OneArticlePresenter.this.doSetAdapter(FlattenDataUtils.FlattenOneListBeanList(oneListBean));
+                .subscribe(oneListBean -> {
+                    if(oneListBean.getData().getContent_list()!=null&&oneListBean.getData().getContent_list().size()>0){
+                        OneArticlePresenter.this.doSetAdapter(FlattenDataUtils.FlattenOneListBeanList(oneListBean));
 //                            OneArticlePresenter.this.doSetAdapter(oneListBean.getData().getContent_list());
-                        }else {
-                            OneArticlePresenter.this.doShowNoMore();
-                        }
+                    }else {
+                        OneArticlePresenter.this.doShowNoMore();
+                    }
 
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        OneArticlePresenter.this.doShowNetError();
-                        Log.e(TAG, "accept: throwable = "+throwable );
-                    }
+                }, throwable -> {
+                    OneArticlePresenter.this.doShowNetError();
+                    Log.e(TAG, "accept: throwable = "+throwable );
                 });
     }
 
