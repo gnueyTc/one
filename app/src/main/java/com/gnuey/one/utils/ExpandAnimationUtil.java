@@ -78,9 +78,8 @@ public class ExpandAnimationUtil {
     private ValueAnimator creatAnimation(View view,int start,int end){
         ValueAnimator animator = ValueAnimator.ofInt(start,end);
         animator.addUpdateListener(animation -> {
-            int value = (int) animation.getAnimatedValue();
             ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-            layoutParams.height = value;
+            layoutParams.height = (int) animation.getAnimatedValue();
             view.setLayoutParams(layoutParams);
         });
         return animator;
