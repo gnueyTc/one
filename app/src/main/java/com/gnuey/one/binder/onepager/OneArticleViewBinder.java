@@ -34,7 +34,7 @@ public class OneArticleViewBinder extends ItemViewBinder<OneFlattenBean,OneArtic
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull OneFlattenBean item) {
+    protected void onBindViewHolder(@NonNull final ViewHolder holder, @NonNull OneFlattenBean item) {
         final Context context = holder.itemView.getContext();
         String title = item.getTag_list().size()==0?"":item.getTag_list().get(0).getTitle();
         if(!title.equals("")){
@@ -72,9 +72,12 @@ public class OneArticleViewBinder extends ItemViewBinder<OneFlattenBean,OneArtic
             ImageLoader.displayImage(context,item.getImg_url(),holder.iv_cover);//加载圆形图片
             ImageLoader.displayImage(context,item.getAudio_platform_icon(),holder.iv_platform_icom);//左下角icon
             holder.tv_music_name.setText(item.getMusic_name()+" · "+item.getAudio_author()+" | "+item.getAudio_album());
-            holder.iv_play.setOnClickListener(v -> {
-                holder.iv_play.setImageResource(isPlay?R.drawable.pause:R.drawable.play);
-                isPlay = isPlay?false:true;
+            holder.iv_play.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    holder.iv_play.setImageResource(isPlay ? R.drawable.pause : R.drawable.play);
+                    isPlay = isPlay ? false : true;
+                }
             });
         }else {
             ImageLoader.displayImage(context,item.getImg_url(),holder.iv_image,R.drawable.default_diary_pic);

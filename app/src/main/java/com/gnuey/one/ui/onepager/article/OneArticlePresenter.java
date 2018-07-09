@@ -20,20 +20,21 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import me.drakeet.multitype.Items;
+import retrofit2.Retrofit;
 
 public class OneArticlePresenter extends RxPresenter<OneArticleContract.View> implements OneArticleContract.Presenter{
     private static final String TAG = "OneArticlePresenter";
-    private RetrofitFactory retrofitFactory;
+    private Retrofit retrofit;
     private List<OneFlattenBean> dataList = new ArrayList<>();
     @Inject
-    public OneArticlePresenter(RetrofitFactory retrofitFactory){
-        this.retrofitFactory = retrofitFactory;
+    public OneArticlePresenter(Retrofit retrofit){
+        this.retrofit = retrofit;
     }
 
     @SuppressLint("CheckResult")
     @Override
     public void doLoadData(int code) {
-        retrofitFactory.getRetrofitFactory().create(OnePagerApi.class).getOneList(code)
+        retrofit.create(OnePagerApi.class).getOneList(code)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(oneListBean -> {

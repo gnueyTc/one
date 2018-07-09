@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdkVersion 27
     defaultConfig {
         applicationId "com.gnuey.one"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -20,52 +20,46 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildToolsVersion '27.0.3'
+    dexOptions {
+    }
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
-    implementation "com.android.support:design:$rootProject.supportLibraryVersion"
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    api "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    api "com.android.support:design:$rootProject.supportLibraryVersion"
     //
-    implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
+    api "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     //    butterknife
-    implementation 'com.jakewharton:butterknife:8.8.1'
+    api 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-
     //
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-
+    api 'com.android.support.constraint:constraint-layout:1.1.0'
     //    TwinklingRefreshLayout
-    implementation 'com.lcodecorex:tkrefreshlayout:1.0.7'
-
+    api 'com.lcodecorex:tkrefreshlayout:1.0.7'
     //    RxJava 2
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.14'
-
+    api 'io.reactivex.rxjava2:rxjava:2.1.16'
     //    AutoDispose
-    implementation 'com.uber.autodispose:autodispose:0.7.0'
-    implementation 'com.uber.autodispose:autodispose-android:0.7.0'
-    implementation 'com.uber.autodispose:autodispose-android-archcomponents:0.7.0'
-
+    api 'com.uber.autodispose:autodispose:0.7.0'
+    api 'com.uber.autodispose:autodispose-android:0.7.0'
+    api 'com.uber.autodispose:autodispose-android-archcomponents:0.7.0'
     //    MultitypeAdapter
-    implementation 'me.drakeet.multitype:multitype:3.4.4'
-
+    api 'me.drakeet.multitype:multitype:3.4.4'
     //    retrofit2
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
-    implementation 'com.squareup.retrofit2:converter-scalars:2.4.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
-
+    api 'com.squareup.retrofit2:retrofit:2.4.0'
+    api 'com.squareup.retrofit2:converter-gson:2.4.0'
+    api 'com.squareup.retrofit2:converter-scalars:2.4.0'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
     //    dagger2
-    implementation 'com.google.dagger:dagger:2.16'
+    api 'com.google.dagger:dagger:2.16'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.16'
-
     // 持久化 Cookie
-//    implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
-
+    //    implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
     // 图片加载
-    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    api 'com.github.bumptech.glide:glide:4.7.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
 }
