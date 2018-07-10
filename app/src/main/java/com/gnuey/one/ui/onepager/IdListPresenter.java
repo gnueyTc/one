@@ -3,15 +3,11 @@ package com.gnuey.one.ui.onepager;
 import android.util.Log;
 
 import com.gnuey.one.api.OnePagerApi;
-import com.gnuey.one.api.RetrofitFactory;
-import com.gnuey.one.bean.IdListBean;
-import com.gnuey.one.ui.base.RxPresenter;
 
 import javax.inject.Inject;
 
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 

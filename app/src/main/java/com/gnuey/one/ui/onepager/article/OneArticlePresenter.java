@@ -4,9 +4,7 @@ import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.gnuey.one.api.OnePagerApi;
-import com.gnuey.one.api.RetrofitFactory;
 import com.gnuey.one.bean.onepager.OneFlattenBean;
-import com.gnuey.one.bean.onepager.OneListBean;
 import com.gnuey.one.ui.base.RxPresenter;
 import com.gnuey.one.utils.FlattenDataUtils;
 
@@ -15,11 +13,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import me.drakeet.multitype.Items;
 import retrofit2.Retrofit;
 
 public class OneArticlePresenter extends RxPresenter<OneArticleContract.View> implements OneArticleContract.Presenter{

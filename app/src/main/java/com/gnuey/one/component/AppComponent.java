@@ -2,7 +2,6 @@ package com.gnuey.one.component;
 
 import android.content.Context;
 
-import com.gnuey.one.api.RetrofitFactory;
 import com.gnuey.one.module.ApiModule;
 import com.gnuey.one.module.AppModule;
 
@@ -19,5 +18,5 @@ import retrofit2.Retrofit;
 @Component(modules ={AppModule.class, ApiModule.class})
 public interface AppComponent {
     Context getContext();
-    Retrofit geRetrofit();
+    Retrofit getRetrofit();
 }
