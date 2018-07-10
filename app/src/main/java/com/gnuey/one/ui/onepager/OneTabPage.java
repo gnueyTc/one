@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.gnuey.one.adapter.BasePagerAdapter;
 import com.gnuey.one.bean.IdListBean;
 import com.gnuey.one.component.AppComponent;
 import com.gnuey.one.component.DaggerFragmentComponent;
+import com.gnuey.one.ui.base.BaseFragment;
 import com.gnuey.one.ui.onepager.article.OneArticleView;
 
 import java.util.ArrayList;
@@ -23,34 +25,34 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 
-public class OneTabPage extends Fragment implements IdListContract.View,ViewPager.OnPageChangeListener {
+
+public class OneTabPage extends BaseFragment implements IdListContract.View,ViewPager.OnPageChangeListener {
     public static final String TAG = "OneTab";
 
     @Inject
     IdListPresenter mPresenter;
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.view_pager)
+    ViewPager viewPager;
+
     private BasePagerAdapter adapter;
-    private ViewPager viewPager;
     private List<Fragment> fragmentList;
-    private List<String> idList;
     private int viewPageSelectedPosition;
+    private List<String> idList;
+    private OneArticleView oneArticleView;
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(attachLayoutId(), container, false);
-        initView(view);
-        initData();
-        return view;
-    }
-
-
     protected int attachLayoutId() {
-        return R.layout.item_viewpager;
+        return R.layout.item_one_tab;
     }
 
-
+    @Override
     protected void setAppComponent(AppComponent appComponent) {
         DaggerFragmentComponent.builder()
                 .appComponent(appComponent)
@@ -58,28 +60,17 @@ public class OneTabPage extends Fragment implements IdListContract.View,ViewPage
                 .inject(this);
     }
 
-
+    @Override
     protected void initView(View view) {
         setAppComponent(InitApp.getApplication().getAppComponent());
-        viewPager = view.findViewById(R.id.view_pager);
+        initToolBar(toolbar,"One");
         viewPager.addOnPageChangeListener(this);
         viewPager.setOffscreenPageLimit(5);
         mPresenter.attachView(this);
     }
-
+    @Override
     protected void initData() throws NullPointerException {
         mPresenter.getIdList("wdj", "4.0.2");
-    }
-
-    private OneArticleView oneArticleView;
-
-    private void initChildView() {
-        fragmentList = new ArrayList<>();
-        for(int i = 0;i<2;i++){
-            oneArticleView = OneArticleView.setArguments(idList.get(i));
-            fragmentList.add(oneArticleView);
-        }
-
     }
 
     @Override
@@ -88,10 +79,19 @@ public class OneTabPage extends Fragment implements IdListContract.View,ViewPage
             return;
         }
         idList = data.getData();
-        initChildView();
+        initChildView(idList);
         adapter = new BasePagerAdapter(getFragmentManager(), fragmentList);
         viewPager.setAdapter(adapter);
         Log.e(TAG, "showList: " + idList.get(viewPageSelectedPosition));
+    }
+
+    private void initChildView(List<String> idList) {
+        fragmentList = new ArrayList<>();
+        for(int i = 0;i<2;i++){
+            oneArticleView = OneArticleView.setArguments(idList.get(i));
+            fragmentList.add(oneArticleView);
+        }
+
     }
 
     @Override
@@ -119,6 +119,26 @@ public class OneTabPage extends Fragment implements IdListContract.View,ViewPage
 
     @Override
     public void onPageScrollStateChanged(int state) {
+
+    }
+
+    @Override
+    public void onShowLoading() {
+
+    }
+
+    @Override
+    public void onHideLoading() {
+
+    }
+
+    @Override
+    public void onShowNetError() {
+
+    }
+
+    @Override
+    public void onShowNoMore() {
 
     }
 }

@@ -18,6 +18,8 @@ import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.AutoDisposeConverter;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
+import butterknife.ButterKnife;
+
 public abstract class BaseFragment extends Fragment implements IBaseView {
 
 
@@ -62,6 +64,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(attachLayoutId(),container,false);
         setAppComponent(InitApp.getApplication().getAppComponent());
+        ButterKnife.bind(this,view);
         initView(view);
         initData();
         return view;
