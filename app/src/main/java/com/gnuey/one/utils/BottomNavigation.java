@@ -52,24 +52,29 @@ public class BottomNavigation extends RelativeLayout {
             @Override
             public void onClick(View v) {
                 mSelectionListener.onValueSelected(0);
+                setBottomNavigationClick(0);
             }
         });
         mRadioButton2.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 mSelectionListener.onValueSelected(1);
+                setBottomNavigationClick(1);
             }
         });
         mRadioButton3.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 mSelectionListener.onValueSelected(2);
+                setBottomNavigationClick(2);
             }
         });
 
     }
-    public void setBottomNavigationSelectedListener(OnBottomNavigationSelectedListener l) {
-        this.mSelectionListener = l;
+    public void setBottomNavigationSelectedListener(OnBottomNavigationSelectedListener listener) {
+        this.mSelectionListener = listener;
+        this.mSelectionListener.onValueSelected(0);
+        setBottomNavigationClick(0);
     }
 
     public void setBottomNavigationClick(int index) {

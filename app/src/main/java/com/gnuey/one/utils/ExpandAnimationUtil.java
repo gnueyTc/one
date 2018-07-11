@@ -82,6 +82,7 @@ public class ExpandAnimationUtil {
             layoutParams.height = (int) animation.getAnimatedValue();
             view.setLayoutParams(layoutParams);
         });
+        animator.setDuration(150);
         return animator;
     }
 }

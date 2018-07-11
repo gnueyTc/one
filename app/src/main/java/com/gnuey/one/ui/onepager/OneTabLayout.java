@@ -1,16 +1,10 @@
 package com.gnuey.one.ui.onepager;
 
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-
 import com.gnuey.one.InitApp;
 import com.gnuey.one.R;
 import com.gnuey.one.adapter.BasePagerAdapter;
@@ -28,7 +22,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 
 
-public class OneTabPage extends BaseFragment implements IdListContract.View,ViewPager.OnPageChangeListener {
+public class OneTabLayout extends BaseFragment implements IdListContract.View,ViewPager.OnPageChangeListener {
     public static final String TAG = "OneTab";
 
     @Inject
@@ -63,7 +57,7 @@ public class OneTabPage extends BaseFragment implements IdListContract.View,View
     @Override
     protected void initView(View view) {
         setAppComponent(InitApp.getApplication().getAppComponent());
-        initToolBar(toolbar,"One");
+        initToolBar(toolbar,"");
         viewPager.addOnPageChangeListener(this);
         viewPager.setOffscreenPageLimit(5);
         mPresenter.attachView(this);
@@ -91,7 +85,6 @@ public class OneTabPage extends BaseFragment implements IdListContract.View,View
             oneArticleView = OneArticleView.setArguments(idList.get(i));
             fragmentList.add(oneArticleView);
         }
-
     }
 
     @Override
@@ -109,7 +102,7 @@ public class OneTabPage extends BaseFragment implements IdListContract.View,View
     @Override
     public void onPageSelected(int position) {
         viewPageSelectedPosition = position;
-        if(position==fragmentList.size()-1&&position!=idList.size()-1){
+        if(position == fragmentList.size()-1 && position != idList.size()-1){
             oneArticleView = OneArticleView.setArguments(idList.get(position+1));
             fragmentList.add(oneArticleView);
             adapter.notifyDataSetChanged();
