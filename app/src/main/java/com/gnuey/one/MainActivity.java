@@ -10,12 +10,12 @@ import com.gnuey.one.ui.allpager.AllTabLayout;
 import com.gnuey.one.ui.base.BaseActivity;
 import com.gnuey.one.ui.mepager.MeTabLayout;
 import com.gnuey.one.ui.onepager.OneTabLayout;
-import com.gnuey.one.utils.BottomNavigation;
-import com.gnuey.one.utils.OnBottomNavigationSelectedListener;
+import com.gnuey.one.widget.BottomNavigation;
+import com.gnuey.one.widget.OnBottomNavigationSelectedListener;
 
 import butterknife.BindView;
 
-public class MainActivity extends BaseActivity implements OnBottomNavigationSelectedListener{
+public class MainActivity extends BaseActivity implements OnBottomNavigationSelectedListener {
 
     @BindView(R.id.bottom_navigation)
     BottomNavigation bottomNavigation;

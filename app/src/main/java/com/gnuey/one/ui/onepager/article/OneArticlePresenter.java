@@ -29,21 +29,21 @@ public class OneArticlePresenter extends RxPresenter<OneArticleContract.View> im
     @SuppressLint("CheckResult")
     @Override
     public void doLoadData(int code) {
-        retrofit.create(OnePagerApi.class).getOneList(code)
+        addSubscribe(retrofit.create(OnePagerApi.class).getOneList(code)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(oneListBean -> {
-                    if(oneListBean.getData().getContent_list()!=null&&oneListBean.getData().getContent_list().size()>0){
+                    if (oneListBean.getData().getContent_list() != null && oneListBean.getData().getContent_list().size() > 0) {
                         OneArticlePresenter.this.doSetAdapter(FlattenDataUtils.FlattenOneListBeanList(oneListBean));
 //                            OneArticlePresenter.this.doSetAdapter(oneListBean.getData().getContent_list());
-                    }else {
+                    } else {
                         OneArticlePresenter.this.doShowNoMore();
                     }
 
                 }, throwable -> {
                     OneArticlePresenter.this.doShowNetError();
                     Log.e(TAG, "accept: throwable = "+throwable );
-                });
+                }));
     }
 
     @Override

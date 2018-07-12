@@ -14,21 +14,19 @@ import android.view.animation.Animation;
 public class ExpandAnimationUtil {
 
     private int mHeight;
-    private View mTagerView;
     private View mSwitcher;
     private float mDensity;
     private ValueAnimator expandAnimator;
     private ValueAnimator closeAnimator;
-    public static ExpandAnimationUtil getIntance(Context context,View tagerView,View switcher){
-        return new ExpandAnimationUtil(context,tagerView,switcher);
+    private boolean click = false;
+    public static ExpandAnimationUtil getIntance(Context context,View switcher){
+        return new ExpandAnimationUtil(context,switcher);
     }
     /**
      * @param context 上下文
-     * @param tagerView 目标控件
-     * @param switcher 开关控件
+     * @param switcher 指示器
      */
-    public ExpandAnimationUtil(Context context,View tagerView,View switcher){
-        this.mTagerView = tagerView;
+    public ExpandAnimationUtil(Context context,View switcher){
         this.mSwitcher = switcher;
         mDensity = context.getResources().getDisplayMetrics().density;
 
@@ -39,16 +37,27 @@ public class ExpandAnimationUtil {
      * @param down 向下旋转动画
      * @param height 需要展开的高度
      */
-    public void taggle(Animation up,Animation down,int height){
+    public void taggle(Animation up,Animation down,View tagerView,int height){
         mHeight = (int) (mDensity*height+0.5);
-        if (mTagerView.getVisibility()== View.VISIBLE){
+        if (tagerView.getVisibility()== View.VISIBLE){
             switchRotariesAnimation(up);
-            closeView(mTagerView);
+            closeView(tagerView);
         }else {
             switchRotariesAnimation(down);
-            expandView(mTagerView);
+            expandView(tagerView);
         }
     }
+
+    /**
+     *
+     * @param up 向上旋转动画
+     * @param down 向下旋转动画
+    */
+    public void rotation(Animation up,Animation down){
+            switchRotariesAnimation(click?up:down);
+            click = click?false:true;
+    }
+
     /**
      * 开始动画
      * @param animation 需要操作的动画

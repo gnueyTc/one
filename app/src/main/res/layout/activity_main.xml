@@ -8,7 +8,7 @@
 
   <include layout="@layout/container"/>
 
-    <com.gnuey.one.utils.BottomNavigation
+    <com.gnuey.one.widget.BottomNavigation
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="50dp"

@@ -85,5 +85,6 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
     @Override
     public void onDestroy() {
         super.onDestroy();
+        mPresenter.detachView();
     }
 }

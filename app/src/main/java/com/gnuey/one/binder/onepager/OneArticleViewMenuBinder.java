@@ -10,8 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -44,7 +42,10 @@ public class OneArticleViewMenuBinder extends ItemViewBinder<OneFlattenBean,OneA
                 @Override
                 public void onClick(View v) {
                     //第三个参数height为recyclerView的每个item预留80的高度
-                    holder.expandAnimationUtil.taggle(holder.animationUp,holder.animationDown,item.getMenu().getList().size()*80);
+                    holder.expandAnimationUtil.taggle(holder.animationUp
+                            ,holder.animationDown
+                            ,holder.recyclerView
+                            ,item.getMenu().getList().size()*80);
                 }
             });
     }
@@ -68,9 +69,9 @@ public class OneArticleViewMenuBinder extends ItemViewBinder<OneFlattenBean,OneA
             Register.registerOneArticleMenuItem(adapter);
             this.recyclerView.setAdapter(adapter);
 
-            this.animationDown = AnimationUtils.loadAnimation(itemView.getContext(),R.anim.anim_arrow_rotation_began);
-            this.animationUp = AnimationUtils.loadAnimation(itemView.getContext(),R.anim.anim_arrow_rotation_end);
-            this.expandAnimationUtil = ExpandAnimationUtil.getIntance(itemView.getContext(),recyclerView,this.img_arrow);
+            this.animationDown = AnimationUtils.loadAnimation(itemView.getContext(),R.anim.anim_arrow_rotation_down);
+            this.animationUp = AnimationUtils.loadAnimation(itemView.getContext(),R.anim.anim_arrow_rotation_up);
+            this.expandAnimationUtil = ExpandAnimationUtil.getIntance(itemView.getContext(),this.img_arrow);
             Log.e(TAG, "ViewHolder: Not bind ryViewHeight = "+adapter.getItemCount() );
             this.tv_title.setOnTouchListener(new View.OnTouchListener() {
                 @Override

@@ -28,8 +28,8 @@ public class OneTabLayout extends BaseFragment implements IdListContract.View,Vi
     @Inject
     IdListPresenter mPresenter;
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+//    @BindView(R.id.toolbar)
+//    Toolbar toolbar;
 
     @BindView(R.id.view_pager)
     ViewPager viewPager;
@@ -57,7 +57,7 @@ public class OneTabLayout extends BaseFragment implements IdListContract.View,Vi
     @Override
     protected void initView(View view) {
         setAppComponent(InitApp.getApplication().getAppComponent());
-        initToolBar(toolbar,"");
+//        initToolBar(toolbar,"");
         viewPager.addOnPageChangeListener(this);
         viewPager.setOffscreenPageLimit(5);
         mPresenter.attachView(this);
@@ -90,7 +90,7 @@ public class OneTabLayout extends BaseFragment implements IdListContract.View,Vi
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mPresenter.dettachview();
+        mPresenter.detachView();
     }
 
 

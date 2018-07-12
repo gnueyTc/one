@@ -1,4 +1,4 @@
-package com.gnuey.one.utils;
+package com.gnuey.one.widget;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -38,9 +38,9 @@ public class BottomNavigation extends RelativeLayout {
 
     private void initView(Context context) {
         View view = View.inflate(context, R.layout.bottom_navigation, this);
-        mRadioButton1 = (RadioButton) view.findViewById(R.id.rb1);
-        mRadioButton2 = (RadioButton) view.findViewById(R.id.rb2);
-        mRadioButton3 = (RadioButton) view.findViewById(R.id.rb3);
+        mRadioButton1 =  view.findViewById(R.id.rb1);
+        mRadioButton2 =  view.findViewById(R.id.rb2);
+        mRadioButton3 =  view.findViewById(R.id.rb3);
 
         radioButtonsArrays = new RadioButton[]{
                 mRadioButton1,
@@ -48,26 +48,17 @@ public class BottomNavigation extends RelativeLayout {
                 mRadioButton3,
 
         };
-        mRadioButton1.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSelectionListener.onValueSelected(0);
-                setBottomNavigationClick(0);
-            }
+        mRadioButton1.setOnClickListener(v -> {
+            mSelectionListener.onValueSelected(0);
+            setBottomNavigationClick(0);
         });
-        mRadioButton2.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSelectionListener.onValueSelected(1);
-                setBottomNavigationClick(1);
-            }
+        mRadioButton2.setOnClickListener(v -> {
+            mSelectionListener.onValueSelected(1);
+            setBottomNavigationClick(1);
         });
-        mRadioButton3.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSelectionListener.onValueSelected(2);
-                setBottomNavigationClick(2);
-            }
+        mRadioButton3.setOnClickListener(v -> {
+            mSelectionListener.onValueSelected(2);
+            setBottomNavigationClick(2);
         });
 
     }
