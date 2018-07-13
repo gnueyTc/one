@@ -9,6 +9,7 @@
     tools:context="com.gnuey.one.MainActivity">
 
     <com.gnuey.one.widget.OneTabToolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_size">
 

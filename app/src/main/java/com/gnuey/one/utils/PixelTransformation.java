@@ -6,7 +6,7 @@ import android.util.TypedValue;
 /**
  * Created by gnueyTc on 2018/7/12.
  */
-public class PixelTransformer {
+public class PixelTransformation {
     public static int dpToPx(Context context,int dpValue){
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dpValue,context.getResources().getDisplayMetrics());
     }

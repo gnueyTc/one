@@ -23,7 +23,7 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
     @Inject
     OneArticlePresenter mPresenter;
 
-    public static final String TAG = "OneArticleView";
+    public static final String TAG = OneArticleView.class.getSimpleName();
     private int code;
     public static OneArticleView setArguments(String code) {
         Bundle bundle = new Bundle();

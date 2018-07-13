@@ -1,8 +1,12 @@
 package com.gnuey.one.utils;
 
+import android.util.Log;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by gnueyTc on 2018/5/30.
@@ -42,5 +46,13 @@ public class DateUtils {
             e.printStackTrace();
         }
         return todayDate.equals(ortherDate)?"今日":ortherDate;
+    }
+
+    public static String getDate(int count){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMM.yyyy", Locale.US);
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH,count);
+        Log.e("DateUtils", "getDate: "+sdf.format(calendar.getTime()));
+        return sdf.format(calendar.getTime());
     }
 }

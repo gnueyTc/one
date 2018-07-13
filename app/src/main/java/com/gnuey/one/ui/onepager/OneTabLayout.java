@@ -13,6 +13,8 @@ import com.gnuey.one.component.AppComponent;
 import com.gnuey.one.component.DaggerFragmentComponent;
 import com.gnuey.one.ui.base.BaseFragment;
 import com.gnuey.one.ui.onepager.article.OneArticleView;
+import com.gnuey.one.utils.DateUtils;
+import com.gnuey.one.widget.OneTabToolbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +25,13 @@ import butterknife.BindView;
 
 
 public class OneTabLayout extends BaseFragment implements IdListContract.View,ViewPager.OnPageChangeListener {
-    public static final String TAG = "OneTab";
+    public static final String TAG = OneTabLayout.class.getSimpleName();
 
     @Inject
     IdListPresenter mPresenter;
 
-//    @BindView(R.id.toolbar)
-//    Toolbar toolbar;
+    @BindView(R.id.toolbar)
+    OneTabToolbar toolbar;
 
     @BindView(R.id.view_pager)
     ViewPager viewPager;
@@ -57,7 +59,8 @@ public class OneTabLayout extends BaseFragment implements IdListContract.View,Vi
     @Override
     protected void initView(View view) {
         setAppComponent(InitApp.getApplication().getAppComponent());
-//        initToolBar(toolbar,"");
+        initToolBar(toolbar,"");
+        toolbar.setDate(DateUtils.getDate(0));
         viewPager.addOnPageChangeListener(this);
         viewPager.setOffscreenPageLimit(5);
         mPresenter.attachView(this);
@@ -101,6 +104,7 @@ public class OneTabLayout extends BaseFragment implements IdListContract.View,Vi
 
     @Override
     public void onPageSelected(int position) {
+        toolbar.setDate(DateUtils.getDate(0-position));
         viewPageSelectedPosition = position;
         if(position == fragmentList.size()-1 && position != idList.size()-1){
             oneArticleView = OneArticleView.setArguments(idList.get(position+1));

@@ -29,12 +29,7 @@ public class OneArticleViewMenuItemBinder extends ItemViewBinder<OneFlattenBean.
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull OneFlattenBean.MenuBean.ListBean item) {
         holder.tv_subhead.setText(item.getTitle());
-        holder.ly_menu_item.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtils.showSingleToast("item");
-            }
-        });
+        holder.ly_menu_item.setOnClickListener(v -> ToastUtils.showSingleToast("item"));
         if(item.getTag()!=null){
             holder.tv_title.setText(item.getTag().getTitle());
             return;

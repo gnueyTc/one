@@ -36,31 +36,27 @@ public class OneArticleViewMenuBinder extends ItemViewBinder<OneFlattenBean,OneA
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull OneFlattenBean item) {
+
             holder.tv_title.setText("一个VOL."+item.getMenu().getVol());
             holder.adapter.setItems(item.getMenu().getList());
-            holder.ly_menu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //第三个参数height为recyclerView的每个item预留80的高度
-                    holder.expandAnimationUtil.taggle(holder.animationUp
-                            ,holder.animationDown
-                            ,holder.recyclerView
-                            ,item.getMenu().getList().size()*80);
-                }
+            holder.itemView.setOnClickListener(v -> {
+                //第三个参数height为recyclerView的每个item预留80的高度
+                holder.expandAnimationUtil.taggle(holder.animationUp
+                        ,holder.animationDown
+                        ,holder.recyclerView
+                        ,item.getMenu().getList().size()*80);
             });
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private RecyclerView recyclerView;
         private MultiTypeAdapter adapter;
-        private LinearLayout ly_menu;
         private TextView tv_title;
         private ImageView img_arrow;
         private Animation animationDown,animationUp;
         private ExpandAnimationUtil expandAnimationUtil;
         public ViewHolder(View itemView) {
             super(itemView);
-            this.ly_menu = itemView.findViewById(R.id.ly_menu);
             this.tv_title = itemView.findViewById(R.id.tv_title);
             this.img_arrow = itemView.findViewById(R.id.img_arrow);
             this.recyclerView = itemView.findViewById(R.id.recycle_view);

@@ -18,22 +18,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:text="12"
             android:textColor="@color/colorBlack"
             android:textSize="40dp" />
 
         <TextView
-            android:id="@+id/tv_month_year"
+            android:includeFontPadding="false"
+            android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_marginLeft="5dp"
-            android:text="Jul.2018"
-            android:textColor="@color/colorBlack"
-            android:textSize="@dimen/one_text_mini_size" />
+            android:textColor="@color/colorBlack"/>
 
         <ImageView
-            android:layout_marginLeft="5dp"
             android:id="@+id/iv_triangle"
             android:layout_width="8dp"
             android:layout_height="8dp"

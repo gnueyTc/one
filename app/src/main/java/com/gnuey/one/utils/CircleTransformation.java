@@ -1,4 +1,4 @@
-package com.gnuey.one.widget;
+package com.gnuey.one.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
