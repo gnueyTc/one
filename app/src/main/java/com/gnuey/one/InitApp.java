@@ -7,6 +7,8 @@ import com.gnuey.one.component.DaggerAppComponent;
 import com.gnuey.one.module.ApiModule;
 import com.gnuey.one.module.AppModule;
 import com.gnuey.one.utils.AppUtils;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 /**
  * Created by gnueyTc on 2018/4/26.
@@ -14,6 +16,7 @@ import com.gnuey.one.utils.AppUtils;
 public class InitApp extends Application {
     private static InitApp sIntance;
     private AppComponent appComponent;
+    private static RefWatcher sRefWatcher;
 
     @Override
     public void onCreate() {
@@ -21,6 +24,7 @@ public class InitApp extends Application {
         AppUtils.init(this.getApplicationContext());
         sIntance = this;
         initComponent();
+        sRefWatcher = LeakCanary.install(this);
     }
 
     private void initComponent(){
@@ -34,5 +38,8 @@ public class InitApp extends Application {
     }
     public AppComponent getAppComponent(){
         return appComponent;
+    }
+    public static RefWatcher getRefWatcher() {
+        return sRefWatcher;
     }
 }

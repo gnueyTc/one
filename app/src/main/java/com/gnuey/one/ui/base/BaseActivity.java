@@ -16,14 +16,13 @@ import butterknife.Unbinder;
 
 public abstract class BaseActivity extends AppCompatActivity {
     protected Context mContext;
-    private Unbinder unbinder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         mContext = this;
-        unbinder = ButterKnife.bind(this);
+        ButterKnife.bind(this);
     }
     /**
      * 初始化 Toolbar
@@ -50,6 +49,5 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbinder.unbind();
     }
 }

@@ -46,10 +46,11 @@ public class MainActivity extends BaseActivity implements OnBottomNavigationSele
         switch (index){
             case 0:
                 if(mOneTabLayout == null){
-                    mCurrentFragmet = mOneTabLayout = new OneTabLayout();
+                    mOneTabLayout = new OneTabLayout();
+                    mCurrentFragmet = mOneTabLayout;
                     fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction
-                            .add(R.id.container, mOneTabLayout, mOneTabLayout.getClass().getName())
+                            .add(R.id.container, mOneTabLayout)
                             .commit();
                 }
                 switchContent(mOneTabLayout);
@@ -78,7 +79,7 @@ public class MainActivity extends BaseActivity implements OnBottomNavigationSele
             if (!fragment.isAdded()) {
                 fragmentTransaction
                         .hide(mCurrentFragmet)
-                        .add(R.id.container, fragment, fragment.getClass().getName())
+                        .add(R.id.container, fragment)
                         .commit();
             } else {
                 fragmentTransaction
@@ -87,6 +88,14 @@ public class MainActivity extends BaseActivity implements OnBottomNavigationSele
                         .commit();
             }
             mCurrentFragmet = fragment;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mCurrentFragmet!=null){
+            mCurrentFragmet = null;
         }
     }
 }

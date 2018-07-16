@@ -34,11 +34,11 @@ public abstract class BaseListFragment extends LazyLoadFragment implements IBase
     protected void initView(View view) {
         Log.e(TAG, "initView: " );
         recyclerView = view.findViewById(R.id.recycle_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setHasFixedSize(true);
         twinklingRefreshLayout = view.findViewById(R.id.ly_twinkling);
         twinklingRefreshLayout.setEnableLoadmore(false);
-        twinklingRefreshLayout.setHeaderView(new SinaRefreshHeader(getContext()));
+        twinklingRefreshLayout.setHeaderView(new SinaRefreshHeader(mContext));
         twinklingRefreshLayout.setTargetView(recyclerView);
         twinklingRefreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override

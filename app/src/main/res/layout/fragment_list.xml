@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhiteSmoke">
@@ -17,8 +16,7 @@
             android:fadeScrollbars="true"
             android:overScrollMode="never"
             android:scrollbarFadeDuration="1"
-            android:scrollbars="vertical"
-            app:layoutManager="LinearLayoutManager">
+            android:scrollbars="vertical">
 
         </android.support.v7.widget.RecyclerView>
     </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>

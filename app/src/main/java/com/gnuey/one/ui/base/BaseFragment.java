@@ -24,6 +24,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
 
 
     protected Context mContext;
+    protected ViewGroup parent;
 
     /**
      * 绑定布局文件
@@ -89,5 +90,11 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
     public void onAttach(Context context) {
         super.onAttach(context);
         this.mContext = context;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        InitApp.getRefWatcher().watch(this);
     }
 }
