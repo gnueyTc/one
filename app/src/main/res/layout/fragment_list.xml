@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorWhiteSmoke"
+    android:id="@+id/ly_twinkling"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorWhiteSmoke">
-    <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
-        android:id="@+id/ly_twinkling"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-
+    android:layout_height="match_parent">
+    <android.support.v7.widget.RecyclerView
             android:id="@+id/recycle_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fadeScrollbars="true"
             android:overScrollMode="never"
             android:scrollbarFadeDuration="1"
-            android:scrollbars="vertical">
+            android:scrollbars="vertical"
+            app:layoutManager="LinearLayoutManager">
+    </android.support.v7.widget.RecyclerView>
+</com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
 
-        </android.support.v7.widget.RecyclerView>
-    </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
-</LinearLayout>
 
 

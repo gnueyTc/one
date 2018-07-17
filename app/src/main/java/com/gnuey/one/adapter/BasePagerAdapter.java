@@ -47,6 +47,11 @@ public class BasePagerAdapter extends FragmentStatePagerAdapter{
     }
 
     @Override
+    public void setPrimaryItem(ViewGroup container, int position, Object object) {
+        super.setPrimaryItem(container, position, object);
+    }
+
+    @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         super.destroyItem(container, position, object);
     }

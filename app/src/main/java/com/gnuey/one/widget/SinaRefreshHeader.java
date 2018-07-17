@@ -28,23 +28,23 @@ public class SinaRefreshHeader extends FrameLayout implements IHeaderView{
     private Animation anim;
     public SinaRefreshHeader(@NonNull Context context) {
         super(context);
-        init();
+        init(context);
     }
 
     public SinaRefreshHeader(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs,0);
-        init();
+        init(context);
     }
 
     public SinaRefreshHeader(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        init(context);
     }
-    private void init() {
+    private void init(Context context) {
         lir = new LinearInterpolator();
-        anim = AnimationUtils.loadAnimation(getContext(),R.anim.anim_rotation);
+        anim = AnimationUtils.loadAnimation(context,R.anim.anim_rotation);
         anim.setInterpolator(lir);
-        View rootView = View.inflate(getContext(), R.layout.item_one_head_loading, null);
+        View rootView = View.inflate(context, R.layout.item_one_head_loading, null);
         refreshTextView = (TextView) rootView.findViewById(R.id.tv_tiv);
         loadingView = (ImageView) rootView.findViewById(R.id.iv_circle);
         addView(rootView);

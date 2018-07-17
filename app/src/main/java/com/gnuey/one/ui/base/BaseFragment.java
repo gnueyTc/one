@@ -65,15 +65,15 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(attachLayoutId(),container,false);
         setAppComponent(InitApp.getApplication().getAppComponent());
-        ButterKnife.bind(this,view);
-        initView(view);
-        initData();
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this,view);
+        initView(view);
+        initData();
     }
 
     /**

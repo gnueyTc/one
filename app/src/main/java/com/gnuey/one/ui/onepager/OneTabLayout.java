@@ -73,8 +73,8 @@ public class OneTabLayout extends BaseFragment implements IdListContract.View,Vi
     private int index = 0;
     @Override
     protected void initData() throws NullPointerException {
-//        mPresenter.getIdList("wdj", "4.0.2");
-        justTest();
+        mPresenter.getIdList("wdj", "4.0.2");
+//        justTest();
     }
 
     private void justTest(){
@@ -128,18 +128,18 @@ public class OneTabLayout extends BaseFragment implements IdListContract.View,Vi
     public void onPageSelected(int position) {
         toolbar.setDate(DateUtils.getDate(0-position));
         viewPageSelectedPosition = position;
-//        if(position == fragmentList.size()-1 && position != idList.size()-1){
-//            fragmentList.add(OneArticleView.setArguments(idList.get(position+1)));
-//            adapter.notifyDataSetChanged();
-//        }
-          if(index<10){
-              View view = LayoutInflater.from(mContext).inflate(R.layout.test,parent);
-              TextView textView = view.findViewById(R.id.iv_test);
-              textView.setText("index = "+index);
-              viewList.add(view);
-              index++;
-              viewPageAdapter.notifyDataSetChanged();
-          }
+        if(position == fragmentList.size()-1 && position != idList.size()-1){
+            fragmentList.add(OneArticleView.setArguments(idList.get(position+1)));
+            adapter.notifyDataSetChanged();
+        }
+//          if(index<10){
+//              View view = LayoutInflater.from(mContext).inflate(R.layout.test,parent);
+//              TextView textView = view.findViewById(R.id.iv_test);
+//              textView.setText("index = "+index);
+//              viewList.add(view);
+//              index++;
+//              viewPageAdapter.notifyDataSetChanged();
+//          }
         Log.e(TAG, "onPageSelected: " );
     }
 

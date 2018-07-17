@@ -11,6 +11,7 @@ import com.gnuey.one.widget.SinaRefreshHeader;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 
+import butterknife.BindView;
 import io.reactivex.Observable;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
@@ -18,13 +19,13 @@ import me.drakeet.multitype.MultiTypeAdapter;
 public abstract class BaseListFragment extends LazyLoadFragment implements IBaseListView {
 
     public static final String TAG = "BaseListFragment";
-    private TwinklingRefreshLayout twinklingRefreshLayout;
+    @BindView(R.id.ly_twinkling)
+    TwinklingRefreshLayout twinklingRefreshLayout;
+    @BindView(R.id.recycle_view)
     protected RecyclerView recyclerView;
-    protected Observable<String> observable;
     protected MultiTypeAdapter adapter;
     protected Items oldItems = new Items();
-    protected boolean canLoadMore = false;
-    private int index;
+
     @Override
     protected int attachLayoutId() {
         return R.layout.fragment_list;
@@ -33,10 +34,7 @@ public abstract class BaseListFragment extends LazyLoadFragment implements IBase
     @Override
     protected void initView(View view) {
         Log.e(TAG, "initView: " );
-        recyclerView = view.findViewById(R.id.recycle_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setHasFixedSize(true);
-        twinklingRefreshLayout = view.findViewById(R.id.ly_twinkling);
         twinklingRefreshLayout.setEnableLoadmore(false);
         twinklingRefreshLayout.setHeaderView(new SinaRefreshHeader(mContext));
         twinklingRefreshLayout.setTargetView(recyclerView);
