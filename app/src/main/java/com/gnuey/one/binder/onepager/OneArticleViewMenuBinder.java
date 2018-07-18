@@ -37,15 +37,13 @@ public class OneArticleViewMenuBinder extends ItemViewBinder<OneFlattenBean,OneA
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull OneFlattenBean item) {
 
-            holder.tv_title.setText("一个VOL."+item.getMenu().getVol());
-            holder.adapter.setItems(item.getMenu().getList());
-            holder.itemView.setOnClickListener(v -> {
-                //第三个参数height为recyclerView的每个item预留80的高度
-                holder.expandAnimationUtil.taggle(holder.animationUp
-                        ,holder.animationDown
-                        ,holder.recyclerView
-                        ,item.getMenu().getList().size()*80);
-            });
+        holder.tv_title.setText("一个VOL."+item.getMenu().getVol());
+        holder.adapter.setItems(item.getMenu().getList());
+        holder.expandAnimationUtil.setExpanHeight(item.getMenu().getList().size()*80);
+        holder.itemView.setOnClickListener(v -> {
+            //第三个参数height为recyclerView的每个item预留80的高度
+            holder.expandAnimationUtil.taggle();
+        });
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -53,7 +51,6 @@ public class OneArticleViewMenuBinder extends ItemViewBinder<OneFlattenBean,OneA
         private MultiTypeAdapter adapter;
         private TextView tv_title;
         private ImageView img_arrow;
-        private Animation animationDown,animationUp;
         private ExpandAnimationUtil expandAnimationUtil;
         public ViewHolder(View itemView) {
             super(itemView);
@@ -65,9 +62,8 @@ public class OneArticleViewMenuBinder extends ItemViewBinder<OneFlattenBean,OneA
             Register.registerOneArticleMenuItem(adapter);
             this.recyclerView.setAdapter(adapter);
 
-            this.animationDown = AnimationUtils.loadAnimation(itemView.getContext(),R.anim.anim_arrow_rotation_down);
-            this.animationUp = AnimationUtils.loadAnimation(itemView.getContext(),R.anim.anim_arrow_rotation_up);
             this.expandAnimationUtil = ExpandAnimationUtil.getIntance(itemView.getContext(),this.img_arrow);
+            this.expandAnimationUtil.setTagerView(this.recyclerView);
             Log.e(TAG, "ViewHolder: Not bind ryViewHeight = "+adapter.getItemCount() );
             this.tv_title.setOnTouchListener(new View.OnTouchListener() {
                 @Override

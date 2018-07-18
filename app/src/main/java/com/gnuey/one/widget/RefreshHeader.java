@@ -18,7 +18,7 @@ import com.gnuey.one.R;
 import com.lcodecore.tkrefreshlayout.IHeaderView;
 import com.lcodecore.tkrefreshlayout.OnAnimEndListener;
 
-public class SinaRefreshHeader extends FrameLayout implements IHeaderView{
+public class RefreshHeader extends FrameLayout implements IHeaderView{
     private ImageView loadingView;
     private TextView refreshTextView;
     private String pullDownStr = "下拉刷新...";
@@ -26,17 +26,17 @@ public class SinaRefreshHeader extends FrameLayout implements IHeaderView{
     private String refreshingStr = "正在载入...";
     private LinearInterpolator lir;
     private Animation anim;
-    public SinaRefreshHeader(@NonNull Context context) {
+    public RefreshHeader(@NonNull Context context) {
         super(context);
         init(context);
     }
 
-    public SinaRefreshHeader(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public RefreshHeader(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs,0);
         init(context);
     }
 
-    public SinaRefreshHeader(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public RefreshHeader(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
@@ -73,8 +73,11 @@ public class SinaRefreshHeader extends FrameLayout implements IHeaderView{
     }
     @Override
     public void onPullingDown(float fraction, float maxHeadHeight, float headHeight) {
-        if (fraction < 1f) refreshTextView.setText(pullDownStr);
-        if (fraction > 1f) refreshTextView.setText(releaseRefreshStr);
+        if (fraction < 1f){
+            refreshTextView.setText(pullDownStr);
+        }else{
+            if (fraction > 1f) refreshTextView.setText(releaseRefreshStr);
+        }
         loadingView.setRotation(fraction * headHeight / maxHeadHeight * 180);
     }
 

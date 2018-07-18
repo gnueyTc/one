@@ -16,13 +16,6 @@ import java.security.MessageDigest;
  * Created by gnueyTc on 2018/6/6.
  */
 public class CircleTransformation extends BitmapTransformation {
-    private static CircleTransformation circleTransformation;
-    public static CircleTransformation getIntance(){
-        if(circleTransformation==null){
-            circleTransformation = new CircleTransformation();
-        }
-        return circleTransformation;
-    }
     @Override
     protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
         return circleCrop(pool,toTransform);

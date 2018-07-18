@@ -1,23 +1,20 @@
 package com.gnuey.one.ui.base;
 
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
 import com.gnuey.one.R;
 import com.gnuey.one.utils.ToastUtils;
-import com.gnuey.one.widget.SinaRefreshHeader;
+import com.gnuey.one.widget.RefreshHeader;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 
 import butterknife.BindView;
-import io.reactivex.Observable;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
 public abstract class BaseListFragment extends LazyLoadFragment implements IBaseListView {
-
     public static final String TAG = "BaseListFragment";
     @BindView(R.id.ly_twinkling)
     TwinklingRefreshLayout twinklingRefreshLayout;
@@ -36,7 +33,7 @@ public abstract class BaseListFragment extends LazyLoadFragment implements IBase
         Log.e(TAG, "initView: " );
         recyclerView.setHasFixedSize(true);
         twinklingRefreshLayout.setEnableLoadmore(false);
-        twinklingRefreshLayout.setHeaderView(new SinaRefreshHeader(mContext));
+        twinklingRefreshLayout.setHeaderView(new RefreshHeader(mContext));
         twinklingRefreshLayout.setTargetView(recyclerView);
         twinklingRefreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
