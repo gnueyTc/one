@@ -35,7 +35,7 @@ public interface OneArticleContract {
         /**
          * 设置适配器
          */
-        void doSetAdapter(List<OneFlattenBean> list);
+        void doSetAdapter(List<OneListBean.DataBean.ContentListBean> list);
 
         /**
          * 加载完毕

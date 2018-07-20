@@ -96,8 +96,12 @@ public class OneTabLayout extends BaseFragment implements IdListContract.View,Vi
         }
         idList = data.getData();
         initChildView(idList);
-        adapter = new BasePagerAdapter(getFragmentManager(), fragmentList);
-        viewPager.setAdapter(adapter);
+        if(adapter==null){
+            adapter = new BasePagerAdapter(getFragmentManager(), fragmentList);
+            viewPager.setAdapter(adapter);
+        }else {
+            adapter.recreateItems(fragmentList);
+        }
         Log.e(TAG, "showList: " + idList.get(viewPageSelectedPosition));
     }
 
@@ -112,6 +116,7 @@ public class OneTabLayout extends BaseFragment implements IdListContract.View,Vi
     @Override
     public void onDestroy() {
         if(fragmentList!=null){
+            fragmentList.clear();
             fragmentList=null;
         }
         mPresenter.detachView();
@@ -128,10 +133,10 @@ public class OneTabLayout extends BaseFragment implements IdListContract.View,Vi
     public void onPageSelected(int position) {
         toolbar.setDate(DateUtils.getDate(0-position));
         viewPageSelectedPosition = position;
-        if(position == fragmentList.size()-1 && position != idList.size()-1){
-            fragmentList.add(OneArticleView.setArguments(idList.get(position+1)));
-            adapter.notifyDataSetChanged();
-        }
+//        if(position == fragmentList.size()-1 && position != idList.size()-1){
+//            fragmentList.add(OneArticleView.setArguments(idList.get(position+1)));
+//            adapter.notifyDataSetChanged();
+//        }
 //          if(index<10){
 //              View view = LayoutInflater.from(mContext).inflate(R.layout.test,parent);
 //              TextView textView = view.findViewById(R.id.iv_test);

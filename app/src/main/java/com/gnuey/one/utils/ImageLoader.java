@@ -19,7 +19,7 @@ public class ImageLoader extends AppGlideModule {
                 .thumbnail(0.1f)
                 .transition(withCrossFade())
                 .apply(GlideOptions.circleCropTransform())
-                .transform(new CircleTransformation())
+                .transform(CircleTransformation.getIntance())
                 .into(imageView);
     }
     public static void displayImage(Context context, String uri, ImageView imageView,int defaultIconId){

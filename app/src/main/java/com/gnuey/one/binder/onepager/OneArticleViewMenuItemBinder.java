@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gnuey.one.R;
-import com.gnuey.one.bean.onepager.OneFlattenBean;
+import com.gnuey.one.bean.onepager.OneListBean;
 import com.gnuey.one.utils.Constant;
 import com.gnuey.one.utils.ToastUtils;
 
@@ -18,7 +18,7 @@ import me.drakeet.multitype.ItemViewBinder;
 /**
  * Created by gnueyTc on 2018/6/1.
  */
-public class OneArticleViewMenuItemBinder extends ItemViewBinder<OneFlattenBean.MenuBean.ListBean,OneArticleViewMenuItemBinder.ViewHolder> {
+public class OneArticleViewMenuItemBinder extends ItemViewBinder<OneListBean.DataBean.MenuBean.ListBean,OneArticleViewMenuItemBinder.ViewHolder> {
     @NonNull
     @Override
     protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
@@ -27,7 +27,7 @@ public class OneArticleViewMenuItemBinder extends ItemViewBinder<OneFlattenBean.
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull OneFlattenBean.MenuBean.ListBean item) {
+    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull OneListBean.DataBean.MenuBean.ListBean item) {
         holder.tv_subhead.setText(item.getTitle());
         holder.ly_menu_item.setOnClickListener(v -> ToastUtils.showSingleToast("item"));
         if(item.getTag()!=null){

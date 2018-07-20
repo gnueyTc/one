@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.gnuey.one.InitApp;
 import com.gnuey.one.R;
-import com.gnuey.one.bean.onepager.OneFlattenBean;
 import com.gnuey.one.bean.onepager.OneListBean;
 
 import me.drakeet.multitype.ItemViewBinder;
@@ -19,7 +19,7 @@ import me.drakeet.multitype.ItemViewBinder;
 /**
  * Created by gnueyTc on 2018/5/2.
  */
-public class OneArticleViewHeadBinder extends ItemViewBinder<OneFlattenBean,OneArticleViewHeadBinder.ViewHolder> {
+public class OneArticleViewHeadBinder extends ItemViewBinder<OneListBean.DataBean.ContentListBean,OneArticleViewHeadBinder.ViewHolder> {
     @NonNull
     @Override
     protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
@@ -28,7 +28,7 @@ public class OneArticleViewHeadBinder extends ItemViewBinder<OneFlattenBean,OneA
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull OneFlattenBean item) {
+    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull OneListBean.DataBean.ContentListBean item) {
         final Context context = holder.itemView.getContext();
         Glide.with(context).load(item.getImg_url()).into(holder.iv_image);
         holder.tv_title.setText(item.getTitle());

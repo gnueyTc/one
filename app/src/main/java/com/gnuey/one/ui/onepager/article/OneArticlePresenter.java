@@ -4,9 +4,9 @@ import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.gnuey.one.api.OnePagerApi;
-import com.gnuey.one.bean.onepager.OneFlattenBean;
+import com.gnuey.one.bean.onepager.OneListBean;
 import com.gnuey.one.ui.base.RxPresenter;
-import com.gnuey.one.utils.FlattenDataUtils;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,24 +18,33 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
 public class OneArticlePresenter extends RxPresenter<OneArticleContract.View> implements OneArticleContract.Presenter{
-    private static final String TAG = "OneArticlePresenter";
+    private static final String TAG = OneArticlePresenter.class.getSimpleName();
     private Retrofit retrofit;
-    private List<OneFlattenBean> dataList = new ArrayList<>();
+    private List<OneListBean.DataBean.ContentListBean> dataList = new ArrayList<>();
     @Inject
     public OneArticlePresenter(Retrofit retrofit){
         this.retrofit = retrofit;
+        Log.e(TAG, "OneArticlePresenter: create" );
     }
 
     @SuppressLint("CheckResult")
     @Override
     public void doLoadData(int code) {
         addSubscribe(retrofit.create(OnePagerApi.class).getOneList(code)
+                .onBackpressureDrop()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(oneListBean -> {
                     if (oneListBean.getData().getContent_list() != null && oneListBean.getData().getContent_list().size() > 0) {
-                        OneArticlePresenter.this.doSetAdapter(FlattenDataUtils.FlattenOneListBeanList(oneListBean));
-//                            OneArticlePresenter.this.doSetAdapter(oneListBean.getData().getContent_list());
+//                            OneArticlePresenter.this.doSetAdapter(FlattenDataUtils.FlattenOneListBeanList(oneListBean));
+
+                        OneListBean.DataBean.ContentListBean contentListBean = new OneListBean.DataBean.ContentListBean();
+                        contentListBean.setContent_type("-1");
+                        contentListBean.setVol(oneListBean.getData().getMenu().getVol());
+                        contentListBean.setList(oneListBean.getData().getMenu().getList());
+                        oneListBean.getData().getContent_list().add(1,contentListBean);
+                        OneArticlePresenter.this.doSetAdapter(oneListBean.getData().getContent_list());
+
                     } else {
                         OneArticlePresenter.this.doShowNoMore();
                     }
@@ -58,7 +67,7 @@ public class OneArticlePresenter extends RxPresenter<OneArticleContract.View> im
     }
 
     @Override
-    public void doSetAdapter(List<OneFlattenBean> list) {
+    public void doSetAdapter(List<OneListBean.DataBean.ContentListBean> list) {
         dataList.addAll(list);
         mView.onSetAdapter(dataList);
         mView.onHideLoading();

@@ -405,6 +405,26 @@ public class OneListBean {
             private List<?> serial_list;
             private List<TagListBean> tag_list;
 
+            private String vol;
+            private List<MenuBean.ListBean> list;
+
+            public String getVol() {
+                return vol;
+            }
+
+            public void setVol(String vol) {
+                this.vol = vol;
+            }
+
+            public List<MenuBean.ListBean> getList() {
+                return list;
+            }
+
+            public void setList(List<MenuBean.ListBean> list) {
+                this.list = list;
+            }
+
+
             public String getId() {
                 return id;
             }

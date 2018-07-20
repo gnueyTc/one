@@ -4,6 +4,7 @@ import com.gnuey.one.bean.IdListBean;
 import com.gnuey.one.bean.onepager.OneListBean;
 
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -36,7 +37,7 @@ public interface OnePagerApi {
     */
     @GET("onelist/{code}/0?cchannel=wdj&version=4.1.0" +
             "&uuid=ffffffff-a90e-706a-63f7-ccf973aae5ee&platform=android")
-    Observable<OneListBean> getOneList(
+    Flowable<OneListBean> getOneList(
             @Path("code") int code
 //            @Query("channel") String channel,
 //            @Query("version") String version

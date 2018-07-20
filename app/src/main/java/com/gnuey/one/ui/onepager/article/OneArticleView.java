@@ -72,7 +72,7 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
         AdapterDiffCallBack.create(oldItems, newItems, adapter);
         oldItems.clear();
         oldItems.addAll(newItems);
-//        recyclerView.stopScroll();
+        recyclerView.stopScroll();
 
     }
 

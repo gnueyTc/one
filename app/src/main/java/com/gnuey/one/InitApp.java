@@ -24,9 +24,8 @@ public class InitApp extends Application {
         AppUtils.init(this.getApplicationContext());
         sIntance = this;
         initComponent();
-        sRefWatcher = LeakCanary.install(this);
+//        sRefWatcher = LeakCanary.install(this);
     }
-
     private void initComponent(){
         appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))

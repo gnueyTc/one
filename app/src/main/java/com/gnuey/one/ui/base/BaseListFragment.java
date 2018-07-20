@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.gnuey.one.InitApp;
 import com.gnuey.one.R;
 import com.gnuey.one.utils.ToastUtils;
 import com.gnuey.one.widget.RefreshHeader;
@@ -33,7 +34,7 @@ public abstract class BaseListFragment extends LazyLoadFragment implements IBase
         Log.e(TAG, "initView: " );
         recyclerView.setHasFixedSize(true);
         twinklingRefreshLayout.setEnableLoadmore(false);
-        twinklingRefreshLayout.setHeaderView(new RefreshHeader(mContext));
+        twinklingRefreshLayout.setHeaderView(new RefreshHeader(InitApp.getApplication()));
         twinklingRefreshLayout.setTargetView(recyclerView);
         twinklingRefreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override

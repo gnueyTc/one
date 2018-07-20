@@ -86,6 +86,7 @@ public class ExpandAnimationUtil {
     private void switchRotariesAnimation(Animation animation){
         mSwitcher.startAnimation(animation);
     }
+
     private void expandView(View view){
         view.setVisibility(View.VISIBLE);
         if(expandAnimator==null){
@@ -93,6 +94,7 @@ public class ExpandAnimationUtil {
         }
         expandAnimator.start();
     }
+
     private void closeView(View view){
         if(closeAnimator==null){
             closeAnimator = creatAnimation(view,mHeight,0);
@@ -105,6 +107,7 @@ public class ExpandAnimationUtil {
         }
         closeAnimator.start();
     }
+
     private ValueAnimator creatAnimation(View view,int start,int end){
         ValueAnimator animator = ValueAnimator.ofInt(start,end);
         animator.addUpdateListener(animation -> {
