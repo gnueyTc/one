@@ -42,4 +42,15 @@ public interface OnePagerApi {
 //            @Query("channel") String channel,
 //            @Query("version") String version
     );
+
+    /**
+     *
+     * 最新api 2018-9-22
+     * http://v3.wufazhuce.com:8000/api/channel/one/0/%E6%B8%85%E8%BF%9C?user_id=9080706&channel=14&sign=2d21456947a8ea5f223ff1de333fa3d4&version=4.5.5&uuid=ffffffff-97de-5b11-ffff-ffffe5557a3d&platform=android
+     */
+    @GET("channel/one/{date}/%E6%B8%85%E8%BF%9C?user_id=9080706&channel=14&sign=2d21456947a8ea5f223ff1de333fa3d4&version=4.5.5&uuid=ffffffff-97de-5b11-ffff-ffffe5557a3d&platform=android")
+    Flowable<OneListBean> getOneList(
+            @Path("date") String date
+    );
+
 }
