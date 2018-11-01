@@ -20,12 +20,12 @@ public interface OneArticleContract {
         /**
          * 刷新数据
          */
-        void doRefresh(int code);
+        void doRefresh(String date);
 
         /**
          * 请求数据
          */
-        void doLoadData(int code);
+        void doLoadData(String date);
 
         /**
          * 再起请求数据
@@ -35,7 +35,7 @@ public interface OneArticleContract {
         /**
          * 设置适配器
          */
-        void doSetAdapter(List<OneListBean.DataBean.ContentListBean> list);
+        void doSetAdapter(List<OneFlattenBean> list);
 
         /**
          * 加载完毕

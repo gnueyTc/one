@@ -19,6 +19,8 @@ public abstract class LazyLoadFragment extends BaseFragment  {
      */
     protected boolean isDataInitiated;
 
+
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -30,8 +32,11 @@ public abstract class LazyLoadFragment extends BaseFragment  {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         this.isVisibleToUser = isVisibleToUser;
+//        Log.e("LazyLoad", "setUserVisibleHint: "+isVisibleToUser );
         if(isVisibleToUser){
             prepareFetchData();
+        }else {
+            clearData();
         }
     }
 
@@ -39,18 +44,14 @@ public abstract class LazyLoadFragment extends BaseFragment  {
      * 懒加载
      */
     public abstract void fetchData();
-
-    public void prepareFetchData() {
-        prepareFetchData(false);
-    }
+    public abstract void clearData();
 
     /**
      * 判断懒加载条件
      *
-     * @param forceUpdate
      */
-    public void prepareFetchData(boolean forceUpdate) {
-        if (isVisibleToUser && isViewInitiated && (!isDataInitiated || forceUpdate)) {
+    public void prepareFetchData() {
+        if (isVisibleToUser && isViewInitiated) {
             fetchData();
             isDataInitiated = true;
         }

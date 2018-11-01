@@ -31,14 +31,13 @@ public class ApiModule {
         // 指定缓存路径,缓存大小 50Mb
         Cache cache = new Cache(new File(Constant.PATH_CACHE, "HttpCache"),
                 Constant.CACHE_SIZE);
-        CacheControlInterceptor cacheControlInterceptor = new CacheControlInterceptor();
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
+                .cache(cache)
                 .connectTimeout(10 , TimeUnit.SECONDS)
                 .readTimeout(20 , TimeUnit.SECONDS)
                 .writeTimeout(20, TimeUnit.SECONDS)
-                .addInterceptor(cacheControlInterceptor)
-                .addNetworkInterceptor(cacheControlInterceptor)
-                .cache(cache)
+                .addInterceptor(new CacheControlInterceptor())
+                .addNetworkInterceptor(new NetWorkInterceptor())
                 .retryOnConnectionFailure(true);
         return builder.build();
     }

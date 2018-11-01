@@ -1,11 +1,8 @@
 package com.gnuey.one.binder.onepager;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,22 +11,19 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.gnuey.one.InitApp;
 import com.gnuey.one.R;
 import com.gnuey.one.bean.onepager.OneFlattenBean;
-import com.gnuey.one.bean.onepager.OneListBean;
 import com.gnuey.one.utils.Constant;
-import com.gnuey.one.utils.DateUtils;
+import com.gnuey.one.utils.GlideApp;
 import com.gnuey.one.utils.ImageLoader;
-
 
 import me.drakeet.multitype.ItemViewBinder;
 
 /**
  * Created by gnueyTc on 2018/5/2.
  */
-public class OneArticleViewBinder extends ItemViewBinder<OneListBean.DataBean.ContentListBean,OneArticleViewBinder.ViewHolder>{
-    private static final String TAG = OneArticleViewBinder.class.getSimpleName();
+public class OneArticleViewBinder extends ItemViewBinder<OneFlattenBean,OneArticleViewBinder.ViewHolder>{
+    private static final String TAG = "OneArticleViewBinder";
     private boolean isPlay = true;//是否点击播放
     @NonNull
     @Override
@@ -39,10 +33,10 @@ public class OneArticleViewBinder extends ItemViewBinder<OneListBean.DataBean.Co
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull final ViewHolder holder, @NonNull OneListBean.DataBean.ContentListBean item) {
+    protected void onBindViewHolder(@NonNull final ViewHolder holder, @NonNull OneFlattenBean item) {
         final Context context = holder.itemView.getContext();
         String title = item.getTag_list().size()==0?"":item.getTag_list().get(0).getTitle();
-        if(!title.equals("")){
+        if(!"".equals(title)){
             holder.tv_mainTitle.setText("-"+title+"-");
         }else {
             switch (item.getContent_type()){
@@ -75,20 +69,20 @@ public class OneArticleViewBinder extends ItemViewBinder<OneListBean.DataBean.Co
 
             holder.layout_default.setVisibility(View.GONE);//默认布局
             holder.layout_music.setVisibility(View.VISIBLE);//music布局
-            ImageLoader.displayImage(context,item.getImg_url(),holder.iv_cover);//加载圆形图片
-            ImageLoader.displayImage(context,item.getAudio_platform_icon(),holder.iv_platform_icom);//左下角icon
+            ImageLoader.displayImage(GlideApp.with(context),item.getImg_url(),holder.iv_cover);//加载圆形图片
+            ImageLoader.displayImage(GlideApp.with(context),item.getAudio_platform_icon(),holder.iv_platform_icom);//左下角icon
             holder.tv_music_name.setText(item.getMusic_name()+" · "+item.getAudio_author()+" | "+item.getAudio_album());
             holder.iv_play.setOnClickListener(v -> {
                 holder.iv_play.setImageResource(isPlay ? R.drawable.pause : R.drawable.play);
                 isPlay = isPlay ? false : true;
             });
         }else {
-            ImageLoader.displayImage(context,item.getImg_url(),holder.iv_image,R.drawable.default_diary_pic);
+            ImageLoader.displayImage(GlideApp.with(context),item.getImg_url(),holder.iv_image,R.drawable.default_diary_pic);
         }
         holder.tv_title.setText(item.getTitle());
-        holder.tv_author.setText("文/"+item.getAuthor().getUser_name());
+        holder.tv_author.setText(item.getAuthor().getUser_name());
         holder.tv_forward.setText(item.getForward());
-        holder.tv_date.setText(DateUtils.getTodayDate(item.getPost_date()));
+//        holder.tv_date.setText(DateUtils.getTodayDate(item.getPost_date()));
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -104,7 +98,7 @@ public class OneArticleViewBinder extends ItemViewBinder<OneListBean.DataBean.Co
         private RelativeLayout.LayoutParams layoutParams;
 
         //layout_music
-        private ConstraintLayout layout_music;
+        private LinearLayout layout_music;
         private ImageView iv_platform_icom;
         private ImageView iv_cover;
         private ImageView iv_play;

@@ -105,6 +105,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        InitApp.getRefWatcher().watch(this);
 //        InitApp.getRefWatcher().watch(this);
     }
 }

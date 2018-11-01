@@ -5,16 +5,21 @@ import android.util.Log;
 import android.view.View;
 
 
+import com.bumptech.glide.Glide;
 import com.gnuey.one.Register;
 import com.gnuey.one.component.AppComponent;
 import com.gnuey.one.component.DaggerFragmentComponent;
 import com.gnuey.one.ui.base.BaseListFragment;
 import com.gnuey.one.utils.AdapterDiffCallBack;
+import com.gnuey.one.utils.GlideApp;
+import com.gnuey.one.utils.ImageLoader;
+import com.gnuey.one.utils.RxBus;
 
 
 import java.util.List;
 
 import javax.inject.Inject;
+
 
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
@@ -25,9 +30,10 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
 
     public static final String TAG = OneArticleView.class.getSimpleName();
     private int code;
-    public static OneArticleView setArguments(String code) {
+    private String date = "0";
+    public static OneArticleView setArguments(int code) {
         Bundle bundle = new Bundle();
-        bundle.putString(TAG, code);
+        bundle.putInt(TAG, code);
         OneArticleView view = new OneArticleView();
         view.setArguments(bundle);
         return view;
@@ -38,7 +44,10 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
 
     }
 
-
+    public void getDate(String date){
+        this.date = date;
+        Log.e(TAG, "initData: code ="+ date );
+    }
     @Override
     protected void initView(View view) {
         super.initView(view);
@@ -52,9 +61,18 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
 
     @Override
     protected void initData() {
-        code = Integer.valueOf(getArguments().getString(OneArticleView.TAG));
+//        code = Integer.valueOf(getArguments().getString(OneArticleView.TAG));
+//        code = getArguments().getInt(OneArticleView.TAG);
     }
 
+    @Override
+    public void clearData() {
+        Log.e(TAG, "clearData: " );
+        if(mContext!=null){
+            ImageLoader.clearMemory(GlideApp.get(mContext));
+        }
+
+    }
 
     @Override
     protected void setAppComponent(AppComponent appComponent) {
@@ -78,13 +96,15 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
 
     @Override
     public void doOnRefresh() {
-        mPresenter.doRefresh(code);
-        Log.e(TAG, "doOnRefresh: "+code);
+        mPresenter.doLoadData(date);
+        Log.e(TAG, "doOnRefresh: "+date);
     }
 
     @Override
     public void onDestroy() {
         mPresenter.detachView();
+        RxBus.getInstance().unregisterAll();
         super.onDestroy();
+        Log.e(TAG, "OneArticleView: onDestroy" );
     }
 }

@@ -6,6 +6,8 @@ import android.view.View;
 
 import com.gnuey.one.InitApp;
 import com.gnuey.one.R;
+import com.gnuey.one.utils.NetWorkUtil;
+import com.gnuey.one.utils.RxBus;
 import com.gnuey.one.utils.ToastUtils;
 import com.gnuey.one.widget.RefreshHeader;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
@@ -34,12 +36,13 @@ public abstract class BaseListFragment extends LazyLoadFragment implements IBase
         Log.e(TAG, "initView: " );
         recyclerView.setHasFixedSize(true);
         twinklingRefreshLayout.setEnableLoadmore(false);
-        twinklingRefreshLayout.setHeaderView(new RefreshHeader(InitApp.getApplication()));
+        twinklingRefreshLayout.setHeaderView(new RefreshHeader(mContext));
         twinklingRefreshLayout.setTargetView(recyclerView);
         twinklingRefreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
             public void onRefresh(TwinklingRefreshLayout refreshLayout) {
                 super.onRefresh(refreshLayout);
+                RxBus.getInstance().post(true);
                 doOnRefresh();
             }
         });
@@ -55,7 +58,8 @@ public abstract class BaseListFragment extends LazyLoadFragment implements IBase
 
     @Override
     public void fetchData() {
-        onShowLoading();
+        RxBus.getInstance().post(false);
+        doOnRefresh();
         Log.e(TAG, "fetchData: ");
 
     }
@@ -67,7 +71,10 @@ public abstract class BaseListFragment extends LazyLoadFragment implements IBase
 
     @Override
     public void onShowNetError() {
-        ToastUtils.showSingleToast(R.string.network_error);
+        if(NetWorkUtil.isNetworkConnected(mContext)){
+            ToastUtils.showSingleToast(R.string.network_error);
+        }
+        ToastUtils.showSingleToast(R.string.no_network);
     }
 
     @Override

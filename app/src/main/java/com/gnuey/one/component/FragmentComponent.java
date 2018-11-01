@@ -10,6 +10,5 @@ import dagger.Component;
 @FragmentScope
 @Component(dependencies = AppComponent.class)
 public interface FragmentComponent {
-    OneTabLayout inject(OneTabLayout oneTabLayout);
     OneArticleView inject(OneArticleView oneArticleView);
 }
