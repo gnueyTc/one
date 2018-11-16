@@ -1,5 +1,6 @@
 package com.gnuey.one.api;
 
+import com.gnuey.one.bean.FeedsListBean;
 import com.gnuey.one.bean.IdListBean;
 import com.gnuey.one.bean.onepager.OneListBean;
 
@@ -53,4 +54,12 @@ public interface OnePagerApi {
             @Path("date") String date
     );
 
+    /**
+     *
+     * http://v3.wufazhuce.com:8000/api/feeds/list/2018-11?user_id=9080706&channel=yingyongbao&sign=0cf43d3f6dca829f562b9060404cd8b5&version=4.5.6&uuid=ffffffff-97de-5b11-ffff-ffffe5557a3d&platform=android
+     */
+    @GET("http://v3.wufazhuce.com:8000/api/feeds/list/{date}?user_id=9080706&channel=yingyongbao&sign=0cf43d3f6dca829f562b9060404cd8b5&version=4.5.6&uuid=ffffffff-97de-5b11-ffff-ffffe5557a3d&platform=android")
+    Flowable<FeedsListBean> getFeedsList(
+            @Path("date") String date
+    );
 }

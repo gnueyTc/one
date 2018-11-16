@@ -1,5 +1,6 @@
 package com.gnuey.one.utils;
 
+import android.content.Context;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -24,9 +25,9 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
 @GlideModule
 public class ImageLoader extends AppGlideModule {
 
-    public static void displayImage(GlideRequests glideRequests, String uri, ImageView imageView) {
+    public static void displayImage(Context mContext, String uri, ImageView imageView) {
 
-        glideRequests.asDrawable()
+        GlideApp.with(mContext).asDrawable()
                 .load(uri)
                 .thumbnail(0.1f)
                 .transition(withCrossFade())
@@ -35,9 +36,9 @@ public class ImageLoader extends AppGlideModule {
                 .into(imageView);
     }
 
-    public static void displayImage(GlideRequests glideRequests, String uri, ImageView imageView, int defaultIconId) {
+    public static void displayImage(Context mContext, String uri, ImageView imageView, int defaultIconId) {
 
-        glideRequests.asDrawable()
+        GlideApp.with(mContext).asDrawable()
                 .load(uri)
                 .thumbnail(0.1f)
                 .placeholder(defaultIconId)
@@ -46,8 +47,8 @@ public class ImageLoader extends AppGlideModule {
                 .into(imageView);
     }
 
-    public static void loadNormal(GlideRequests glideRequests, String url, ImageView view) {
-        glideRequests.load(url).into(view);
+    public static void loadNormal(Context mContext, String url, ImageView view) {
+        GlideApp.with(mContext).load(url).into(view);
     }
 
     public static void clearMemory(Glide glide) {

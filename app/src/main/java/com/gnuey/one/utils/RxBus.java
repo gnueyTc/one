@@ -22,6 +22,7 @@ import io.reactivex.subjects.Subject;
 public class RxBus {
 
     private final FlowableProcessor<Object> mBus;
+    private ConcurrentHashMap<Object, List<FlowableProcessor>> processorMapper = new ConcurrentHashMap<>();
 
     private RxBus() {
         mBus = PublishProcessor.create().toSerialized();
@@ -38,16 +39,56 @@ public class RxBus {
     public void post(@NonNull Object obj) {
         mBus.onNext(obj);
     }
+    public void post(@NonNull Object tag,@NonNull Object content){
+        List<FlowableProcessor> processorList = processorMapper.get(tag);
+        if(!processorList.isEmpty()){
+            for(FlowableProcessor flowableProcessor:processorList){
+                flowableProcessor.onNext(content);
+            }
+        }
+    }
 
     public <T> Flowable<T> register(Class<T> clz) {
         return mBus.ofType(clz);
+    }
+    public <T> Flowable<T> register(Object tag,Class<T> clz){
+        List<FlowableProcessor> processorList = processorMapper.get(tag);
+        if(null==processorList){
+            processorList = new ArrayList<>();
+            processorMapper.put(tag,processorList);
+        }
+        FlowableProcessor<Object> processor = PublishProcessor.create().toSerialized();
+        processor.onBackpressureLatest();
+        processorList.add(processor);
+
+        return processor.ofType(clz);
     }
 
     public void unregisterAll() {
         //会将所有由mBus 生成的 Flowable 都置  completed 状态  后续的 所有消息  都收不到了
         mBus.onComplete();
     }
-
+    public void unRegister(Object tag){
+        List<FlowableProcessor> processorList = processorMapper.get(tag);
+        if(null != processorList){
+            for(FlowableProcessor processor : processorList){
+                processor.onComplete();
+            }
+            processorList.clear();
+            if(processorList.isEmpty()){
+                processorMapper.remove(tag);
+            }
+        }
+    }
+    public void unRegister(Object tag,Flowable flowable){
+        List<FlowableProcessor> processorList = processorMapper.get(tag);
+        if(null != processorList){
+            processorList.remove(flowable);
+            if(processorList.isEmpty()){
+                processorMapper.remove(tag);
+            }
+        }
+    }
     public boolean hasSubscribers() {
         return mBus.hasSubscribers();
     }

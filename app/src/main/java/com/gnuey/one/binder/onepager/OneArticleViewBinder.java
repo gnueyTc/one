@@ -3,6 +3,7 @@ package com.gnuey.one.binder.onepager;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.gnuey.one.InitApp;
 import com.gnuey.one.R;
 import com.gnuey.one.bean.onepager.OneFlattenBean;
 import com.gnuey.one.utils.Constant;
@@ -66,23 +68,23 @@ public class OneArticleViewBinder extends ItemViewBinder<OneFlattenBean,OneArtic
 
         }
         if(item.getContent_type().equals(Constant.TYPE_MUSIC)){
-
+            Log.e(TAG, "onBindViewHolder: TYPE_MUSIC" );
             holder.layout_default.setVisibility(View.GONE);//默认布局
             holder.layout_music.setVisibility(View.VISIBLE);//music布局
-            ImageLoader.displayImage(GlideApp.with(context),item.getImg_url(),holder.iv_cover);//加载圆形图片
-            ImageLoader.displayImage(GlideApp.with(context),item.getAudio_platform_icon(),holder.iv_platform_icom);//左下角icon
+            ImageLoader.displayImage(context,item.getImg_url(),holder.iv_cover);//加载圆形图片
+            ImageLoader.displayImage(context,item.getAudio_platform_icon(),holder.iv_platform_icom);//左下角icon
             holder.tv_music_name.setText(item.getMusic_name()+" · "+item.getAudio_author()+" | "+item.getAudio_album());
             holder.iv_play.setOnClickListener(v -> {
                 holder.iv_play.setImageResource(isPlay ? R.drawable.pause : R.drawable.play);
                 isPlay = isPlay ? false : true;
             });
         }else {
-            ImageLoader.displayImage(GlideApp.with(context),item.getImg_url(),holder.iv_image,R.drawable.default_diary_pic);
+            ImageLoader.displayImage(context,item.getImg_url(),holder.iv_image,R.drawable.default_diary_pic);
         }
         holder.tv_title.setText(item.getTitle());
         holder.tv_author.setText(item.getAuthor().getUser_name());
         holder.tv_forward.setText(item.getForward());
-//        holder.tv_date.setText(DateUtils.getTodayDate(item.getPost_date()));
+        holder.tv_date.setText(InitApp.getDateUtils().getTodayDate(item.getPost_date()));
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

@@ -3,6 +3,7 @@ package com.gnuey.one.ui.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
 
 
 public abstract class LazyLoadFragment extends BaseFragment  {
@@ -18,8 +19,11 @@ public abstract class LazyLoadFragment extends BaseFragment  {
      * 是否加载过数据
      */
     protected boolean isDataInitiated;
+    /**
+     * 是否启用懒加载
+     */
 
-
+    protected boolean isUnableToLoad;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -38,6 +42,7 @@ public abstract class LazyLoadFragment extends BaseFragment  {
         }else {
             clearData();
         }
+
     }
 
     /**
@@ -51,7 +56,7 @@ public abstract class LazyLoadFragment extends BaseFragment  {
      *
      */
     public void prepareFetchData() {
-        if (isVisibleToUser && isViewInitiated) {
+        if (isVisibleToUser && isViewInitiated && !isUnableToLoad) {
             fetchData();
             isDataInitiated = true;
         }

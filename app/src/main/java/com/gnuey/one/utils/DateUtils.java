@@ -8,22 +8,25 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import io.reactivex.Observable;
+
 /**
  * Created by gnueyTc on 2018/5/30.
  */
 public class DateUtils {
-    private static final String TAG = DateUtils.class.getSimpleName();
+    public static final String TAG = DateUtils.class.getSimpleName();
     private SimpleDateFormat format1;
     private SimpleDateFormat format2;
     private SimpleDateFormat format3;
     private SimpleDateFormat format4;
+    public final static int FORMAT_DDMMYYYY = 3;
+    public final static int FORMAT_YYYYMMDD = 4;
     private int dayApart = 0;
     private boolean isDayApartAlreadyCalculated = false;
     private String todayDate = "";
     private String ortherDate = "";
-    private String searchDate = "";
-    private String upToDate = "";
-
+    public String currentDateForMat3 = "";//当前页面时间
+    public String currentDateForMat4 = "";//当前页面时间
     public DateUtils() {
         format1 = new SimpleDateFormat("M月dd日");
         format2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -61,37 +64,39 @@ public class DateUtils {
         return todayDate.equals(ortherDate) ? "今日" : ortherDate;
     }
 
-    public String getDate(int count) {
+    /**
+     * 获取当前月日
+     *
+     * @param count 当前日期与最新数据日期是否有差距
+     * @return 30 May.2018
+     */
+    public String[] getDate(int count) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, 0 - count);
-        return format3.format(calendar.getTime());
+        this.currentDateForMat3 = format3.format(calendar.getTime());
+        this.currentDateForMat4 = format4.format(calendar.getTime());
+        return new String[]{currentDateForMat3,currentDateForMat4};
+
     }
 
-    public String getSearchDate(int count) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_MONTH, 0 - count);
-        Log.e(TAG, "getSearchDate: " + format4.format(calendar.getTime()));
-        return format4.format(calendar.getTime());
-    }
+//    /**
+//     * 获取当前月日
+//     *
+//     * @param count 当前日期与最新数据日期是否有差距
+//     * @return 2018-05-30
+//     */
+//    public String getSearchDate(int count) {
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.add(Calendar.DAY_OF_MONTH, 0 - count);
+//
+//        return currentDate;
+//    }
 
-    public String getUpToDate() {
-        return "".equals(getUpToDate()) ? "0" : upToDate;
-    }
-
-    public String getDate(String date) {
-        Log.e(TAG, "getDate: dayApart = " + dayApart);
-        if (!"".equals(date)) {
-            return date;
-        }
-        if (isDayApartAlreadyCalculated) {
-            dayApart += 1;
-            return getSearchDate(dayApart);
-        }else {
-            return "0";
-        }
-    }
-
-
+    /**
+     * 计算当前日期最新数据是否有差距，相差1天为1如此类推
+     *
+     * @param date 服务器获取的日期 2018-05-30 06:00:00
+     */
     public void calculaDayApart(String date) {
         if (isDayApartAlreadyCalculated) {
             return;
@@ -101,17 +106,12 @@ public class DateUtils {
             Date d0 = format4.parse(format4.format(calendar.getTime()));
             Date d1 = format4.parse(date);
             dayApart = (int) ((d0.getTime() - d1.getTime()) / (24 * 60 * 60 * 1000));
-            RxBus.getInstance().post(dayApart);
+            RxBus.getInstance().post(TAG,dayApart);
             isDayApartAlreadyCalculated = true;
         } catch (ParseException e) {
             e.printStackTrace();
         }
         Log.e(TAG, "calculaDayApart: dayApart = " + dayApart);
     }
-//    public static String getDate(int count){
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.add(Calendar.DAY_OF_MONTH,count);
-//        return sdf.format(calendar.getTime());
-//    }
+
 }

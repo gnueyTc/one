@@ -1,24 +1,26 @@
 package com.gnuey.one.ui.onepager;
 
 
-import com.gnuey.one.bean.IdListBean;
+import com.gnuey.one.bean.FeedsListBean;
 import com.gnuey.one.ui.base.IBasePresenter;
 import com.gnuey.one.ui.base.IBaseView;
+
+import java.util.List;
 
 
 /**
  * Created by gnueyTc on 2018/4/26.
  */
-public interface IdListContract {
+public interface FeedsListContract {
     interface View extends IBaseView{
         /**
          *
          */
-        void doSetData(IdListBean data);
+        void doSetData(List<?> list);
     }
     interface Presenter extends IBasePresenter{
 
 
-        void getIdList(String channel,String version);
+        void getFeedsList(String date);
     }
 }

@@ -27,7 +27,7 @@ public class InfiniteFragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return Integer.MAX_VALUE;
+        return 1000;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class InfiniteFragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        super.destroyItem(container, position, object);
+//        super.destroyItem(container, position, object);
     }
 
     @Override

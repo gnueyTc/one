@@ -26,6 +26,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
 
     protected Context mContext;
     protected ViewGroup parent;
+    private View rootView;
 
     /**
      * 绑定布局文件
@@ -64,9 +65,15 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(attachLayoutId(),container,false);
+        if(rootView == null){
+            rootView = inflater.inflate(attachLayoutId(),container,false);
+        }
+        ViewGroup viewGroup = (ViewGroup) rootView.getParent();
+        if(viewGroup != null){
+            viewGroup.removeView(rootView);
+        }
         setAppComponent(InitApp.getApplication().getAppComponent());
-        return view;
+        return rootView;
     }
 
     @Override

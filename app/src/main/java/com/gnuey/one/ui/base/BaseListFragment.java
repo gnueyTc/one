@@ -1,5 +1,6 @@
 package com.gnuey.one.ui.base;
 
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +19,7 @@ import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
 public abstract class BaseListFragment extends LazyLoadFragment implements IBaseListView {
-    public static final String TAG = "BaseListFragment";
+    public static final String TAG = BaseListFragment.class.getSimpleName();
     @BindView(R.id.ly_twinkling)
     TwinklingRefreshLayout twinklingRefreshLayout;
     @BindView(R.id.recycle_view)
@@ -42,7 +43,6 @@ public abstract class BaseListFragment extends LazyLoadFragment implements IBase
             @Override
             public void onRefresh(TwinklingRefreshLayout refreshLayout) {
                 super.onRefresh(refreshLayout);
-                RxBus.getInstance().post(true);
                 doOnRefresh();
             }
         });
@@ -58,11 +58,17 @@ public abstract class BaseListFragment extends LazyLoadFragment implements IBase
 
     @Override
     public void fetchData() {
-        RxBus.getInstance().post(false);
-        doOnRefresh();
+        RxBus.getInstance().post(TAG,false);
+//        doOnRefresh();
         Log.e(TAG, "fetchData: ");
 
     }
+
+    @Override
+    public void doOnRefresh() {
+        RxBus.getInstance().post(TAG,true);
+    }
+
     @Override
     public void onHideLoading() {
         twinklingRefreshLayout.post(() -> twinklingRefreshLayout.finishRefreshing());

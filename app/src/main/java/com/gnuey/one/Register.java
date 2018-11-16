@@ -3,11 +3,13 @@ package com.gnuey.one;
 import android.support.annotation.NonNull;
 
 
+import com.gnuey.one.bean.FeedsListBean;
 import com.gnuey.one.bean.onepager.OneFlattenBean;
 import com.gnuey.one.binder.onepager.OneArticleViewBinder;
 import com.gnuey.one.binder.onepager.OneArticleViewHeadBinder;
 import com.gnuey.one.binder.onepager.OneArticleViewMenuBinder;
 import com.gnuey.one.binder.onepager.OneArticleViewMenuItemBinder;
+import com.gnuey.one.binder.onepager.OneTabLayoutBinder;
 
 
 import me.drakeet.multitype.ClassLinker;
@@ -19,6 +21,10 @@ import me.drakeet.multitype.MultiTypeAdapter;
  */
 public class Register {
     public static final String TAG = "Register";
+
+    public static void registerOneTablayoutItem(@NonNull MultiTypeAdapter adapter){
+        adapter.register(FeedsListBean.DataBean.class,new OneTabLayoutBinder());
+    }
     public static void registerOneArticleItem(@NonNull MultiTypeAdapter adapter){
         adapter.register(OneFlattenBean.class)
                 .to(new OneArticleViewHeadBinder(),

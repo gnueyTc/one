@@ -30,7 +30,7 @@ public class OneArticleViewHeadBinder extends ItemViewBinder<OneFlattenBean,OneA
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull OneFlattenBean item) {
         final Context context = holder.itemView.getContext();
-        ImageLoader.loadNormal(GlideApp.with(context),item.getImg_url(),holder.iv_image);
+        ImageLoader.loadNormal(context,item.getImg_url(),holder.iv_image);
         holder.tv_title.setText(item.getTitle());
         holder.tv_pic_info.setText(item.getPic_info());
         holder.tv_forward.setText(item.getForward());

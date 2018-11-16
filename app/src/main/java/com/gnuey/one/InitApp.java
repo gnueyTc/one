@@ -2,6 +2,7 @@ package com.gnuey.one;
 
 import android.app.Application;
 
+
 import com.gnuey.one.component.AppComponent;
 import com.gnuey.one.component.DaggerAppComponent;
 import com.gnuey.one.module.ApiModule;
@@ -27,6 +28,7 @@ public class InitApp extends Application {
         sIntance = this;
         initComponent();
         sRefWatcher = LeakCanary.install(this);
+
     }
     private void initComponent(){
         appComponent = DaggerAppComponent.builder()

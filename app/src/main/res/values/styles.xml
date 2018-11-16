@@ -21,4 +21,13 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:background">@color/colorGray</item>
     </style>
+
+    <style name="selection_dialog" >
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+        <item name="android:backgroundDimAmount">0.0</item>
+        <item name="android:windowBackground">@color/colorWhite</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
 </resources>

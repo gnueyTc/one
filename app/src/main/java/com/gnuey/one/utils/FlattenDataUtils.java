@@ -13,22 +13,23 @@ import java.util.List;
  */
 public class FlattenDataUtils {
     private static ArrayList<OneFlattenBean> oneDataBeanArrayList;
-    public static ArrayList<OneFlattenBean> FlattenOneListBeanList(OneListBean data)throws NullPointerException{
+
+    public static ArrayList<OneFlattenBean> FlattenOneListBeanList(OneListBean data) throws NullPointerException {
         oneDataBeanArrayList = new ArrayList<>();
         Parcel parcel = Parcel.obtain();
-        for(OneListBean.DataBean.ContentListBean contentListBean:data.getData().getContent_list()){
+        for (OneListBean.DataBean.ContentListBean contentListBean : data.getData().getContent_list()) {
             OneFlattenBean oneFlattenBean = new OneFlattenBean();
             //
             List<OneFlattenBean.MenuBean.ListBean> menuList = new ArrayList<>();
             OneFlattenBean.MenuBean menu = new OneFlattenBean.MenuBean();
             menu.setVol(data.getData().getMenu().getVol());
-            if(data.getData().getMenu().getList()!=null){
-                for(OneListBean.DataBean.MenuBean.ListBean listBean:data.getData().getMenu().getList()){
+            if (data.getData().getMenu().getList() != null) {
+                for (OneListBean.DataBean.MenuBean.ListBean listBean : data.getData().getMenu().getList()) {
                     OneFlattenBean.MenuBean.ListBean newlListBean = new OneFlattenBean.MenuBean.ListBean();
                     newlListBean.setContent_type(listBean.getContent_type());
                     newlListBean.setContent_id(listBean.getContent_id());
                     newlListBean.setTitle(listBean.getTitle());
-                    if(listBean.getTag()!=null){
+                    if (listBean.getTag() != null) {
                         OneFlattenBean.MenuBean.ListBean.TagBean tagBean = new OneFlattenBean.MenuBean.ListBean.TagBean();
                         tagBean.setId(listBean.getTag().getId());
                         tagBean.setTitle(listBean.getTag().getTitle());
@@ -142,7 +143,7 @@ public class FlattenDataUtils {
             oneFlattenBean.setOrientation(contentListBean.getOrientation());
 
             //
-            if(contentListBean.getAnswerer()!=null){
+            if (contentListBean.getAnswerer() != null) {
                 OneFlattenBean.AnswererBean answerer = new OneFlattenBean.AnswererBean();
                 answerer.setUser_id(contentListBean.getAnswerer().getUser_id());
                 answerer.setUser_name(contentListBean.getAnswerer().getUser_name());
@@ -172,7 +173,7 @@ public class FlattenDataUtils {
 
             //
             List<OneFlattenBean.TagListBean> tagListBeanList = new ArrayList<>();
-            for(OneListBean.DataBean.ContentListBean.TagListBean tagList:contentListBean.getTag_list()){
+            for (OneListBean.DataBean.ContentListBean.TagListBean tagList : contentListBean.getTag_list()) {
                 OneFlattenBean.TagListBean tagListBean = new OneFlattenBean.TagListBean();
                 tagListBean.setId(tagList.getId());
                 tagListBean.setTitle(tagList.getTitle());
@@ -181,14 +182,13 @@ public class FlattenDataUtils {
             oneFlattenBean.setTag_list(tagListBeanList);
 
 
-
             oneDataBeanArrayList.add(oneFlattenBean);
 
         }
         OneFlattenBean flattenBean = new OneFlattenBean();
         flattenBean.setMenu(oneDataBeanArrayList.get(1).getMenu());
         flattenBean.setContent_type("-1");
-        oneDataBeanArrayList.add(1,flattenBean);
-            return oneDataBeanArrayList;
+        oneDataBeanArrayList.add(1, flattenBean);
+        return oneDataBeanArrayList;
     }
 }

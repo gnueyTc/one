@@ -54,31 +54,30 @@ public class ExpandAnimationUtil {
     }
     private static void expandView(View view,int height){
         view.setVisibility(View.VISIBLE);
-        if(expandAnimator==null){
-            expandAnimator = creatAnimation(view,0,height);//mHeight 需要展开的高度
-        }
+        expandAnimator = creatAnimation(view,0,height);//mHeight 需要展开的高度
         expandAnimator.start();
         expandAnimator.end();
     }
     private static void closeView(View view,int height){
-        if(closeAnimator==null){
-            closeAnimator = creatAnimation(view,height,0);
-            closeAnimator.addListener(new AnimatorListenerAdapter() {
+        closeAnimator = creatAnimation(view,height,0);
+        closeAnimator.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     view.setVisibility(View.GONE);
                 }
             });
-        }
         closeAnimator.start();
         expandAnimator.end();
     }
     private static ValueAnimator creatAnimation(View view,int start,int end){
         ValueAnimator animator = ValueAnimator.ofInt(start,end);
-        animator.addUpdateListener(animation -> {
-            ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-            layoutParams.height = (int) animation.getAnimatedValue();
-            view.setLayoutParams(layoutParams);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+                layoutParams.height = (int) animation.getAnimatedValue();
+                view.setLayoutParams(layoutParams);
+            }
         });
         animator.setDuration(150);
         return animator;

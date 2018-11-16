@@ -1,6 +1,6 @@
 package com.gnuey.one.ui.onepager.article;
 
-import android.annotation.SuppressLint;
+
 import android.util.Log;
 
 import com.gnuey.one.InitApp;
@@ -22,7 +22,7 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
 public class OneArticlePresenter extends RxPresenter<OneArticleContract.View> implements OneArticleContract.Presenter{
-    private static final String TAG = OneArticlePresenter.class.getSimpleName();
+    public static final String TAG = OneArticlePresenter.class.getSimpleName();
     private Retrofit retrofit;
     private List<OneFlattenBean> dataList = new ArrayList<>();
     @Inject
@@ -30,35 +30,6 @@ public class OneArticlePresenter extends RxPresenter<OneArticleContract.View> im
         this.retrofit = retrofit;
         Log.e(TAG, "OneArticlePresenter: create" );
     }
-
-//    @SuppressLint("CheckResult")
-//    @Override
-//    public void doLoadData(int code) {
-//        addSubscribe(retrofit.create(OnePagerApi.class).getOneList(code)
-//                .onBackpressureDrop()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(oneListBean -> {
-//                    if (oneListBean.getData().getContent_list() != null && oneListBean.getData().getContent_list().size() > 0) {
-////                            OneArticlePresenter.this.doSetAdapter(FlattenDataUtils.FlattenOneListBeanList(oneListBean));
-//
-//                        OneListBean.DataBean.ContentListBean contentListBean = new OneListBean.DataBean.ContentListBean();
-//                        contentListBean.setContent_type("-1");
-//                        contentListBean.setVol(oneListBean.getData().getMenu().getVol());
-//                        contentListBean.setList(oneListBean.getData().getMenu().getList());
-//                        oneListBean.getData().getContent_list().add(1,contentListBean);
-//                        OneArticlePresenter.this.doSetAdapter(oneListBean.getData().getContent_list());
-//
-//                    } else {
-//                        OneArticlePresenter.this.doShowNoMore();
-//                    }
-//
-//                }, throwable -> {
-//                    OneArticlePresenter.this.doShowNetError();
-//                    Log.e(TAG, "accept: throwable = "+throwable );
-//                }));
-//    }
-
 
     @Override
     public void doLoadData(String date) {
@@ -78,7 +49,7 @@ public class OneArticlePresenter extends RxPresenter<OneArticleContract.View> im
                             OneArticlePresenter.this.doShowNoMore();
                         }
 
-                        Log.e(TAG, "accept: oneListBeanNew Res = "+oneListBean.getRes() );
+                        Log.e(TAG, "accept: oneListBeanNew Res = "+oneListBean.getData().getDate());
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -103,6 +74,9 @@ public class OneArticlePresenter extends RxPresenter<OneArticleContract.View> im
 
     @Override
     public void doSetAdapter(List<OneFlattenBean> list) {
+        if(dataList.size()!=0){
+            dataList.clear();
+        }
         dataList.addAll(list);
         mView.onSetAdapter(dataList);
         mView.onHideLoading();
@@ -113,7 +87,6 @@ public class OneArticlePresenter extends RxPresenter<OneArticleContract.View> im
         if(dataList.size()!=0){
             dataList.clear();
         }
-        mView.onShowLoading();
         doLoadData(date);
     }
 

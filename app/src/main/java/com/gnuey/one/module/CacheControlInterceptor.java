@@ -2,6 +2,8 @@ package com.gnuey.one.module;
 
 import android.util.Log;
 
+import com.gnuey.one.ui.base.BaseListFragment;
+import com.gnuey.one.ui.onepager.OneTabLayout;
 import com.gnuey.one.utils.AppUtils;
 import com.gnuey.one.utils.NetWorkUtil;
 import com.gnuey.one.utils.RxBus;
@@ -9,6 +11,7 @@ import com.gnuey.one.utils.RxBus;
 import java.io.IOException;
 
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
 import okhttp3.CacheControl;
 import okhttp3.Interceptor;
@@ -27,18 +30,23 @@ public class CacheControlInterceptor implements Interceptor {
      */
     private boolean isRefresh = true;//是否刷新
     private final static int CODE = 504;
-
+    public CacheControlInterceptor(){
+        Flowable<Boolean> Flowable = RxBus.getInstance().register(BaseListFragment.TAG,Boolean.class);
+        Flowable.subscribe(new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean aBoolean) throws Exception {
+                isRefresh = aBoolean;
+            }
+        });
+    }
     @Override
     public Response intercept(Chain chain) throws IOException {
-        Flowable<Boolean> flowable = RxBus.getInstance().register(Boolean.class);
-        flowable.subscribe(aBoolean -> isRefresh = aBoolean);
-
         Request request = chain.request();
         request = request.newBuilder()
                 .cacheControl(CacheControl.FORCE_CACHE)
                 .build();
         Response response = chain.proceed(request);
-        Log.e("CacheControlInterceptor", "intercept: originalResponse " + response.code());
+        Log.e("CacheControlInterceptor", "intercept: originalResponse " + response.code()+ " "+isRefresh);
         if (response.code() == CODE || (isRefresh && NetWorkUtil.isNetworkConnected(AppUtils.getAppContext()))) {
             Response originalResponse = chain.proceed(chain.request());
             int maxAge = 10;
