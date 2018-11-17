@@ -19,9 +19,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </android.support.v4.view.ViewPager>
-    <include layout="@layout/base_recyclerview"
+    <RelativeLayout
         android:visibility="gone"
+        android:id="@+id/ry_feed"
         android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+        <include layout="@layout/base_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <Button
+            android:text="button"
+            android:background="@color/colorWhite"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+    </RelativeLayout>
+
 </RelativeLayout>

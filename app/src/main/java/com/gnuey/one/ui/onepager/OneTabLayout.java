@@ -7,11 +7,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 
 import com.gnuey.one.InitApp;
+import com.gnuey.one.MainActivity;
 import com.gnuey.one.R;
 
 import com.gnuey.one.Register;
@@ -43,6 +46,7 @@ import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
@@ -60,6 +64,9 @@ public class OneTabLayout extends BaseFragment implements FeedsListContract.View
     @BindView(R.id.view_pager)
     ViewPager viewPager;
 
+    @BindView(R.id.ry_feed)
+    RelativeLayout relativeLayout;
+
     @BindView(R.id.recycle_view)
     RecyclerView recyclerView;
 
@@ -68,10 +75,11 @@ public class OneTabLayout extends BaseFragment implements FeedsListContract.View
     private String currentDate = "";//当前页面的时间
     private OneArticleView currentArticleView;//当前显示页面
     private ArrayList<OneArticleView> fragmentList;
-    private boolean isShow;
+    private boolean isShow;//是否显示feedsList
+    private boolean isFromFeedsList;//是否来自跳转
     private int viewPageSelectedPosition;
     private InfiniteFragmentAdapter infiniteFragmentAdapter;
-    private int dayApart = 0;
+    private int dayApart = 0;//日差值
     private MultiTypeAdapter adapter;
     private Items oldItems = new Items();
     private Flowable<Integer> flowableDateUtils;
@@ -89,9 +97,10 @@ public class OneTabLayout extends BaseFragment implements FeedsListContract.View
                 .build()
                 .inject(this);
     }
-
+    private MainActivity mainActivity;
     @Override
     protected void initView(View view) {
+        mainActivity = (MainActivity) getActivity();
         initToolBar(toolbar, "");
         final GridLayoutManager layoutManager = new GridLayoutManager(mContext, SPAN_COUNT);
         adapter = new MultiTypeAdapter(oldItems);
@@ -133,13 +142,14 @@ public class OneTabLayout extends BaseFragment implements FeedsListContract.View
         flowableDateUtils = RxBus.getInstance().register(DateUtils.TAG, Integer.class);
         flowableDateUtils.subscribe(integer -> {
             dayApart = integer;//当前最新数据与当前日期相差多少
-            OneTabLayout.this.setToolbar(dayApart, INITIAL_POSITION);
+            OneTabLayout.this.setToolbar(dayApart);
         });
         flowableTabLayoutBinder = RxBus.getInstance().register(OneTabLayoutBinder.TAG, Integer.class);
         flowableTabLayoutBinder.subscribe(position -> {
             viewPager.setCurrentItem(position);
+            isFromFeedsList = true;
             isShow = false;
-            recyclerView.setVisibility(View.INVISIBLE);
+            relativeLayout.setVisibility(View.INVISIBLE);
         });
     }
 
@@ -147,14 +157,10 @@ public class OneTabLayout extends BaseFragment implements FeedsListContract.View
 
     private void getFeedsList() {
         isShow = isShow ? false : true;
-        recyclerView.setVisibility(isShow ? View.VISIBLE : View.INVISIBLE);
-        if (currentDate != null || !"".equals(currentDate) && isShow) {
-            if (!isAreadySet) {
-                isAreadySet = true;
-                mPresenter.getFeedsList(currentDate.substring(0, 7));
-            }
+        relativeLayout.setVisibility(isShow ? View.VISIBLE : View.INVISIBLE);
+        mainActivity.bottomNavigation.setVisibility(isShow ? View.INVISIBLE : View.VISIBLE);
+        mPresenter.getFeedsList(InitApp.getDateUtils().currentDateForMat4.substring(0, 7));
 
-        }
     }
 
     @Override
@@ -166,28 +172,22 @@ public class OneTabLayout extends BaseFragment implements FeedsListContract.View
         recyclerView.stopScroll();
     }
 
-    private void setToolbar(int dayApart, int position) {
-        Observable.create((ObservableOnSubscribe<String[]>) emitter -> emitter.onNext(InitApp.getDateUtils().getDate(dayApart))).subscribeOn(Schedulers.newThread())
+    private void setToolbar(int dayApart) {
+        Observable.create((ObservableOnSubscribe<String>) emitter -> emitter.onNext(InitApp.getDateUtils().getDate(dayApart))).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(strings -> {
-                    toolbar.setDate(strings[0]);
-                    currentDate = strings[1];
-                    if (position != INITIAL_POSITION) {
-                        OneTabLayout.this.initChildViewData(position, currentDate, 500);
-                    }
-                });
+                .subscribe(date -> toolbar.setDate(date));
 
     }
 
-    private void initChildViewData(int position, String currentDate, long delay) {
+    private void initChildViewData(int position, long delay) {
+        viewPageSelectedPosition = position % fragmentList.size();
+        currentArticleView = fragmentList.get(viewPageSelectedPosition);
+        currentArticleView.setUnableToLazyLoad(true);
         Observable.timer(delay, TimeUnit.MILLISECONDS).subscribe(aLong -> {
-            viewPageSelectedPosition = position % fragmentList.size();
-            currentArticleView = fragmentList.get(viewPageSelectedPosition);
-            currentArticleView.setUnableToLazyLoad(true);
             if (position == 0) {
                 currentArticleView.getDate("0").fetchData();
             } else {
-                currentArticleView.getDate(currentDate).fetchData();//.doOnRefresh();
+                currentArticleView.getDate(InitApp.getDateUtils().getSearchDate(position)).fetchData();//.doOnRefresh();
             }
         });
 
@@ -214,7 +214,9 @@ public class OneTabLayout extends BaseFragment implements FeedsListContract.View
 
     @Override
     public void onPageSelected(int position) {
-        setToolbar(dayApart + position, position);
+        setToolbar(dayApart + position);
+        initChildViewData(dayApart + position,500);
+
     }
 
     @Override

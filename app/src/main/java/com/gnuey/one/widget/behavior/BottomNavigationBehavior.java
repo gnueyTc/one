@@ -7,11 +7,19 @@ import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.support.design.widget.CoordinatorLayout;
+
+import com.gnuey.one.R;
+
 public class BottomNavigationBehavior extends CoordinatorLayout.Behavior<View>{
     private ObjectAnimator outAnimator, inAnimator;
 
     public BottomNavigationBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
+    }
+
+    @Override
+    public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency) {
+        return dependency.getId() == R.id.recycle_view;
     }
 
     @Override

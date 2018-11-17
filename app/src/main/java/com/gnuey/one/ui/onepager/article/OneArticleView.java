@@ -14,7 +14,7 @@ import com.gnuey.one.ui.base.BaseListFragment;
 import com.gnuey.one.utils.AdapterDiffCallBack;
 import com.gnuey.one.utils.GlideApp;
 import com.gnuey.one.utils.ImageLoader;
-
+import com.gnuey.one.utils.RxBus;
 
 
 import java.util.List;
@@ -90,6 +90,9 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
     @Override
     public void fetchData() {
         super.fetchData();
+        if("0".equals(date)){
+            RxBus.getInstance().post(BaseListFragment.TAG,true);
+        }
         mPresenter.doLoadData(date);
         Log.e(TAG, "fetchData: "+date);
     }

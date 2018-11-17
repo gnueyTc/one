@@ -70,27 +70,27 @@ public class DateUtils {
      * @param count 当前日期与最新数据日期是否有差距
      * @return 30 May.2018
      */
-    public String[] getDate(int count) {
+    public String getDate(int count) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, 0 - count);
         this.currentDateForMat3 = format3.format(calendar.getTime());
         this.currentDateForMat4 = format4.format(calendar.getTime());
-        return new String[]{currentDateForMat3,currentDateForMat4};
+        return currentDateForMat3;
 
     }
 
-//    /**
-//     * 获取当前月日
-//     *
-//     * @param count 当前日期与最新数据日期是否有差距
-//     * @return 2018-05-30
-//     */
-//    public String getSearchDate(int count) {
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.add(Calendar.DAY_OF_MONTH, 0 - count);
-//
-//        return currentDate;
-//    }
+    /**
+     * 获取当前月日
+     *
+     * @param count 当前日期与最新数据日期是否有差距
+     * @return 2018-05-30
+     */
+    public String getSearchDate(int count) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, 0 - count);
+        this.currentDateForMat4 = format4.format(calendar.getTime());
+        return currentDateForMat4;
+    }
 
     /**
      * 计算当前日期最新数据是否有差距，相差1天为1如此类推

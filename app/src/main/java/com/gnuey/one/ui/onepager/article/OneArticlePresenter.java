@@ -37,27 +37,20 @@ public class OneArticlePresenter extends RxPresenter<OneArticleContract.View> im
                 .onBackpressureDrop()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<OneListBean>() {
-                    @Override
-                    public void accept(OneListBean oneListBean) throws Exception {
-                        if (oneListBean.getData().getContent_list() != null && oneListBean.getData().getContent_list().size() > 0) {
-                            OneArticlePresenter.this.doSetAdapter(FlattenDataUtils.FlattenOneListBeanList(oneListBean));
-//                            OneArticlePresenter.this.doSetAdapter(oneListBean.getData().getContent_list());
-                            InitApp.getDateUtils().calculaDayApart(oneListBean.getData().getDate());
+                .subscribe(oneListBean -> {
+                    if (oneListBean.getData().getContent_list() != null && oneListBean.getData().getContent_list().size() > 0) {
+                        OneArticlePresenter.this.doSetAdapter(FlattenDataUtils.FlattenOneListBeanList(oneListBean));
+                        InitApp.getDateUtils().calculaDayApart(oneListBean.getData().getDate());
 
-                        } else {
-                            OneArticlePresenter.this.doShowNoMore();
-                        }
+                    } else {
+                        OneArticlePresenter.this.doShowNoMore();
+                    }
 
-                        Log.e(TAG, "accept: oneListBeanNew Res = "+oneListBean.getData().getDate());
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        mView.onShowNetError();
-                        mView.onHideLoading();
-                        Log.e(TAG, "accept: oneListBeanNew ERRO ="+throwable);
-                    }
+                    Log.e(TAG, "accept: oneListBeanNew Res = "+oneListBean.getData().getDate());
+                }, throwable -> {
+                    mView.onShowNetError();
+                    mView.onHideLoading();
+                    Log.e(TAG, "accept: oneListBeanNew ERRO ="+throwable);
                 }));
     }
 

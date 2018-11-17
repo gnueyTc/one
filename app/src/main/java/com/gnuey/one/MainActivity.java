@@ -18,7 +18,7 @@ import butterknife.BindView;
 public class MainActivity extends BaseActivity implements OnBottomNavigationSelectedListener {
 
     @BindView(R.id.bottom_navigation)
-    BottomNavigation bottomNavigation;
+    public BottomNavigation bottomNavigation;
 
     @BindView(R.id.container)
     FrameLayout frameLayout;

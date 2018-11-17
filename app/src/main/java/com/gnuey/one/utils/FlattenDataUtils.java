@@ -97,11 +97,14 @@ public class FlattenDataUtils {
 
             //
             OneFlattenBean.ShareInfoBean shareInfo = new OneFlattenBean.ShareInfoBean();
-            shareInfo.setUrl(contentListBean.getShare_info().getUrl());
-            shareInfo.setImage(contentListBean.getShare_info().getImage());
-            shareInfo.setContent(contentListBean.getShare_info().getContent());
-            shareInfo.setTitle(contentListBean.getShare_info().getTitle());
-            oneFlattenBean.setShare_info(shareInfo);
+            if(contentListBean.getShare_info()!=null){
+                shareInfo.setUrl(contentListBean.getShare_info().getUrl());
+                shareInfo.setImage(contentListBean.getShare_info().getImage());
+                shareInfo.setContent(contentListBean.getShare_info().getContent());
+                shareInfo.setTitle(contentListBean.getShare_info().getTitle());
+                oneFlattenBean.setShare_info(shareInfo);
+            }
+
 
             //
             OneFlattenBean.ShareListBean shareList = new OneFlattenBean.ShareListBean();
