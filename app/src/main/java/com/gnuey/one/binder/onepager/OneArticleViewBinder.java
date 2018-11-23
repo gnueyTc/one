@@ -16,6 +16,7 @@ import com.gnuey.one.InitApp;
 import com.gnuey.one.R;
 import com.gnuey.one.bean.onepager.OneFlattenBean;
 import com.gnuey.one.utils.Constant;
+import com.gnuey.one.utils.DateUtils;
 import com.gnuey.one.utils.GlideApp;
 import com.gnuey.one.utils.ImageLoader;
 
@@ -84,7 +85,7 @@ public class OneArticleViewBinder extends ItemViewBinder<OneFlattenBean,OneArtic
         holder.tv_title.setText(item.getTitle());
         holder.tv_author.setText(item.getAuthor().getUser_name());
         holder.tv_forward.setText(item.getForward());
-        holder.tv_date.setText(InitApp.getDateUtils().getTodayDate(item.getPost_date()));
+        holder.tv_date.setText(DateUtils.getTodayDate(item.getPost_date()));
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

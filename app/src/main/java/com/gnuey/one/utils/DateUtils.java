@@ -15,36 +15,34 @@ import io.reactivex.Observable;
  */
 public class DateUtils {
     public static final String TAG = DateUtils.class.getSimpleName();
-    private SimpleDateFormat format1;
-    private SimpleDateFormat format2;
-    private SimpleDateFormat format3;
-    private SimpleDateFormat format4;
+    private static SimpleDateFormat format1;
+    private static SimpleDateFormat format2;
+    private static SimpleDateFormat format3;
+    private static SimpleDateFormat format4;
     public final static int FORMAT_DDMMYYYY = 3;
     public final static int FORMAT_YYYYMMDD = 4;
-    private int dayApart = 0;
-    private boolean isDayApartAlreadyCalculated = false;
-    private String todayDate = "";
-    private String ortherDate = "";
-    public String currentDateForMat3 = "";//当前页面时间
-    public String currentDateForMat4 = "";//当前页面时间
-    public DateUtils() {
-        format1 = new SimpleDateFormat("M月dd日");
-        format2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        format3 = new SimpleDateFormat("dd MMM.yyyy", Locale.US);
-        format4 = new SimpleDateFormat("yyyy-MM-dd");
-        todayDate = getNow();
-
-    }
+    private static int dayApart = -1;
+    private static boolean isDayApartAlreadyCalculated;
+    private static String todayDate = "";
+    private static String ortherDate = "";
+    public static String currentDateForMat3 = "";//当前页面时间
+    public static String currentDateForMat4 = "";//当前页面时间
 
     /**
      * 获取当前月日
      */
-    public String getNow() {
+    public static String getNow() {
+        if(format1 == null){
+            format1 =  format1 = new SimpleDateFormat("M月dd日");;
+        }
         Date d = new Date();
         return format1.format(d);
     }
 
-    public String getNow(Date date) {
+    public static String getNow(Date date) {
+        if(format1 == null){
+            format1 =  format1 = new SimpleDateFormat("M月dd日");;
+        }
         return format1.format(date);
     }
 
@@ -54,7 +52,13 @@ public class DateUtils {
      * @param date 服务器获取的日期 2018-05-30 06:00:00
      * @return 5月30日
      */
-    public String getTodayDate(String date) {
+    public static String getTodayDate(String date) {
+        if(todayDate == null){
+            todayDate = getNow();
+        }
+        if(format2 == null){
+            format2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        }
         try {
             Date d = format2.parse(date);
             ortherDate = getNow(d);
@@ -70,25 +74,43 @@ public class DateUtils {
      * @param count 当前日期与最新数据日期是否有差距
      * @return 30 May.2018
      */
-    public String getDate(int count) {
+    public static String getDate(int count) {
+        Log.e(TAG, "getDate: " );
+        if(format3 == null){
+            format3 = new SimpleDateFormat("dd MMM.yyyy", Locale.US);
+        }
+        if(format4 == null){
+            format4 = new SimpleDateFormat("yyyy-MM-dd");
+        }
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, 0 - count);
-        this.currentDateForMat3 = format3.format(calendar.getTime());
-        this.currentDateForMat4 = format4.format(calendar.getTime());
+        currentDateForMat3 = format3.format(calendar.getTime());
+        currentDateForMat4 = format4.format(calendar.getTime());
         return currentDateForMat3;
 
     }
-
+    public static String getDate(){
+        return currentDateForMat4;
+    }
+    public static String getMonth(int count){
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH,count);
+        Log.e(TAG, "getMonth: "+ format4.format(calendar.getTime()));
+        return format4.format(calendar.getTime());
+    }
     /**
      * 获取当前月日
      *
      * @param count 当前日期与最新数据日期是否有差距
      * @return 2018-05-30
      */
-    public String getSearchDate(int count) {
+    public static String getSearchDate(int count) {
+        if(format4 == null){
+            format4 = new SimpleDateFormat("yyyy-MM-dd");
+        }
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, 0 - count);
-        this.currentDateForMat4 = format4.format(calendar.getTime());
+        currentDateForMat4 = format4.format(calendar.getTime());
         return currentDateForMat4;
     }
 
@@ -97,9 +119,9 @@ public class DateUtils {
      *
      * @param date 服务器获取的日期 2018-05-30 06:00:00
      */
-    public void calculaDayApart(String date) {
-        if (isDayApartAlreadyCalculated) {
-            return;
+    public static void calculaDayApart(String date) {
+        if(format4 == null){
+            format4 = new SimpleDateFormat("yyyy-MM-dd");
         }
         try {
             Calendar calendar = Calendar.getInstance();
@@ -107,7 +129,6 @@ public class DateUtils {
             Date d1 = format4.parse(date);
             dayApart = (int) ((d0.getTime() - d1.getTime()) / (24 * 60 * 60 * 1000));
             RxBus.getInstance().post(TAG,dayApart);
-            isDayApartAlreadyCalculated = true;
         } catch (ParseException e) {
             e.printStackTrace();
         }

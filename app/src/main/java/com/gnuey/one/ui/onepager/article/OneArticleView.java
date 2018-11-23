@@ -1,6 +1,7 @@
 package com.gnuey.one.ui.onepager.article;
 
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
@@ -14,7 +15,7 @@ import com.gnuey.one.ui.base.BaseListFragment;
 import com.gnuey.one.utils.AdapterDiffCallBack;
 import com.gnuey.one.utils.GlideApp;
 import com.gnuey.one.utils.ImageLoader;
-import com.gnuey.one.utils.RxBus;
+
 
 
 import java.util.List;
@@ -33,12 +34,20 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
     private String date = "0";
 
     public OneArticleView getDate(String date){
-        this.date = date;
-        Log.e(TAG, "initData: date ="+ date );
+//        this.date = date;
+//        Log.e(TAG, "initData: date ="+ date );
+        Bundle bundle = new Bundle();
+        bundle.putString(TAG,date);
+        this.setArguments(bundle);
         return this;
     }
-    public void setUnableToLazyLoad(boolean isUnable){
-        isUnableToLoad = isUnable;
+    int positon = -1;
+    public OneArticleView setPosition(int position){
+        positon = position;
+        return this;
+    }
+    public void setAbleToLazyLoad(boolean isAble){
+        isAbleToLoad = isAble;
     }
     @Override
     protected void initView(View view) {
@@ -61,9 +70,9 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
     @Override
     public void clearData() {
 //        Log.e(TAG, "clearData: " );
-        if(mContext!=null){
-            ImageLoader.clearMemory(GlideApp.get(mContext));
-        }
+//        if(mContext!=null){
+//            ImageLoader.clearMemory(GlideApp.get(mContext));
+//        }
 
     }
 
@@ -90,24 +99,27 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
     @Override
     public void fetchData() {
         super.fetchData();
-        if("0".equals(date)){
-            RxBus.getInstance().post(BaseListFragment.TAG,true);
+        isAbleToLoad = false;
+        if(this.getArguments()!=null){
+            mPresenter.doLoadData(getArguments().getString(TAG));
+            Log.e(TAG, "fetchData: "+getArguments().getString(TAG)+" position = "+positon);
+        }else {
+            mPresenter.doLoadData(date);
+            Log.e(TAG, "fetchData: "+date+" position = "+positon);
         }
-        mPresenter.doLoadData(date);
-        Log.e(TAG, "fetchData: "+date);
+//        mPresenter.doLoadData(getArguments()==null?date:getArguments().getString(TAG));
     }
 
     @Override
     public void doOnRefresh() {
         super.doOnRefresh();
         mPresenter.doRefresh(date);
-        Log.e(TAG, "doOnRefresh: "+date);
+        Log.e(TAG, "doOnRefresh: "+date+" position = "+positon);
     }
 
     @Override
     public void onDestroy() {
         mPresenter.detachView();
-//        RxBus.getInstance().unregisterAll();
         super.onDestroy();
         Log.e(TAG, "OneArticleView: onDestroy" );
     }

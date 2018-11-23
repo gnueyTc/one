@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <Button
+        android:id="@+id/bt_select"
+        android:text="button"
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <com.gnuey.one.widget.CustomRecyclerview
+        android:overScrollMode="always"
+        android:background="@color/colorWhite"
+        android:id="@+id/recycle_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</merge>

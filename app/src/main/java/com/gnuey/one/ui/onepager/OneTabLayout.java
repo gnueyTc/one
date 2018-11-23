@@ -1,43 +1,37 @@
 package com.gnuey.one.ui.onepager;
 
 
-import android.graphics.Rect;
+import android.annotation.SuppressLint;
 import android.support.v4.view.ViewPager;
-
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 
-import com.gnuey.one.InitApp;
 import com.gnuey.one.MainActivity;
 import com.gnuey.one.R;
 
 import com.gnuey.one.Register;
-import com.gnuey.one.adapter.InfiniteFragmentAdapter;
+import com.gnuey.one.adapter.onetab.DepthPageTransformer;
+import com.gnuey.one.adapter.onetab.InfiniteFragmentAdapter;
 
+import com.gnuey.one.adapter.helper.ViewPageHelper;
 import com.gnuey.one.binder.onepager.OneTabLayoutBinder;
 import com.gnuey.one.component.AppComponent;
 
 import com.gnuey.one.component.DaggerFragmentComponent;
 import com.gnuey.one.ui.base.BaseFragment;
-import com.gnuey.one.ui.base.BaseListFragment;
 import com.gnuey.one.ui.onepager.article.OneArticleView;
 
 import com.gnuey.one.utils.AdapterDiffCallBack;
 import com.gnuey.one.utils.DateUtils;
 import com.gnuey.one.utils.RxBus;
 import com.gnuey.one.widget.OneTabToolbar;
-
+import com.gnuey.one.widget.TimeSelectLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 
 import javax.inject.Inject;
 
@@ -46,6 +40,7 @@ import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import me.drakeet.multitype.Items;
@@ -64,14 +59,15 @@ public class OneTabLayout extends BaseFragment implements FeedsListContract.View
     @BindView(R.id.view_pager)
     ViewPager viewPager;
 
-    @BindView(R.id.ry_feed)
-    RelativeLayout relativeLayout;
+//    @BindView(R.id.ry_feed)
+//    RelativeLayout relativeLayout;
 
-    @BindView(R.id.recycle_view)
-    RecyclerView recyclerView;
+    @BindView(R.id.ry_time)
+    TimeSelectLayout timeSelectLayout;
+//    @BindView(R.id.recycle_view)
+//    CustomRecyclerview recyclerView;
 
-    private final static int SPAN_COUNT = 2;//列表item个数
-    private final static int INITIAL_POSITION = -1;//初始position
+    private MainActivity mainActivity;
     private String currentDate = "";//当前页面的时间
     private OneArticleView currentArticleView;//当前显示页面
     private ArrayList<OneArticleView> fragmentList;
@@ -79,11 +75,12 @@ public class OneTabLayout extends BaseFragment implements FeedsListContract.View
     private boolean isFromFeedsList;//是否来自跳转
     private int viewPageSelectedPosition;
     private InfiniteFragmentAdapter infiniteFragmentAdapter;
-    private int dayApart = 0;//日差值
+    private int dayApart = -1;//日差值
     private MultiTypeAdapter adapter;
     private Items oldItems = new Items();
     private Flowable<Integer> flowableDateUtils;
     private Flowable<Integer> flowableTabLayoutBinder;
+    private ViewPageHelper viewPageHelper;
 
     @Override
     protected int attachLayoutId() {
@@ -97,69 +94,63 @@ public class OneTabLayout extends BaseFragment implements FeedsListContract.View
                 .build()
                 .inject(this);
     }
-    private MainActivity mainActivity;
+
     @Override
     protected void initView(View view) {
         mainActivity = (MainActivity) getActivity();
         initToolBar(toolbar, "");
-        final GridLayoutManager layoutManager = new GridLayoutManager(mContext, SPAN_COUNT);
         adapter = new MultiTypeAdapter(oldItems);
         Register.registerOneTablayoutItem(adapter);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+        timeSelectLayout.setGetDateListener(new TimeSelectLayout.GetDateListener() {
             @Override
-            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                super.getItemOffsets(outRect, view, parent, state);
-                outRect.bottom = 80;
-                if (parent.getChildLayoutPosition(view) % 2 == 0) {
-                    outRect.left = 50;
-                    outRect.right = 120;
-                } else {
-                    outRect.left = 120;
-                    outRect.right = 50;
-                }
+            public void getDate(String date) {
+                mPresenter.getFeedsList(date);
             }
         });
-        recyclerView.setAdapter(adapter);
+
+        timeSelectLayout.setAdapter(adapter);
+//        viewPager.setPageTransformer(true,new DepthPageTransformer());
         viewPager.addOnPageChangeListener(this);
         viewPager.setOffscreenPageLimit(3);
+        viewPageHelper = new ViewPageHelper(viewPager);
         toolbar.setDateOnClickListener(() -> getFeedsList());
         mPresenter.attachView(this);
     }
 
 
+    @SuppressLint("CheckResult")
     @Override
     protected void initData() throws NullPointerException {
         fragmentList = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
-            fragmentList.add(new OneArticleView());
+            fragmentList.add(new OneArticleView().setPosition(i));
         }
         currentArticleView = fragmentList.get(0);//初始化时获取第一个显示页面
+        currentArticleView.setAbleToLazyLoad(true);//启用懒加载
         infiniteFragmentAdapter = new InfiniteFragmentAdapter(getChildFragmentManager(), fragmentList);
         viewPager.setAdapter(infiniteFragmentAdapter);
         flowableDateUtils = RxBus.getInstance().register(DateUtils.TAG, Integer.class);
         flowableDateUtils.subscribe(integer -> {
-            dayApart = integer;//当前最新数据与当前日期相差多少
-            OneTabLayout.this.setToolbar(dayApart);
-        });
-        flowableTabLayoutBinder = RxBus.getInstance().register(OneTabLayoutBinder.TAG, Integer.class);
-        flowableTabLayoutBinder.subscribe(position -> {
-            viewPager.setCurrentItem(position);
-            isFromFeedsList = true;
+            OneTabLayout.this.setToolbar(integer);
+            if (dayApart == -1) {
+                dayApart = integer;//最新数据的日差
+                return;
+            }
+            viewPageHelper.setCurrentItem(integer - dayApart, false);
             isShow = false;
-            relativeLayout.setVisibility(View.INVISIBLE);
+            timeSelectLayout.show(isShow);
+            Log.e(TAG, "initData: dayApart" + dayApart);
         });
-    }
 
-    private boolean isAreadySet;
+    }
 
     private void getFeedsList() {
         isShow = isShow ? false : true;
-        relativeLayout.setVisibility(isShow ? View.VISIBLE : View.INVISIBLE);
+        timeSelectLayout.show(isShow);
         mainActivity.bottomNavigation.setVisibility(isShow ? View.INVISIBLE : View.VISIBLE);
-        mPresenter.getFeedsList(InitApp.getDateUtils().currentDateForMat4.substring(0, 7));
+        if (isShow) {
+            mPresenter.getFeedsList(DateUtils.getDate().substring(0, 7));
+        }
 
     }
 
@@ -169,27 +160,13 @@ public class OneTabLayout extends BaseFragment implements FeedsListContract.View
         AdapterDiffCallBack.create(oldItems, newItems, adapter);
         oldItems.clear();
         oldItems.addAll(newItems);
-        recyclerView.stopScroll();
+//        recyclerView.stopScroll();
     }
 
     private void setToolbar(int dayApart) {
-        Observable.create((ObservableOnSubscribe<String>) emitter -> emitter.onNext(InitApp.getDateUtils().getDate(dayApart))).subscribeOn(Schedulers.newThread())
+        Observable.create((ObservableOnSubscribe<String>) emitter -> emitter.onNext(DateUtils.getDate(dayApart))).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(date -> toolbar.setDate(date));
-
-    }
-
-    private void initChildViewData(int position, long delay) {
-        viewPageSelectedPosition = position % fragmentList.size();
-        currentArticleView = fragmentList.get(viewPageSelectedPosition);
-        currentArticleView.setUnableToLazyLoad(true);
-        Observable.timer(delay, TimeUnit.MILLISECONDS).subscribe(aLong -> {
-            if (position == 0) {
-                currentArticleView.getDate("0").fetchData();
-            } else {
-                currentArticleView.getDate(InitApp.getDateUtils().getSearchDate(position)).fetchData();//.doOnRefresh();
-            }
-        });
 
     }
 
@@ -199,7 +176,6 @@ public class OneTabLayout extends BaseFragment implements FeedsListContract.View
             fragmentList.clear();
             fragmentList = null;
         }
-        RxBus.getInstance().unRegister(BaseListFragment.TAG);
         RxBus.getInstance().unRegister(DateUtils.TAG);
         RxBus.getInstance().unRegister(OneTabLayoutBinder.TAG);
         mPresenter.detachView();
@@ -214,8 +190,14 @@ public class OneTabLayout extends BaseFragment implements FeedsListContract.View
 
     @Override
     public void onPageSelected(int position) {
-        setToolbar(dayApart + position);
-        initChildViewData(dayApart + position,500);
+        viewPageSelectedPosition = position % fragmentList.size();//取模获取当前显示的view的position
+        currentArticleView = fragmentList.get(viewPageSelectedPosition);
+        setToolbar(position + dayApart);//如果只是滑动而不是来自setCurrentItem的跳转必须加上日差
+        Log.e(TAG, "onPageSelected: " + dayApart);
+        currentArticleView.getDate(DateUtils.getSearchDate(position + dayApart));
+        Observable.timer(1000, TimeUnit.MILLISECONDS).subscribe(aLong -> {
+            currentArticleView.fetchData();
+        });
 
     }
 

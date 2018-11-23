@@ -58,7 +58,7 @@ public abstract class BaseListFragment extends LazyLoadFragment implements IBase
 
     @Override
     public void fetchData() {
-        RxBus.getInstance().post(TAG,false);
+//        RxBus.getInstance().post(TAG,false);
 //        doOnRefresh();
         Log.e(TAG, "fetchData: ");
 
@@ -66,7 +66,7 @@ public abstract class BaseListFragment extends LazyLoadFragment implements IBase
 
     @Override
     public void doOnRefresh() {
-        RxBus.getInstance().post(TAG,true);
+//        RxBus.getInstance().post(TAG,true);
     }
 
     @Override

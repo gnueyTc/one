@@ -1,9 +1,11 @@
-package com.gnuey.one.adapter;
+package com.gnuey.one.adapter.onetab;
 
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.Log;
 import android.view.ViewGroup;
 
 import com.gnuey.one.ui.onepager.article.OneArticleView;
@@ -27,14 +29,16 @@ public class InfiniteFragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 1000;
+        return 3000;
     }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
+        Log.e("InfiniteFragmentAdapter", "instantiateItem: position "+ position);
         position = position % fragmentsList.size();
         return super.instantiateItem(container, position);
     }
+
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {

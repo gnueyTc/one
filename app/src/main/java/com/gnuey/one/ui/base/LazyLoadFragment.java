@@ -23,7 +23,7 @@ public abstract class LazyLoadFragment extends BaseFragment  {
      * 是否启用懒加载
      */
 
-    protected boolean isUnableToLoad;
+    protected boolean isAbleToLoad;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -56,7 +56,8 @@ public abstract class LazyLoadFragment extends BaseFragment  {
      *
      */
     public void prepareFetchData() {
-        if (isVisibleToUser && isViewInitiated && !isUnableToLoad) {
+        if (isVisibleToUser && isViewInitiated && isAbleToLoad) {
+            Log.e("LazyLoad", "prepareFetchData: " );
             fetchData();
             isDataInitiated = true;
         }

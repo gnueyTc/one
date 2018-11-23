@@ -46,7 +46,7 @@ public class ApiModule {
     @Singleton
     public Retrofit RetrofitFactory(OkHttpClient okHttpClient) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(OnePagerApi.HOST)
+                .baseUrl(Constant.API_BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)

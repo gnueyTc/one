@@ -24,7 +24,7 @@ public class InitApp extends Application {
     public void onCreate() {
         super.onCreate();
         AppUtils.init(this.getApplicationContext());
-        dateUtils = new DateUtils();
+//        dateUtils = new DateUtils();
         sIntance = this;
         initComponent();
         sRefWatcher = LeakCanary.install(this);
@@ -36,9 +36,9 @@ public class InitApp extends Application {
                 .apiModule(new ApiModule())
                 .build();
     }
-    public static DateUtils getDateUtils(){
-        return dateUtils;
-    }
+//    public static DateUtils getDateUtils(){
+//        return dateUtils;
+//    }
     public static InitApp getApplication(){
         return sIntance;
     }

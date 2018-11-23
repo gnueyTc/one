@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorWhite"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
@@ -10,7 +11,6 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_size">
-
     </com.gnuey.one.widget.OneTabToolbar>
 
     <android.support.v4.view.ViewPager
@@ -19,21 +19,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </android.support.v4.view.ViewPager>
-    <RelativeLayout
-        android:visibility="gone"
-        android:id="@+id/ry_feed"
-        android:layout_below="@+id/toolbar"
+
+    <com.gnuey.one.widget.TimeSelectLayout
+        android:id="@+id/ry_time"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <include layout="@layout/base_recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-        <Button
-            android:text="button"
-            android:background="@color/colorWhite"
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="50dp" />
-    </RelativeLayout>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:visibility="gone"
+        app:button_text="button2"
+        app:button_top="false"
+        app:layout_manager_normal="false">
+    </com.gnuey.one.widget.TimeSelectLayout>
+
 
 </RelativeLayout>

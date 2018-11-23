@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.gnuey.one.InitApp;
 import com.gnuey.one.R;
 import com.gnuey.one.bean.FeedsListBean;
+import com.gnuey.one.utils.DateUtils;
 import com.gnuey.one.utils.GlideApp;
 import com.gnuey.one.utils.ImageLoader;
 import com.gnuey.one.utils.RxBus;
@@ -38,10 +39,18 @@ public class OneTabLayoutBinder extends ItemViewBinder<FeedsListBean.DataBean,On
         final Context context = holder.itemView.getContext();
         ImageLoader.loadNormal(context,item.getCover(),holder.iv_cover);
         holder.tv_date.setText(item.getDate());
-        if(holder.tv_date.getText().equals(InitApp.getDateUtils().currentDateForMat4)){
-//            holder.ll_feed.setSelected(true);
+        if(holder.tv_date.getText().equals(DateUtils.getDate())){
+            holder.ll_feed.setSelected(true);
+        }else {
+            holder.ll_feed.setSelected(false);
         }
-        holder.ll_feed.setOnClickListener(v -> RxBus.getInstance().post(TAG,holder.getLayoutPosition()));
+        holder.ll_feed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                RxBus.getInstance().post(TAG, holder.getLayoutPosition());
+                DateUtils.calculaDayApart(item.getDate());
+            }
+        });
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

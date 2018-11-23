@@ -8,6 +8,7 @@ import com.gnuey.one.api.OnePagerApi;
 import com.gnuey.one.bean.onepager.OneFlattenBean;
 import com.gnuey.one.bean.onepager.OneListBean;
 import com.gnuey.one.ui.base.RxPresenter;
+import com.gnuey.one.utils.DateUtils;
 import com.gnuey.one.utils.FlattenDataUtils;
 
 
@@ -40,13 +41,15 @@ public class OneArticlePresenter extends RxPresenter<OneArticleContract.View> im
                 .subscribe(oneListBean -> {
                     if (oneListBean.getData().getContent_list() != null && oneListBean.getData().getContent_list().size() > 0) {
                         OneArticlePresenter.this.doSetAdapter(FlattenDataUtils.FlattenOneListBeanList(oneListBean));
-                        InitApp.getDateUtils().calculaDayApart(oneListBean.getData().getDate());
-
+                        if("0".equals(date)){
+                            DateUtils.calculaDayApart(oneListBean.getData().getDate());
+                            Log.e(TAG, "accept: oneListBeanNew Res = "+oneListBean.getData().getDate());
+                        }
                     } else {
                         OneArticlePresenter.this.doShowNoMore();
                     }
 
-                    Log.e(TAG, "accept: oneListBeanNew Res = "+oneListBean.getData().getDate());
+
                 }, throwable -> {
                     mView.onShowNetError();
                     mView.onHideLoading();

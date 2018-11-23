@@ -47,6 +47,17 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        // Fragment 逐个出栈
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+        if (count == 0) {
+            super.onBackPressed();
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
     }
