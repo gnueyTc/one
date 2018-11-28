@@ -3,8 +3,14 @@ package com.gnuey.one;
 import android.support.annotation.NonNull;
 
 
-import com.gnuey.one.bean.FeedsListBean;
+import com.gnuey.one.bean.activity.read.AuthorBean;
+import com.gnuey.one.bean.activity.read.CommentBean;
+import com.gnuey.one.bean.activity.read.WebBean;
+import com.gnuey.one.bean.onepager.FeedsListBean;
 import com.gnuey.one.bean.onepager.OneFlattenBean;
+import com.gnuey.one.binder.activity.ReadActivityAuthorBinder;
+import com.gnuey.one.binder.activity.ReadActivityCommentBinder;
+import com.gnuey.one.binder.activity.ReadActivityWebViewBinder;
 import com.gnuey.one.binder.onepager.OneArticleViewBinder;
 import com.gnuey.one.binder.onepager.OneArticleViewHeadBinder;
 import com.gnuey.one.binder.onepager.OneArticleViewMenuBinder;
@@ -48,5 +54,11 @@ public class Register {
     }
     public static void registerOneArticleMenuItem(@NonNull MultiTypeAdapter adapter){
         adapter.register(OneFlattenBean.MenuBean.ListBean.class,new OneArticleViewMenuItemBinder());
+    }
+
+    public static void registerReadActivityItem(@NonNull MultiTypeAdapter adapter){
+        adapter.register(WebBean.class,new ReadActivityWebViewBinder());
+        adapter.register(AuthorBean.DataBean.class,new ReadActivityAuthorBinder());
+        adapter.register(CommentBean.DataBeanX.DataBean.class,new ReadActivityCommentBinder());
     }
 }

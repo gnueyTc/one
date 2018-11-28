@@ -1,20 +1,15 @@
 package com.gnuey.one.ui.onepager;
 
-import android.util.Log;
-
 import com.gnuey.one.api.OnePagerApi;
-import com.gnuey.one.bean.FeedsListBean;
+import com.gnuey.one.bean.onepager.FeedsListBean;
 import com.gnuey.one.ui.base.RxPresenter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 

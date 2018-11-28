@@ -19,4 +19,5 @@ public class Constant {
     public static final String TYPE_QA = "3";
     public static final String TYPE_MUSIC = "4";
     public static final String TYPE_MOVIE = "5";
+
 }

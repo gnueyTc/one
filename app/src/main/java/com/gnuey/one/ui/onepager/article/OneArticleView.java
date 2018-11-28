@@ -52,13 +52,11 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
     @Override
     protected void initView(View view) {
         super.initView(view);
-        Log.e(TAG, "initView: ");
         mPresenter.attachView(this);
-        oldItems.clear();//因为viewPager缓存原因，当复用到此view时候必须清空，不然会跟第一次加载的数据重叠
         adapter = new MultiTypeAdapter(oldItems);
         Register.registerOneArticleItem(adapter);
         recyclerView.setAdapter(adapter);
-
+        Log.e(TAG, "initView: ");
     }
 
     @Override
@@ -87,12 +85,14 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
 
 
     @Override
-    public void onSetAdapter(final List<?> list) {
+    public void onSetAdapter(List<?> list) {
         Items newItems = new Items(list);
+        Log.e(TAG, "onSetAdapter: oldItems = " + oldItems.size() + " newItems = " + newItems.size() );
         AdapterDiffCallBack.create(oldItems, newItems, adapter);
         oldItems.clear();
         oldItems.addAll(newItems);
-        recyclerView.stopScroll();
+
+
 
     }
 
@@ -101,13 +101,15 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
         super.fetchData();
         isAbleToLoad = false;
         if(this.getArguments()!=null){
-            mPresenter.doLoadData(getArguments().getString(TAG));
-            Log.e(TAG, "fetchData: "+getArguments().getString(TAG)+" position = "+positon);
+            date = getArguments().getString(TAG);
+            mPresenter.doLoadData(date);
+//            Log.e(TAG, "fetchData: "+getArguments().getString(TAG)+" position = "+positon);
         }else {
             mPresenter.doLoadData(date);
-            Log.e(TAG, "fetchData: "+date+" position = "+positon);
+//            Log.e(TAG, "fetchData: "+date+" position = "+positon);
         }
 //        mPresenter.doLoadData(getArguments()==null?date:getArguments().getString(TAG));
+        Log.e(TAG, "fetchData: position = "+positon);
     }
 
     @Override

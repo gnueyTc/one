@@ -84,16 +84,6 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
         initData();
     }
 
-    /**
-     * 绑定生命周期
-     */
-    @Override
-    public <X> AutoDisposeConverter<X> bindAutoDispose() {
-        return AutoDispose.autoDisposable(AndroidLifecycleScopeProvider
-                .from(this, Lifecycle.Event.ON_DESTROY));
-    }
-
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

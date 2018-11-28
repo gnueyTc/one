@@ -1,14 +1,11 @@
 package com.gnuey.one.ui.base;
 
-import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
-import com.gnuey.one.InitApp;
 import com.gnuey.one.R;
 import com.gnuey.one.utils.NetWorkUtil;
-import com.gnuey.one.utils.RxBus;
 import com.gnuey.one.utils.ToastUtils;
 import com.gnuey.one.widget.RefreshHeader;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
@@ -29,7 +26,7 @@ public abstract class BaseListFragment extends LazyLoadFragment implements IBase
 
     @Override
     protected int attachLayoutId() {
-        return R.layout.fragment_list;
+        return R.layout.base_list;
     }
 
     @Override

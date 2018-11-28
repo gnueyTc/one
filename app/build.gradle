@@ -69,4 +69,7 @@ dependencies {
 //    debugImplementation 'com.github.markzhai:blockcanary-android:1.5.0'
 //    releaseImplementation 'com.github.markzhai:blockcanary-no-op:1.5.0'
     implementation 'com.weigan:loopView:0.1.2'
+
+    // 解析HTML
+    implementation 'org.jsoup:jsoup:1.11.3'
 }

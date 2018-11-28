@@ -1,4 +1,4 @@
-package com.gnuey.one.bean;
+package com.gnuey.one.bean.onepager;
 
 import java.util.List;
 

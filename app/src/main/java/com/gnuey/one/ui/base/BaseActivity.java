@@ -32,7 +32,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
     }
-
     /**
      * 返回布局
      */

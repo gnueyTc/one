@@ -26,4 +26,8 @@
     <string name="music_">-音乐-</string>
     <string name="movie_">-影视-</string>
     <string name="radio_">-电台-</string>
+
+    <string name="author">作者</string>
+    <string name="comment_list">评论列表</string>
+    <string name="hot_comment">以上是热门评论</string>
 </resources>

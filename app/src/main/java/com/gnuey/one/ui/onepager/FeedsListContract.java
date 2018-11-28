@@ -1,7 +1,6 @@
 package com.gnuey.one.ui.onepager;
 
 
-import com.gnuey.one.bean.FeedsListBean;
 import com.gnuey.one.ui.base.IBasePresenter;
 import com.gnuey.one.ui.base.IBaseView;
 

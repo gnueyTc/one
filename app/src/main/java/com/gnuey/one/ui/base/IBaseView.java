@@ -26,9 +26,5 @@ public interface IBaseView {
         void onShowNoMore();
 
 
-        /**
-         * 绑定生命周期
-         */
-        <K>AutoDisposeConverter<K> bindAutoDispose();
 
 }

@@ -1,7 +1,9 @@
 package com.gnuey.one.binder.onepager;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 
 import com.gnuey.one.R;
 import com.gnuey.one.bean.onepager.OneFlattenBean;
+import com.gnuey.one.ui.activity.read.ReadActivity;
 import com.gnuey.one.utils.Constant;
 import com.gnuey.one.utils.ToastUtils;
 
@@ -28,8 +31,15 @@ public class OneArticleViewMenuItemBinder extends ItemViewBinder<OneFlattenBean.
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull OneFlattenBean.MenuBean.ListBean item) {
+        final Context context = holder.itemView.getContext();
         holder.tv_subhead.setText(item.getTitle());
-        holder.ly_menu_item.setOnClickListener(v -> ToastUtils.showSingleToast("item"));
+        holder.ly_menu_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("MenuItemBinder", "onClick: "+item.getContent_type()+" - "+item.getContent_id() );
+                ReadActivity.startReadDetailActivity(context, new String[]{getType(item.getContent_type()), item.getContent_id()});
+            }
+        });
         if(item.getTag()!=null){
             holder.tv_title.setText(item.getTag().getTitle());
             return;
@@ -55,7 +65,29 @@ public class OneArticleViewMenuItemBinder extends ItemViewBinder<OneFlattenBean.
         }
 
     }
-
+    private String getType(String type){
+        String param = "";
+        switch (type){
+            case Constant.TYPE_READ:
+                param =  "essay";
+                break;
+            case Constant.TYPE_SERIALIZE:
+                param = "serialcontent";
+                break;
+            case Constant.TYPE_QA:
+                param = "question";
+                break;
+            case Constant.TYPE_MUSIC:
+                param = "music";
+                break;
+            case Constant.TYPE_MOVIE:
+                param = "movie";
+                break;
+            default:
+                break;
+        }
+        return param;
+    }
     public class ViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout ly_menu_item;
         private TextView tv_title;

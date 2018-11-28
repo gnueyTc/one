@@ -3,22 +3,17 @@ package com.gnuey.one.binder.onepager;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.gnuey.one.InitApp;
 import com.gnuey.one.R;
-import com.gnuey.one.bean.FeedsListBean;
+import com.gnuey.one.bean.onepager.FeedsListBean;
 import com.gnuey.one.utils.DateUtils;
-import com.gnuey.one.utils.GlideApp;
 import com.gnuey.one.utils.ImageLoader;
-import com.gnuey.one.utils.RxBus;
 
 import me.drakeet.multitype.ItemViewBinder;
 

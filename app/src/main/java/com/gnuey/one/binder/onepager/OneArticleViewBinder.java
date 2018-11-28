@@ -3,7 +3,6 @@ package com.gnuey.one.binder.onepager;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +11,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.gnuey.one.InitApp;
 import com.gnuey.one.R;
 import com.gnuey.one.bean.onepager.OneFlattenBean;
+import com.gnuey.one.ui.activity.read.ReadActivity;
 import com.gnuey.one.utils.Constant;
 import com.gnuey.one.utils.DateUtils;
-import com.gnuey.one.utils.GlideApp;
 import com.gnuey.one.utils.ImageLoader;
 
 import me.drakeet.multitype.ItemViewBinder;
@@ -39,6 +37,12 @@ public class OneArticleViewBinder extends ItemViewBinder<OneFlattenBean,OneArtic
     protected void onBindViewHolder(@NonNull final ViewHolder holder, @NonNull OneFlattenBean item) {
         final Context context = holder.itemView.getContext();
         String title = item.getTag_list().size()==0?"":item.getTag_list().get(0).getTitle();
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ReadActivity.startReadDetailActivity(context,new String[]{getType(item.getContent_type()),item.getContent_id()});
+            }
+        });
         if(!"".equals(title)){
             holder.tv_mainTitle.setText("-"+title+"-");
         }else {
@@ -57,10 +61,6 @@ public class OneArticleViewBinder extends ItemViewBinder<OneFlattenBean,OneArtic
                     break;
                 case Constant.TYPE_MOVIE:
                     holder.tv_mainTitle.setText(R.string.movie_);
-                    holder.tv_subtitle.setVisibility(View.VISIBLE);
-                    holder.tv_subtitle.setText("——《"+item.getSubtitle()+"》");
-                    holder.layout_default.setBackgroundResource(R.drawable.feeds_movie);
-                    holder.iv_image.setLayoutParams(holder.layoutParams);
                     break;
                 default:
                     holder.tv_mainTitle.setText("-"+title+"-");
@@ -69,7 +69,7 @@ public class OneArticleViewBinder extends ItemViewBinder<OneFlattenBean,OneArtic
 
         }
         if(item.getContent_type().equals(Constant.TYPE_MUSIC)){
-            Log.e(TAG, "onBindViewHolder: TYPE_MUSIC" );
+//            Log.e(TAG, "onBindViewHolder: TYPE_MUSIC" );
             holder.layout_default.setVisibility(View.GONE);//默认布局
             holder.layout_music.setVisibility(View.VISIBLE);//music布局
             ImageLoader.displayImage(context,item.getImg_url(),holder.iv_cover);//加载圆形图片
@@ -79,7 +79,20 @@ public class OneArticleViewBinder extends ItemViewBinder<OneFlattenBean,OneArtic
                 holder.iv_play.setImageResource(isPlay ? R.drawable.pause : R.drawable.play);
                 isPlay = isPlay ? false : true;
             });
-        }else {
+        }else if(item.getContent_type().equals(Constant.TYPE_MOVIE)){
+            holder.tv_subtitle.setVisibility(View.VISIBLE);
+            holder.tv_subtitle.setText("——《"+item.getSubtitle()+"》");
+            holder.layout_default.setBackgroundResource(R.drawable.feeds_movie);
+            holder.layoutParams.setMargins(0,50,0,50);
+            holder.iv_image.setLayoutParams(holder.layoutParams);
+            ImageLoader.displayImage(context,item.getImg_url(),holder.iv_image,R.drawable.default_diary_pic);
+        }else{
+            holder.layout_default.setVisibility(View.VISIBLE);//默认布局
+            holder.layout_default.setBackgroundResource(R.color.colorWhite);
+            holder.tv_subtitle.setVisibility(View.GONE);
+            holder.layout_music.setVisibility(View.GONE);//music布局
+            holder.layoutParams.setMargins(0,0,0,0);
+            holder.iv_image.setLayoutParams(holder.layoutParams);
             ImageLoader.displayImage(context,item.getImg_url(),holder.iv_image,R.drawable.default_diary_pic);
         }
         holder.tv_title.setText(item.getTitle());
@@ -87,7 +100,29 @@ public class OneArticleViewBinder extends ItemViewBinder<OneFlattenBean,OneArtic
         holder.tv_forward.setText(item.getForward());
         holder.tv_date.setText(DateUtils.getTodayDate(item.getPost_date()));
     }
-
+    private String getType(String type){
+        String param = "";
+        switch (type){
+            case Constant.TYPE_READ:
+                param =  "essay";
+                break;
+            case Constant.TYPE_SERIALIZE:
+                param = "serialcontent";
+                break;
+            case Constant.TYPE_QA:
+                param = "question";
+                break;
+            case Constant.TYPE_MUSIC:
+                param = "music";
+                break;
+            case Constant.TYPE_MOVIE:
+                param = "movie";
+                break;
+            default:
+                break;
+        }
+        return param;
+    }
     public class ViewHolder extends RecyclerView.ViewHolder{
         //default
         private TextView tv_mainTitle;
@@ -118,7 +153,6 @@ public class OneArticleViewBinder extends ItemViewBinder<OneFlattenBean,OneArtic
             this.tv_subtitle = itemView.findViewById(R.id.tv_subtitle);
             this.layout_default = itemView.findViewById(R.id.layout_default);
             this.layoutParams = (RelativeLayout.LayoutParams)iv_image.getLayoutParams();
-            this.layoutParams.setMargins(0,50,0,50);
 
             this.layout_music = itemView.findViewById(R.id.layout_music);
             this.iv_platform_icom = itemView.findViewById(R.id.iv_audio_platform_icom);
