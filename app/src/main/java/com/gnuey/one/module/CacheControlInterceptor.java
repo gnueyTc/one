@@ -32,10 +32,12 @@ public class CacheControlInterceptor implements Interceptor {
                 .cacheControl(CacheControl.FORCE_CACHE)
                 .build();
         Response response = chain.proceed(request);
-        if(request.url().encodedPathSegments().contains("0")||request.url().encodedPathSegments().contains("feeds")){
+        if(request.url().encodedPathSegments().contains("0")||
+                request.url().encodedPathSegments().contains("feeds")||
+                request.url().encodedPathSegments().contains("author")){
             isRefresh = true;
         }else {
-            isRefresh = false;
+            isRefresh = true;
         }
         if (response.code() == CODE || (isRefresh && NetWorkUtil.isNetworkConnected(AppUtils.getAppContext()))) {
 

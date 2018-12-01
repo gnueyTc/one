@@ -37,7 +37,7 @@ public class OneArticleViewMenuItemBinder extends ItemViewBinder<OneFlattenBean.
             @Override
             public void onClick(View v) {
                 Log.e("MenuItemBinder", "onClick: "+item.getContent_type()+" - "+item.getContent_id() );
-                ReadActivity.startReadDetailActivity(context, new String[]{getType(item.getContent_type()), item.getContent_id()});
+                ReadActivity.startReadDetailActivity(context, new String[]{Constant.getType(item.getContent_type()), item.getContent_id()});
             }
         });
         if(item.getTag()!=null){
@@ -65,29 +65,7 @@ public class OneArticleViewMenuItemBinder extends ItemViewBinder<OneFlattenBean.
         }
 
     }
-    private String getType(String type){
-        String param = "";
-        switch (type){
-            case Constant.TYPE_READ:
-                param =  "essay";
-                break;
-            case Constant.TYPE_SERIALIZE:
-                param = "serialcontent";
-                break;
-            case Constant.TYPE_QA:
-                param = "question";
-                break;
-            case Constant.TYPE_MUSIC:
-                param = "music";
-                break;
-            case Constant.TYPE_MOVIE:
-                param = "movie";
-                break;
-            default:
-                break;
-        }
-        return param;
-    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout ly_menu_item;
         private TextView tv_title;

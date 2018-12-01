@@ -3,6 +3,7 @@ package com.gnuey.one.binder.onepager;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,8 @@ public class OneArticleViewBinder extends ItemViewBinder<OneFlattenBean,OneArtic
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ReadActivity.startReadDetailActivity(context,new String[]{getType(item.getContent_type()),item.getContent_id()});
+                ReadActivity.startReadDetailActivity(context,new String[]{Constant.getType(item.getContent_type()),item.getContent_id()});
+                Log.e(TAG, "onClick: " +item.getContent_id() );
             }
         });
         if(!"".equals(title)){
@@ -100,29 +102,7 @@ public class OneArticleViewBinder extends ItemViewBinder<OneFlattenBean,OneArtic
         holder.tv_forward.setText(item.getForward());
         holder.tv_date.setText(DateUtils.getTodayDate(item.getPost_date()));
     }
-    private String getType(String type){
-        String param = "";
-        switch (type){
-            case Constant.TYPE_READ:
-                param =  "essay";
-                break;
-            case Constant.TYPE_SERIALIZE:
-                param = "serialcontent";
-                break;
-            case Constant.TYPE_QA:
-                param = "question";
-                break;
-            case Constant.TYPE_MUSIC:
-                param = "music";
-                break;
-            case Constant.TYPE_MOVIE:
-                param = "movie";
-                break;
-            default:
-                break;
-        }
-        return param;
-    }
+
     public class ViewHolder extends RecyclerView.ViewHolder{
         //default
         private TextView tv_mainTitle;

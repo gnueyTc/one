@@ -68,9 +68,9 @@ public interface OnePagerApi {
 
     /**
      *
-     * http://v3.wufazhuce.com:8000/api/essay/htmlcontent/3574?channel=yingyongbao&sign=5db81bdfdd69c84ef79fa962e0d24364&source=menu&source_id=2240&version=4.5.6&uuid=ffffffff-97de-5b11-ffff-ffffe5557a3d&platform=android
+     * http://v3.wufazhuce.com:8000/api/essay/htmlcontent/3587?channel=yingyongbao&sign=af01ef4071b23330ee84dbb22c034964&source=summary&source_id=16824&version=4.5.6&uuid=ffffffff-97de-5b11-ffff-ffffe5557a3d&platform=android
      */
-    @GET("{type}/htmlcontent/{code}?channel=yingyongbao&sign=5db81bdfdd69c84ef79fa962e0d24364&source=menu&source_id=2240&version=4.5.6&uuid=ffffffff-97de-5b11-ffff-ffffe5557a3d&platform=android")
+    @GET("{type}/htmlcontent/{code}?channel=yingyongbao&sign=af01ef4071b23330ee84dbb22c034964&source=menu&source_id=2240&version=4.5.6&uuid=ffffffff-97de-5b11-ffff-ffffe5557a3d&platform=android")
     Observable<OneHtmlContentBean> getHtmlContent(
             @Path("type") String type,
             @Path("code") String code
@@ -88,10 +88,11 @@ public interface OnePagerApi {
 
     /**
      *
-     * http://v3.wufazhuce.com:8000/api/author/list?content_id=3582&channel=yingyongbao&sign=4bd02b632990e959d7b14c5b2eb07146&category=1&version=4.5.6&uuid=ffffffff-97de-5b11-ffff-ffffe5557a3d&platform=android
+     * http://v3.wufazhuce.com:8000/api/author/list?content_id=2846&channel=yingyongbao&sign=a175d093b24ca4caf76878bc7adab2d4&category=4&version=4.5.6&uuid=ffffffff-97de-5b11-ffff-ffffe5557a3d&platform=android
      */
-    @GET("author/list?channel=yingyongbao&sign=5b5611118556e39a0cee1eb3f1f87ec2&category=1&version=4.5.6&uuid=ffffffff-97de-5b11-ffff-ffffe5557a3d&platform=android")
+    @GET("author/list?channel=yingyongbao&sign=bc8b98a644731786ab435d570fae3b4a&version=4.5.6&uuid=ffffffff-97de-5b11-ffff-ffffe5557a3d&platform=android")
     Observable<AuthorBean> getAuthor(
+            @Query("category") String category,
             @Query("content_id") String contenId
     );
 

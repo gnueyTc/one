@@ -13,8 +13,6 @@ import com.gnuey.one.component.AppComponent;
 import com.gnuey.one.component.DaggerFragmentComponent;
 import com.gnuey.one.ui.base.BaseListFragment;
 import com.gnuey.one.utils.AdapterDiffCallBack;
-import com.gnuey.one.utils.GlideApp;
-import com.gnuey.one.utils.ImageLoader;
 
 
 

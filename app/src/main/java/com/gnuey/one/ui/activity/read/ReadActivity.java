@@ -59,7 +59,6 @@ public class ReadActivity extends BaseActivity implements ReadContract.View{
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         twinklingRefreshLayout.setEnableRefresh(false);
         twinklingRefreshLayout.setEnableLoadmore(true);
-        twinklingRefreshLayout.setHeaderView(new RefreshHeader(mContext));
         twinklingRefreshLayout.setTargetView(recyclerView);
         twinklingRefreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
@@ -119,7 +118,9 @@ public class ReadActivity extends BaseActivity implements ReadContract.View{
     @Override
     public void doSetReadData(ReadActivityBean data) {
         oldItems.add(0,data.getWebBean());
-        oldItems.add(1,data.getAuthorDataBean());
+        if(data.getAuthorDataBean()!=null){
+            oldItems.add(1,data.getAuthorDataBean());
+        }
         adapter.setItems(oldItems);
         adapter.notifyDataSetChanged();
     }
