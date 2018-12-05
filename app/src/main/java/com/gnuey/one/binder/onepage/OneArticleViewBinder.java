@@ -1,4 +1,4 @@
-package com.gnuey.one.binder.onepager;
+package com.gnuey.one.binder.onepage;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -13,7 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gnuey.one.R;
-import com.gnuey.one.bean.onepager.OneFlattenBean;
+import com.gnuey.one.bean.onepage.OneFlattenBean;
 import com.gnuey.one.ui.activity.read.ReadActivity;
 import com.gnuey.one.utils.Constant;
 import com.gnuey.one.utils.DateUtils;
@@ -30,7 +30,7 @@ public class OneArticleViewBinder extends ItemViewBinder<OneFlattenBean,OneArtic
     @NonNull
     @Override
     protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View view = inflater.inflate(R.layout.item_one,parent,false);
+        View view = inflater.inflate(R.layout.fragment_one,parent,false);
         return new ViewHolder(view);
     }
 

@@ -1,4 +1,4 @@
-package com.gnuey.one.adapter.onetab;
+package com.gnuey.one.adapter.onepage;
 
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;

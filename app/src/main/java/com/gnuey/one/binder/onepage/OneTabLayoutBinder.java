@@ -1,4 +1,4 @@
-package com.gnuey.one.binder.onepager;
+package com.gnuey.one.binder.onepage;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gnuey.one.R;
-import com.gnuey.one.bean.onepager.FeedsListBean;
+import com.gnuey.one.bean.onepage.FeedsListBean;
 import com.gnuey.one.utils.DateUtils;
 import com.gnuey.one.utils.ImageLoader;
 

@@ -1,4 +1,4 @@
-package com.gnuey.one.binder.onepager;
+package com.gnuey.one.binder.onepage;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,8 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gnuey.one.R;
-import com.gnuey.one.bean.onepager.OneFlattenBean;
-import com.gnuey.one.utils.GlideApp;
+import com.gnuey.one.bean.onepage.OneFlattenBean;
 import com.gnuey.one.utils.ImageLoader;
 
 import me.drakeet.multitype.ItemViewBinder;

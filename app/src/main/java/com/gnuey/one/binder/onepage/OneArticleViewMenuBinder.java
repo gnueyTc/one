@@ -1,4 +1,4 @@
-package com.gnuey.one.binder.onepager;
+package com.gnuey.one.binder.onepage;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.gnuey.one.R;
 import com.gnuey.one.Register;
-import com.gnuey.one.bean.onepager.OneFlattenBean;
+import com.gnuey.one.bean.onepage.OneFlattenBean;
 import com.gnuey.one.utils.ExpandAnimationUtil;
 
 import me.drakeet.multitype.ItemViewBinder;

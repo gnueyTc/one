@@ -19,6 +19,7 @@ public class Constant {
     public static final String TYPE_QA = "3";
     public static final String TYPE_MUSIC = "4";
     public static final String TYPE_MOVIE = "5";
+    public static final String TYPE_TOPIC = "11";
 
     public static final String getType(String type){
         String param = "";
@@ -37,6 +38,9 @@ public class Constant {
                 break;
             case Constant.TYPE_MOVIE:
                 param = "movie";
+                break;
+            case Constant.TYPE_TOPIC:
+                param = "topic";
                 break;
             default:
                 break;
@@ -61,40 +65,17 @@ public class Constant {
             case "movie":
                 param = Constant.TYPE_MOVIE;
                 break;
+            case "topic":
+                param = Constant.TYPE_TOPIC;
+                break;
             default:
                 break;
         }
         return param;
     }
 
-    public static final String JS_INJECT_READING = "javascript:(function(){" +
-            "var obj =document.getElementById(\"oneReadingAudioTemplate\").value;" +
-            "    obj.onclick=function()  " +
-            "  {  "
-            + "        window.listener.click();  " +
-            "  }  " +
-            "})()";
-    public static final String JS_INJECT_DIV = "javascript:(function(){" +
-            "var testElements  = document.getElementsByClass(\"onevue-readingaudio-box\"); " +
-            "var testDivs = Array.prototype.filter.call(testElements, function(testElement)"+
-            " { "+
-            "   return testElement.nodeName === \'DIV\';" +
-            "  });"+
-            "for(var i=0;i<objs.length;i++)  " +
-            "{"
-            + "    testDivs[i].onclick=function()  " +
-            "    {  "
-            + "       window.listener.click();   " +
-            "    }  " +
-            "}" +
-            "})()";
-
-    public static final String JS_INJECT_IMG = "javascript:(function(){" +
-            "var objs = document.getElementsByTagName(\"div\"); "
-            + "var spans = objs[6].getElementsByTagName(\"span\");"
-            + "    objs[3].onclick=function()  " +
-            "    {  "
-            + "        window.listener.click(spans[2].innerText); " +
-            "    }  " +
-            "})()";
+    public static final String JS_INJECT_CLICK = "javascript:function openRelateCx(e){" +
+            " var index=$(\".one-special-cards-box div div\").index(this);"+
+            " window.listener.click(index);" +
+            "}";
 }

@@ -70,9 +70,16 @@ public class ReadActivity extends BaseActivity implements ReadContract.View{
         adapter = new MultiTypeAdapter();
         Register.registerReadActivityItem(adapter);
         recyclerView.setAdapter(adapter);
-
+        initData();
     }
-
+    private void initData(){
+        Bundle bundle = getIntent().getExtras();
+        array = bundle.getStringArray(TAG);
+        if(array != null && array.length == 2){
+            mPresenter.getReadData(array[0],array[1]);
+            mPresenter.getCommontData(array[0],array[1]);
+        }
+    }
     @Override
     protected int getLayoutId() {
         return R.layout.base_list;
@@ -82,12 +89,6 @@ public class ReadActivity extends BaseActivity implements ReadContract.View{
     @Override
     protected void onResume() {
         super.onResume();
-        Bundle bundle = getIntent().getExtras();
-        array = bundle.getStringArray(TAG);
-        if(array != null && array.length == 2){
-            mPresenter.getReadData(array[0],array[1]);
-            mPresenter.getCommontData(array[0],array[1]);
-        }
 
     }
 
@@ -110,7 +111,8 @@ public class ReadActivity extends BaseActivity implements ReadContract.View{
     @Override
     public void doSetCommontAdapter(List<?> list) {
         oldItems.addAll(list);
-        adapter.setItems(oldItems);
+        Items items = new Items(oldItems);
+        adapter.setItems(items);
         adapter.notifyDataSetChanged();
         twinklingRefreshLayout.finishLoadmore();
     }
@@ -127,12 +129,11 @@ public class ReadActivity extends BaseActivity implements ReadContract.View{
 
     @Override
     public void onShowLoading() {
-
     }
 
     @Override
     public void onHideLoading() {
-
+        twinklingRefreshLayout.finishLoadmore();
     }
 
     @Override

@@ -3,10 +3,8 @@ package com.gnuey.one.ui.onepager.article;
 
 import android.util.Log;
 
-import com.gnuey.one.InitApp;
 import com.gnuey.one.api.OnePagerApi;
-import com.gnuey.one.bean.onepager.OneFlattenBean;
-import com.gnuey.one.bean.onepager.OneListBean;
+import com.gnuey.one.bean.onepage.OneFlattenBean;
 import com.gnuey.one.ui.base.RxPresenter;
 import com.gnuey.one.utils.DateUtils;
 import com.gnuey.one.utils.FlattenDataUtils;
@@ -18,7 +16,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 

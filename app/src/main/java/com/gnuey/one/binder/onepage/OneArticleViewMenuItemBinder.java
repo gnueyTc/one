@@ -1,4 +1,4 @@
-package com.gnuey.one.binder.onepager;
+package com.gnuey.one.binder.onepage;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,10 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gnuey.one.R;
-import com.gnuey.one.bean.onepager.OneFlattenBean;
+import com.gnuey.one.bean.onepage.OneFlattenBean;
 import com.gnuey.one.ui.activity.read.ReadActivity;
 import com.gnuey.one.utils.Constant;
-import com.gnuey.one.utils.ToastUtils;
 
 import me.drakeet.multitype.ItemViewBinder;
 

@@ -12,11 +12,10 @@ import com.gnuey.one.MainActivity;
 import com.gnuey.one.R;
 
 import com.gnuey.one.Register;
-import com.gnuey.one.adapter.onetab.DepthPageTransformer;
-import com.gnuey.one.adapter.onetab.InfiniteFragmentAdapter;
+import com.gnuey.one.adapter.onepage.InfiniteFragmentAdapter;
 
 import com.gnuey.one.adapter.helper.ViewPageHelper;
-import com.gnuey.one.binder.onepager.OneTabLayoutBinder;
+import com.gnuey.one.binder.onepage.OneTabLayoutBinder;
 import com.gnuey.one.component.AppComponent;
 
 import com.gnuey.one.component.DaggerFragmentComponent;
@@ -40,8 +39,6 @@ import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.BiFunction;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
@@ -100,7 +97,7 @@ public class OneTabLayout extends BaseFragment implements FeedsListContract.View
         mainActivity = (MainActivity) getActivity();
         initToolBar(toolbar, "");
         adapter = new MultiTypeAdapter(oldItems);
-        Register.registerOneTablayoutItem(adapter);
+        Register.registerOneTabLayoutItem(adapter);
         timeSelectLayout.setGetDateListener(new TimeSelectLayout.GetDateListener() {
             @Override
             public void getDate(String date) {
@@ -145,11 +142,15 @@ public class OneTabLayout extends BaseFragment implements FeedsListContract.View
     }
 
     private void getFeedsList() {
+        String date="";
         isShow = isShow ? false : true;
         timeSelectLayout.show(isShow);
         mainActivity.bottomNavigation.setVisibility(isShow ? View.INVISIBLE : View.VISIBLE);
         if (isShow) {
-            mPresenter.getFeedsList(DateUtils.getDate().substring(0, 7));
+            date = DateUtils.getDate();
+            if(!"".equals(date)||date.length()>=8){
+                mPresenter.getFeedsList(date.substring(0, 7));
+            }
         }
 
     }

@@ -6,16 +6,19 @@ import android.support.annotation.NonNull;
 import com.gnuey.one.bean.activity.read.AuthorBean;
 import com.gnuey.one.bean.activity.read.CommentBean;
 import com.gnuey.one.bean.activity.read.WebBean;
-import com.gnuey.one.bean.onepager.FeedsListBean;
-import com.gnuey.one.bean.onepager.OneFlattenBean;
+import com.gnuey.one.bean.allpage.AllListBean;
+import com.gnuey.one.bean.onepage.FeedsListBean;
+import com.gnuey.one.bean.onepage.OneFlattenBean;
 import com.gnuey.one.binder.activity.ReadActivityAuthorBinder;
 import com.gnuey.one.binder.activity.ReadActivityCommentBinder;
 import com.gnuey.one.binder.activity.ReadActivityWebViewBinder;
-import com.gnuey.one.binder.onepager.OneArticleViewBinder;
-import com.gnuey.one.binder.onepager.OneArticleViewHeadBinder;
-import com.gnuey.one.binder.onepager.OneArticleViewMenuBinder;
-import com.gnuey.one.binder.onepager.OneArticleViewMenuItemBinder;
-import com.gnuey.one.binder.onepager.OneTabLayoutBinder;
+import com.gnuey.one.binder.allpage.AllBannerBinder;
+import com.gnuey.one.binder.allpage.AllTabLayoutBinder;
+import com.gnuey.one.binder.onepage.OneArticleViewBinder;
+import com.gnuey.one.binder.onepage.OneArticleViewHeadBinder;
+import com.gnuey.one.binder.onepage.OneArticleViewMenuBinder;
+import com.gnuey.one.binder.onepage.OneArticleViewMenuItemBinder;
+import com.gnuey.one.binder.onepage.OneTabLayoutBinder;
 
 
 import me.drakeet.multitype.ClassLinker;
@@ -28,7 +31,7 @@ import me.drakeet.multitype.MultiTypeAdapter;
 public class Register {
     public static final String TAG = "Register";
 
-    public static void registerOneTablayoutItem(@NonNull MultiTypeAdapter adapter){
+    public static void registerOneTabLayoutItem(@NonNull MultiTypeAdapter adapter){
         adapter.register(FeedsListBean.DataBean.class,new OneTabLayoutBinder());
     }
     public static void registerOneArticleItem(@NonNull MultiTypeAdapter adapter){
@@ -60,5 +63,10 @@ public class Register {
         adapter.register(WebBean.class,new ReadActivityWebViewBinder());
         adapter.register(AuthorBean.DataBean.class,new ReadActivityAuthorBinder());
         adapter.register(CommentBean.DataBeanX.DataBean.class,new ReadActivityCommentBinder());
+    }
+
+    public static void registerAllTabLayoutItem(@NonNull MultiTypeAdapter adapter){
+        adapter.register(AllListBean.class,new AllBannerBinder());
+        adapter.register(AllListBean.DataBean.class,new AllTabLayoutBinder());
     }
 }

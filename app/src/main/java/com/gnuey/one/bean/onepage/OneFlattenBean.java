@@ -1,4 +1,4 @@
-package com.gnuey.one.bean.onepager;
+package com.gnuey.one.bean.onepage;
 
 import android.os.Parcel;
 import android.os.Parcelable;

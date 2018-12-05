@@ -2,8 +2,8 @@ package com.gnuey.one.utils;
 
 import android.os.Parcel;
 
-import com.gnuey.one.bean.onepager.OneFlattenBean;
-import com.gnuey.one.bean.onepager.OneListBean;
+import com.gnuey.one.bean.onepage.OneFlattenBean;
+import com.gnuey.one.bean.onepage.OneListBean;
 
 import java.util.ArrayList;
 import java.util.List;

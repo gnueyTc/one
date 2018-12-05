@@ -1,7 +1,7 @@
 package com.gnuey.one.ui.onepager;
 
 import com.gnuey.one.api.OnePagerApi;
-import com.gnuey.one.bean.onepager.FeedsListBean;
+import com.gnuey.one.bean.onepage.FeedsListBean;
 import com.gnuey.one.ui.base.RxPresenter;
 
 import java.util.List;

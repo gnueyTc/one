@@ -34,10 +34,15 @@ public class CacheControlInterceptor implements Interceptor {
         Response response = chain.proceed(request);
         if(request.url().encodedPathSegments().contains("0")||
                 request.url().encodedPathSegments().contains("feeds")||
-                request.url().encodedPathSegments().contains("author")){
+                request.url().encodedPathSegments().contains("author")||
+                request.url().encodedPathSegments().contains("essay")||
+                request.url().encodedPathSegments().contains("question")||
+                request.url().encodedPathSegments().contains("music")||
+                request.url().encodedPathSegments().contains("movie")||
+                request.url().encodedPathSegments().contains("topic")){
             isRefresh = true;
         }else {
-            isRefresh = true;
+            isRefresh = false;
         }
         if (response.code() == CODE || (isRefresh && NetWorkUtil.isNetworkConnected(AppUtils.getAppContext()))) {
 

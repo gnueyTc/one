@@ -41,9 +41,9 @@ public class TimeSelectLayout extends RelativeLayout {
     private CustomRecyclerview mCustomRecyclerview;
     private Button mButton;
     private Dialog dialog;
-    private String yearSelected = "";
-    private String monthSelected = "";
-    private String dateSelected = "";
+    private String yearSelected = "";//最终选择的年份
+    private String monthSelected = "";//最终选择的月份
+    private String dateSelected = "";//最终选择的日期
     private List<String> monthSelectedList;
     private GetDateListener mGetDateListener;
     public TimeSelectLayout(Context context, AttributeSet attrs) {
@@ -79,12 +79,7 @@ public class TimeSelectLayout extends RelativeLayout {
 
         }
 
-        mButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.show();
-            }
-        });
+        mButton.setOnClickListener(v -> dialog.show());
     }
     public void initTimePickeer(Context context,int gravity){
 
@@ -122,43 +117,39 @@ public class TimeSelectLayout extends RelativeLayout {
         if(dialogWindow == null){
             return;
         }
-        loopViewYear.setItems(yearList);
-        loopViewMonth.setItems(monthListThisYear);
+        loopViewYear.setItems(yearList);//年份选择
+        loopViewMonth.setItems(monthListThisYear);//月份选择
         yearSelected = yearList.get(0);
         monthSelected = monthListThisYear.get(0);//onItemSelected要滑动才触发，没滑动就默认选择了是最新月份
-        loopViewYear.setListener(new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(int index) {
-                if(index == 0){
-                    loopViewMonth.setItems(monthListThisYear);
-                    monthSelectedList = monthListThisYear;
-                }else if(index == yearList.size()-1){
-                    loopViewMonth.setItems(monthList2012);
-                    monthSelectedList = monthList2012;
-                }else {
-                    loopViewMonth.setItems(monthList);
-                    monthSelectedList = monthList;
-                }
-                yearSelected = yearList.get(index);
-                monthSelected = monthSelectedList.get(0);//onItemSelected要滑动才触发，没滑动就默认选择了是最新月份
+        monthSelectedList = monthListThisYear;
+        loopViewYear.setListener(index -> {
+            if(index == 0){
+                loopViewMonth.setItems(monthListThisYear);
+                monthSelectedList = monthListThisYear;
+            }else if(index == yearList.size()-1){
+                loopViewMonth.setItems(monthList2012);
+                monthSelectedList = monthList2012;
+            }else {
+                loopViewMonth.setItems(monthList);
+                monthSelectedList = monthList;
             }
+            yearSelected = yearList.get(index);
+            monthSelected = monthSelectedList.get(0);//onItemSelected要滑动才触发，没滑动就默认选择了是最新月份
         });
         loopViewMonth.setListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(int index) {
+                Log.e("TimeSelectLayout", "onItemSelected: "+index);
                 monthSelected = monthSelectedList.get(index);
             }
         });
-        mButtom.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dateSelected = new StringBuilder().append(yearSelected).append("-").append(monthSelected).toString();//最终返回的日期
-                if(mGetDateListener!=null){
-                    mGetDateListener.getDate(dateSelected);
-                }
-                Log.e("TimeSelectLayout", "onClick: "+dateSelected );
-                dialog.dismiss();
+        mButtom.setOnClickListener(v -> {
+            dateSelected = new StringBuilder().append(yearSelected).append("-").append(monthSelected).toString();//最终返回的日期
+            if(mGetDateListener!=null){
+                mGetDateListener.getDate(dateSelected);
             }
+            Log.e("TimeSelectLayout", "onClick: "+dateSelected );
+            dialog.dismiss();
         });
         //设置Dialog从窗体底部弹出
         dialogWindow.setGravity(gravity);

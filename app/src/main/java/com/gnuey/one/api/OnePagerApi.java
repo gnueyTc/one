@@ -3,10 +3,9 @@ package com.gnuey.one.api;
 
 import com.gnuey.one.bean.activity.read.AuthorBean;
 import com.gnuey.one.bean.activity.read.CommentBean;
-import com.gnuey.one.bean.onepager.FeedsListBean;
-import com.gnuey.one.bean.IdListBean;
+import com.gnuey.one.bean.onepage.FeedsListBean;
 import com.gnuey.one.bean.activity.read.OneHtmlContentBean;
-import com.gnuey.one.bean.onepager.OneListBean;
+import com.gnuey.one.bean.onepage.OneListBean;
 
 
 import io.reactivex.Flowable;
@@ -17,35 +16,6 @@ import retrofit2.http.Query;
 
 public interface OnePagerApi {
 
-    String HOST = "http://v3.wufazhuce.com:8000/api/";
-
-    /**
-     * 获取最新 idlist
-     * http://v3.wufazhuce.com:8000/api/onelist/idlist/?channel=wdj&version=4.0.2&uuid=ffffffff-a90e-706a-63f7-ccf973aae5ee&platform=android
-     *
-     * @param
-     * @return
-    */
-    @GET("onelist/idlist/?uuid=ffffffff-a90e-706a-63f7-ccf973aae5ee&platform=android")
-    Observable<IdListBean> getIdList(
-            @Query("channel") String channel,
-            @Query("version") String version
-    );
-    /**
-     * 获取 onelist
-     * http://v3.wufazhuce.com:8000/api/onelist/3528/0?channel=wdj&version=4.0.2&uuid=ffffffff-a90e-706a-63f7-ccf973aae5ee&platform=android
-     *
-     * @param
-     * @return
-    */
-    @GET("onelist/{code}/0?cchannel=wdj&version=4.1.0" +
-            "&uuid=ffffffff-a90e-706a-63f7-ccf973aae5ee&platform=android")
-    Flowable<OneListBean> getOneList(
-            @Path("code") int code
-//            @Query("channel") String channel,
-//            @Query("version") String version
-    );
-/**/
     /**
      *
      * 最新api 2018-9-22
@@ -67,7 +37,7 @@ public interface OnePagerApi {
     );
 
     /**
-     *
+     * 获取阅读内容
      * http://v3.wufazhuce.com:8000/api/essay/htmlcontent/3587?channel=yingyongbao&sign=af01ef4071b23330ee84dbb22c034964&source=summary&source_id=16824&version=4.5.6&uuid=ffffffff-97de-5b11-ffff-ffffe5557a3d&platform=android
      */
     @GET("{type}/htmlcontent/{code}?channel=yingyongbao&sign=af01ef4071b23330ee84dbb22c034964&source=menu&source_id=2240&version=4.5.6&uuid=ffffffff-97de-5b11-ffff-ffffe5557a3d&platform=android")
@@ -76,7 +46,7 @@ public interface OnePagerApi {
             @Path("code") String code
     );
     /**
-     *
+     * 获取评论内容
      * http://v3.wufazhuce.com:8000/api/comment/praiseandtime/essay/3580/0?channel=yingyongbao&sign=0cf43d3f6dca829f562b9060404cd8b5&version=4.5.6&uuid=ffffffff-97de-5b11-ffff-ffffe5557a3d&platform=android
      */
     @GET("comment/praiseandtime/{type}/{contentId}/{loadmore}?channel=yingyongbao&sign=0cf43d3f6dca829f562b9060404cd8b5&version=4.5.6&uuid=ffffffff-97de-5b11-ffff-ffffe5557a3d&platform=android")
@@ -87,7 +57,7 @@ public interface OnePagerApi {
     );
 
     /**
-     *
+     * 获取作者信息
      * http://v3.wufazhuce.com:8000/api/author/list?content_id=2846&channel=yingyongbao&sign=a175d093b24ca4caf76878bc7adab2d4&category=4&version=4.5.6&uuid=ffffffff-97de-5b11-ffff-ffffe5557a3d&platform=android
      */
     @GET("author/list?channel=yingyongbao&sign=bc8b98a644731786ab435d570fae3b4a&version=4.5.6&uuid=ffffffff-97de-5b11-ffff-ffffe5557a3d&platform=android")

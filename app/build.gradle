@@ -72,4 +72,10 @@ dependencies {
 
     // 解析HTML
     implementation 'org.jsoup:jsoup:1.11.3'
+
+    implementation ('com.alibaba.android:ultraviewpager:1.0.7.7@aar') {
+        transitive = true
+    }
+
+    implementation 'com.github.lzyzsd:jsbridge:1.0.4'
 }
