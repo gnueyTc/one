@@ -13,3 +13,16 @@
 
 ## Preview
 ![](art/10.gif)
+
+
+## Points
+- 首页用了ViewPager + Fragment 实现无限滑动和懒加载
+- 解决Viewpager多页面跳转白屏问题
+- 抓了ONE 一个的包
+- MVP模式
+- RxJava + Retrofit2 + OkHttp3 请求网络
+- Okhttp3网络缓存
+- 自定义了日期选择器
+- RxBus 代替 EventBus 进行组件通讯
+- 使用DiffUtil刷新数据
+- 自定义 BottomNavigationBehavior 实现上滑隐藏下滑显示
