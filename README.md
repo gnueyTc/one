@@ -21,12 +21,12 @@
 - 抓了ONE 一个的包
 - MVP模式
 - RxJava + Retrofit2 + OkHttp3 请求网络
-- Okhttp3网络缓存
+- Okhttp3 网络缓存
 - 自定义了日期选择器
 - RxBus 代替 EventBus 进行组件通讯
-- 使用DiffUtil刷新数据
+- 使用DiffUtil 刷新数据
 - 自定义 BottomNavigationBehavior 实现上滑隐藏下滑显示
-- Dagger2依赖注入
+- Dagger2 依赖注入
 
 ## Libraries
 - [Android Support Libraries](https://developer.android.com/topic/libraries/support-library/index.html)
