@@ -1,43 +1,36 @@
 package com.gnuey.one.binder.activity;
 
 import android.app.Activity;
-import android.content.Context;
+
 import android.graphics.Bitmap;
-import android.os.Build;
+
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
-import android.webkit.ValueCallback;
+
 import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
+
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+
 
 import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.BridgeUtil;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
-import com.github.lzyzsd.jsbridge.DefaultHandler;
+
 import com.gnuey.one.R;
 import com.gnuey.one.bean.activity.read.WebBean;
 import com.gnuey.one.ui.activity.read.ReadActivity;
 import com.gnuey.one.utils.Constant;
 import com.gnuey.one.utils.ToastUtils;
-import com.gnuey.one.widget.CsWebView;
-
-import org.w3c.dom.Document;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
 import me.drakeet.multitype.ItemViewBinder;
 
