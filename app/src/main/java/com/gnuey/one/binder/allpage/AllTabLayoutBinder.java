@@ -22,6 +22,7 @@ import me.drakeet.multitype.ItemViewBinder;
  * Created by gnuey on 2018/12/2/002
  */
 public class AllTabLayoutBinder extends ItemViewBinder<AllListBean.DataBean,AllTabLayoutBinder.ViewHolder> {
+    private final String source = "banner";
     @NonNull
     @Override
     protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
@@ -37,7 +38,7 @@ public class AllTabLayoutBinder extends ItemViewBinder<AllListBean.DataBean,AllT
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ReadActivity.startReadDetailActivity(context,new String[]{Constant.getType(String.valueOf(item.getCategory())),item.getContent_id()});
+                ReadActivity.startReadDetailActivity(context,new String[]{Constant.getType(String.valueOf(item.getCategory())),item.getContent_id(),source,String.valueOf(item.getId())});
             }
         });
     }

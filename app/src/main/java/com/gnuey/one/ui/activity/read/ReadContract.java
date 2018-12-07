@@ -30,7 +30,7 @@ public interface ReadContract {
 
         void getCommontData(String type,String contentId);
 
-        void getReadData(String type,String contentId);
+        void getReadData(String type,String contentId,String source,String sourceId);
         /**
          * 设置适配器
          */

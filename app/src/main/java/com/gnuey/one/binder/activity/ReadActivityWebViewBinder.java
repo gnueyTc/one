@@ -46,7 +46,7 @@ import me.drakeet.multitype.ItemViewBinder;
  */
 public class ReadActivityWebViewBinder extends ItemViewBinder<WebBean,ReadActivityWebViewBinder.ViewHolder> {
     private Activity context;
-
+    private final String source = "topic";
 
     @NonNull
     @Override
@@ -76,34 +76,37 @@ public class ReadActivityWebViewBinder extends ItemViewBinder<WebBean,ReadActivi
                 }
                 if(url.contains("article")){
                         String id = url.substring(url.lastIndexOf("/")).replace("/","");
-                        ReadActivity.startReadDetailActivity(context,new String[]{Constant.getType(Constant.TYPE_READ),id});
+                        ReadActivity.startReadDetailActivity(context,new String[]{Constant.getType(Constant.TYPE_READ),id,source,item.getId()});
                     }else if(url.contains("question")){
                         String id = url.substring(url.lastIndexOf("/")).replace("/","");
-                        ReadActivity.startReadDetailActivity(context,new String[]{Constant.getType(Constant.TYPE_QA),id});
+                        ReadActivity.startReadDetailActivity(context,new String[]{Constant.getType(Constant.TYPE_QA),id,source,item.getId()});
                     }else if(url.contains("movie")){
                         String id = url.substring(url.lastIndexOf("/")).replace("/","");
-                        ReadActivity.startReadDetailActivity(context,new String[]{Constant.getType(Constant.TYPE_MOVIE),id});
-                    }
+                        ReadActivity.startReadDetailActivity(context,new String[]{Constant.getType(Constant.TYPE_MOVIE),id,source,item.getId()});
+                    }else if(url.contains("music")){
+                    String id = url.substring(url.lastIndexOf("/")).replace("/","");
+                    ReadActivity.startReadDetailActivity(context,new String[]{Constant.getType(Constant.TYPE_MUSIC),id,source,item.getId()});
+                }
                 return true;
             }
             @Override
             public void onPageFinished(WebView view, String url) {
-//                holder.webView.loadUrl(Constant.JS_INJECT_CLICK);
-                BridgeUtil.webViewLoadLocalJs(view,"WebViewJavascriptBridge.js");
                 super.onPageFinished(view, url);
+                BridgeUtil.webViewLoadLocalJs(view,"WebViewJavascriptBridge.js");
 
-
-            }
-            @Nullable
-            @Override
-            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-                return super.shouldInterceptRequest(view, request);
             }
         });
         holder.webView.registerHandler("openRelateDetail", new BridgeHandler() {
             @Override
             public void handler(String data, CallBackFunction function) {
                 function.onCallBack("");
+                Log.e("WebViewBinder", "handler: " );
+            }
+        });
+        holder.webView.setDefaultHandler(new BridgeHandler() {
+            @Override
+            public void handler(String data, CallBackFunction function) {
+                Log.e("WebViewBinder", "handler: " );
             }
         });
 

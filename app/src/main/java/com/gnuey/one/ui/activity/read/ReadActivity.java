@@ -11,19 +11,12 @@ import android.util.Log;
 import com.gnuey.one.InitApp;
 import com.gnuey.one.R;
 import com.gnuey.one.Register;
-import com.gnuey.one.bean.activity.read.AuthorBean;
 import com.gnuey.one.bean.activity.read.ReadActivityBean;
-import com.gnuey.one.bean.activity.read.WebBean;
 import com.gnuey.one.component.DaggerActivityComponent;
 import com.gnuey.one.ui.base.BaseActivity;
-import com.gnuey.one.utils.AdapterDiffCallBack;
 import com.gnuey.one.utils.ToastUtils;
-import com.gnuey.one.widget.CsWebView;
-import com.gnuey.one.widget.RefreshHeader;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
-import com.uber.autodispose.AutoDisposeConverter;
-
 import java.util.List;
 
 import javax.inject.Inject;
@@ -75,8 +68,8 @@ public class ReadActivity extends BaseActivity implements ReadContract.View{
     private void initData(){
         Bundle bundle = getIntent().getExtras();
         array = bundle.getStringArray(TAG);
-        if(array != null && array.length == 2){
-            mPresenter.getReadData(array[0],array[1]);
+        if(array != null && array.length == 4){
+            mPresenter.getReadData(array[0],array[1],array[2],array[3]);
             mPresenter.getCommontData(array[0],array[1]);
         }
     }

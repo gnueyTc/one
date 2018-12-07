@@ -26,6 +26,7 @@ import me.drakeet.multitype.ItemViewBinder;
  */
 public class OneArticleViewBinder extends ItemViewBinder<OneFlattenBean,OneArticleViewBinder.ViewHolder>{
     private static final String TAG = "OneArticleViewBinder";
+    private  final String source = "summary";
     private boolean isPlay = true;//是否点击播放
     @NonNull
     @Override
@@ -41,7 +42,7 @@ public class OneArticleViewBinder extends ItemViewBinder<OneFlattenBean,OneArtic
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ReadActivity.startReadDetailActivity(context,new String[]{Constant.getType(item.getContent_type()),item.getContent_id()});
+                ReadActivity.startReadDetailActivity(context,new String[]{Constant.getType(item.getContent_type()),item.getContent_id(),source,item.getId()});
                 Log.e(TAG, "onClick: " +item.getContent_id() );
             }
         });

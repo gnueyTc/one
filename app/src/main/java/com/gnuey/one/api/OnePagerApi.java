@@ -40,10 +40,12 @@ public interface OnePagerApi {
      * 获取阅读内容
      * http://v3.wufazhuce.com:8000/api/essay/htmlcontent/3587?channel=yingyongbao&sign=af01ef4071b23330ee84dbb22c034964&source=summary&source_id=16824&version=4.5.6&uuid=ffffffff-97de-5b11-ffff-ffffe5557a3d&platform=android
      */
-    @GET("{type}/htmlcontent/{code}?channel=yingyongbao&sign=af01ef4071b23330ee84dbb22c034964&source=menu&source_id=2240&version=4.5.6&uuid=ffffffff-97de-5b11-ffff-ffffe5557a3d&platform=android")
+    @GET("{type}/htmlcontent/{code}?channel=yingyongbao&sign=af01ef4071b23330ee84dbb22c034964&version=4.5.6&uuid=ffffffff-97de-5b11-ffff-ffffe5557a3d&platform=android")
     Observable<OneHtmlContentBean> getHtmlContent(
             @Path("type") String type,
-            @Path("code") String code
+            @Path("code") String code,
+            @Query("source") String source,
+            @Query("source_id") String source_id
     );
     /**
      * 获取评论内容

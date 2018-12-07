@@ -1174,6 +1174,7 @@ public class OneFlattenBean implements Parcelable {
         private String vol;
         private List<MenuBean.ListBean> list;
 
+
         public String getVol() {
             return vol;
         }
@@ -1204,7 +1205,15 @@ public class OneFlattenBean implements Parcelable {
             private String title;
             private MenuBean.ListBean.TagBean tag;
             private List<String> serial_list;
+            private String id;
 
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
             public String getContent_type() {
                 return content_type;
             }

@@ -60,8 +60,8 @@ public class ReadPresenter extends RxPresenter<ReadContract.View> implements Rea
     }
 
     @Override
-    public void getReadData(String type, String contentId) {
-        Observable<OneHtmlContentBean> observableWeb= retrofit.create(OnePagerApi.class).getHtmlContent(type,contentId)
+    public void getReadData(String type, String contentId,String source,String sourceId) {
+        Observable<OneHtmlContentBean> observableWeb= retrofit.create(OnePagerApi.class).getHtmlContent(type,contentId,source,sourceId)
                 .subscribeOn(Schedulers.io());
         Observable<AuthorBean> observableAuthor = retrofit.create(OnePagerApi.class).getAuthor(Constant.getCategory(type),contentId)
                 .subscribeOn(Schedulers.io());
@@ -71,6 +71,7 @@ public class ReadPresenter extends RxPresenter<ReadContract.View> implements Rea
             webBean.setUrl(parseHtml(oneHtmlContentBean.getData().getHtml_content()));
             webBean.setMimeType("text/html");
             webBean.setEncoding("utf-8");
+            webBean.setId(sourceId);
             readActivityBean.setWebBean(webBean);
             if(authorBean.getData().size()>0){
             readActivityBean.setAuthorDataBean(authorBean.getData().get(0));

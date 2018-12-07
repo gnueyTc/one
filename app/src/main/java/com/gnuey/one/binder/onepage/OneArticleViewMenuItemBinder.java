@@ -21,6 +21,7 @@ import me.drakeet.multitype.ItemViewBinder;
  * Created by gnueyTc on 2018/6/1.
  */
 public class OneArticleViewMenuItemBinder extends ItemViewBinder<OneFlattenBean.MenuBean.ListBean,OneArticleViewMenuItemBinder.ViewHolder> {
+    private final String source = "menu";
     @NonNull
     @Override
     protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
@@ -36,7 +37,7 @@ public class OneArticleViewMenuItemBinder extends ItemViewBinder<OneFlattenBean.
             @Override
             public void onClick(View v) {
                 Log.e("MenuItemBinder", "onClick: "+item.getContent_type()+" - "+item.getContent_id() );
-                ReadActivity.startReadDetailActivity(context, new String[]{Constant.getType(item.getContent_type()), item.getContent_id()});
+                ReadActivity.startReadDetailActivity(context, new String[]{Constant.getType(item.getContent_type()), item.getContent_id(),source,item.getId()});
             }
         });
         if(item.getTag()!=null){

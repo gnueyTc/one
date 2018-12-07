@@ -36,14 +36,32 @@
             android:layout_gravity="bottom"
             android:src="@drawable/ic_arrow_drop" />
     </LinearLayout>
+
     <LinearLayout
-        android:layout_alignParentEnd="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp">
+
         <Button
-            android:background="@color/colorWhite"
+            android:id="@+id/bt_today"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
+            android:background="@drawable/border_shape_white"
             android:text="今天"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_gravity="bottom"
+            android:id="@+id/tv_weather"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:textSize="12dp" />
     </LinearLayout>
+
 </RelativeLayout>

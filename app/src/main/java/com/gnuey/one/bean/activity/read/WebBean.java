@@ -7,6 +7,15 @@ public class WebBean {
     private String url;
     private String mimeType;
     private String encoding;
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getUrl() {
         return url;

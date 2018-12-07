@@ -8,6 +8,7 @@ import com.gnuey.one.bean.onepage.OneFlattenBean;
 import com.gnuey.one.ui.base.RxPresenter;
 import com.gnuey.one.utils.DateUtils;
 import com.gnuey.one.utils.FlattenDataUtils;
+import com.gnuey.one.utils.RxBus;
 
 
 import java.util.ArrayList;
@@ -37,9 +38,17 @@ public class OneArticlePresenter extends RxPresenter<OneArticleContract.View> im
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(oneListBean -> {
                     if (oneListBean.getData().getContent_list() != null && oneListBean.getData().getContent_list().size() > 0) {
+
                         OneArticlePresenter.this.doSetAdapter(FlattenDataUtils.FlattenOneListBeanList(oneListBean));
                         if("0".equals(date)){
                             DateUtils.calculaDayApart(oneListBean.getData().getDate());
+                            RxBus.getInstance().post(TAG,new StringBuffer()
+                                    .append("地球")
+                                    .append("·")
+                                    .append(oneListBean.getData().getWeather().getClimate())
+                                    .append("\u3000")
+                                    .append(oneListBean.getData().getWeather().getTemperature())
+                                    .append("℃").toString());
                             Log.e(TAG, "accept: oneListBeanNew Res = "+oneListBean.getData().getDate());
                         }
                     } else {

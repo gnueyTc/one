@@ -56,13 +56,8 @@ public class OneTabLayout extends BaseFragment implements FeedsListContract.View
     @BindView(R.id.view_pager)
     ViewPager viewPager;
 
-//    @BindView(R.id.ry_feed)
-//    RelativeLayout relativeLayout;
-
     @BindView(R.id.ry_time)
     TimeSelectLayout timeSelectLayout;
-//    @BindView(R.id.recycle_view)
-//    CustomRecyclerview recyclerView;
 
     private MainActivity mainActivity;
     private String currentDate = "";//当前页面的时间
@@ -76,12 +71,11 @@ public class OneTabLayout extends BaseFragment implements FeedsListContract.View
     private MultiTypeAdapter adapter;
     private Items oldItems = new Items();
     private Flowable<Integer> flowableDateUtils;
-    private Flowable<Integer> flowableTabLayoutBinder;
     private ViewPageHelper viewPageHelper;
 
     @Override
     protected int attachLayoutId() {
-        return R.layout.item_one_tab;
+        return R.layout.layout_one;
     }
 
     @Override
@@ -111,6 +105,12 @@ public class OneTabLayout extends BaseFragment implements FeedsListContract.View
         viewPager.setOffscreenPageLimit(3);
         viewPageHelper = new ViewPageHelper(viewPager);
         toolbar.setDateOnClickListener(() -> getFeedsList());
+        toolbar.setJumpToFirstListener(new OneTabToolbar.JumpToFirstListener() {
+            @Override
+            public void jump() {
+                viewPageHelper.setCurrentItem(0);
+            }
+        });
         mPresenter.attachView(this);
     }
 
@@ -133,7 +133,9 @@ public class OneTabLayout extends BaseFragment implements FeedsListContract.View
                 dayApart = integer;//最新数据的日差
                 return;
             }
-            viewPageHelper.setCurrentItem(integer - dayApart, false);
+            viewPageHelper.setCurrentItem(integer - dayApart, false);//跳转到选择的页面
+            toolbar.StartAnimation();//还原动画
+            mainActivity.bottomNavigation.setVisibility(View.VISIBLE);
             isShow = false;
             timeSelectLayout.show(isShow);
             Log.e(TAG, "initData: dayApart" + dayApart);
@@ -191,6 +193,7 @@ public class OneTabLayout extends BaseFragment implements FeedsListContract.View
 
     @Override
     public void onPageSelected(int position) {
+        toolbar.weatherShow(position);
         viewPageSelectedPosition = position % fragmentList.size();//取模获取当前显示的view的position
         currentArticleView = fragmentList.get(viewPageSelectedPosition);
         setToolbar(position + dayApart);//如果只是滑动而不是来自setCurrentItem的跳转必须加上日差

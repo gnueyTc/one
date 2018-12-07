@@ -57,6 +57,7 @@ public class ExpandAnimationUtil {
         expandAnimator = creatAnimation(view,0,height);//mHeight 需要展开的高度
         expandAnimator.start();
         expandAnimator.end();
+        expandAnimator.cancel();
     }
     private static void closeView(View view,int height){
         closeAnimator = creatAnimation(view,height,0);
@@ -67,7 +68,8 @@ public class ExpandAnimationUtil {
                 }
             });
         closeAnimator.start();
-        expandAnimator.end();
+        closeAnimator.end();
+        closeAnimator.cancel();
     }
     private static ValueAnimator creatAnimation(View view,int start,int end){
         ValueAnimator animator = ValueAnimator.ofInt(start,end);

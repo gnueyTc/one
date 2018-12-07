@@ -26,7 +26,7 @@ public abstract class BaseListFragment extends LazyLoadFragment implements IBase
 
     @Override
     protected int attachLayoutId() {
-        return R.layout.base_list;
+        return R.layout.base_list_toolbar;
     }
 
     @Override

@@ -8,7 +8,8 @@
     <color name="colorBlack">#040404</color>
     <color name="colorGray">#979797</color>
     <color name="colorWhite">#FFFFFF</color>
-    <color name="colorWhiteSmoke">#EEEEEE</color>
+    <color name="colorWhiteSmoke">#EEEEEF</color>
+    <color name="colorLightGray">#D3D3D3</color>
     <color name="viewBackground">@android:color/white</color>
 
     <color name="pickerview_timebtn_nor">#057dff</color>

@@ -65,6 +65,7 @@ public class AllPresenter extends RxPresenter<AllPageContract.View> implements A
             @Override
             public void accept(AllDataBean allDataBean) throws Exception {
                 mView.onSetAdapter(allDataBean);
+                mView.onHideLoading();
             }
         }, new Consumer<Throwable>() {
             @Override

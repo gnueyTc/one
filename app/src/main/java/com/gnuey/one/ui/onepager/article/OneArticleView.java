@@ -101,12 +101,9 @@ public class OneArticleView extends BaseListFragment implements OneArticleContra
         if(this.getArguments()!=null){
             date = getArguments().getString(TAG);
             mPresenter.doLoadData(date);
-//            Log.e(TAG, "fetchData: "+getArguments().getString(TAG)+" position = "+positon);
         }else {
             mPresenter.doLoadData(date);
-//            Log.e(TAG, "fetchData: "+date+" position = "+positon);
         }
-//        mPresenter.doLoadData(getArguments()==null?date:getArguments().getString(TAG));
         Log.e(TAG, "fetchData: position = "+positon);
     }
 

@@ -87,7 +87,7 @@ public class TimeSelectLayout extends RelativeLayout {
         View inflater = LayoutInflater.from(context).inflate(R.layout.time_picker,null);
         LoopView loopViewYear = inflater.findViewById(R.id.lv_year);
         LoopView loopViewMonth = inflater.findViewById(R.id.lv_month);
-        Button mButtom = inflater.findViewById(R.id.bt_ok);
+        Button mButtonOk = inflater.findViewById(R.id.bt_ok);
         dialog.setContentView(inflater);
 
         Calendar year = Calendar.getInstance();
@@ -122,6 +122,7 @@ public class TimeSelectLayout extends RelativeLayout {
         yearSelected = yearList.get(0);
         monthSelected = monthListThisYear.get(0);//onItemSelected要滑动才触发，没滑动就默认选择了是最新月份
         monthSelectedList = monthListThisYear;
+        mButton.setText(new StringBuilder().append(yearSelected).append("年").append(monthSelected).append("月"));
         loopViewYear.setListener(index -> {
             if(index == 0){
                 loopViewMonth.setItems(monthListThisYear);
@@ -143,7 +144,8 @@ public class TimeSelectLayout extends RelativeLayout {
                 monthSelected = monthSelectedList.get(index);
             }
         });
-        mButtom.setOnClickListener(v -> {
+        mButtonOk.setOnClickListener(v -> {
+            mButton.setText(new StringBuilder().append(yearSelected).append("年").append(monthSelected).append("月"));
             dateSelected = new StringBuilder().append(yearSelected).append("-").append(monthSelected).toString();//最终返回的日期
             if(mGetDateListener!=null){
                 mGetDateListener.getDate(dateSelected);

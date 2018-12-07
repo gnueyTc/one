@@ -19,10 +19,7 @@ public class DateUtils {
     private static SimpleDateFormat format2;
     private static SimpleDateFormat format3;
     private static SimpleDateFormat format4;
-    public final static int FORMAT_DDMMYYYY = 3;
-    public final static int FORMAT_YYYYMMDD = 4;
     private static int dayApart = -1;
-    private static boolean isDayApartAlreadyCalculated;
     private static String todayDate = "";
     private static String ortherDate = "";
     public static String currentDateForMat3 = "";//当前页面时间
@@ -33,7 +30,7 @@ public class DateUtils {
      */
     public static String getNow() {
         if(format1 == null){
-            format1 =  format1 = new SimpleDateFormat("M月dd日");;
+            format1 = new SimpleDateFormat("M月dd日");;
         }
         Date d = new Date();
         return format1.format(d);
@@ -41,7 +38,7 @@ public class DateUtils {
 
     public static String getNow(Date date) {
         if(format1 == null){
-            format1 =  format1 = new SimpleDateFormat("M月dd日");;
+            format1 = new SimpleDateFormat("M月dd日");;
         }
         return format1.format(date);
     }

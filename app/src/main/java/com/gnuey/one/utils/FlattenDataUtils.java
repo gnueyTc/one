@@ -29,6 +29,7 @@ public class FlattenDataUtils {
                     newlListBean.setContent_type(listBean.getContent_type());
                     newlListBean.setContent_id(listBean.getContent_id());
                     newlListBean.setTitle(listBean.getTitle());
+                    newlListBean.setId(data.getData().getId());
                     if (listBean.getTag() != null) {
                         OneFlattenBean.MenuBean.ListBean.TagBean tagBean = new OneFlattenBean.MenuBean.ListBean.TagBean();
                         tagBean.setId(listBean.getTag().getId());
