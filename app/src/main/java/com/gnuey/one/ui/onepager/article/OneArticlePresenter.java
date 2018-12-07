@@ -43,7 +43,7 @@ public class OneArticlePresenter extends RxPresenter<OneArticleContract.View> im
                         if("0".equals(date)){
                             DateUtils.calculaDayApart(oneListBean.getData().getDate());
                             RxBus.getInstance().post(TAG,new StringBuffer()
-                                    .append("地球")
+                                    .append(oneListBean.getData().getWeather().getCity_name())
                                     .append("·")
                                     .append(oneListBean.getData().getWeather().getClimate())
                                     .append("\u3000")
