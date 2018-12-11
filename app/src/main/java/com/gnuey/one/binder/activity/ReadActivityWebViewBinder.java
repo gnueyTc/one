@@ -12,8 +12,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.ConsoleMessage;
 import android.webkit.JavascriptInterface;
 
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 
 import android.webkit.WebView;
@@ -85,21 +87,8 @@ public class ReadActivityWebViewBinder extends ItemViewBinder<WebBean,ReadActivi
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                BridgeUtil.webViewLoadLocalJs(view,"WebViewJavascriptBridge.js");
+//                BridgeUtil.webViewLoadLocalJs(view,"WebViewJavascriptBridge.js");
 
-            }
-        });
-        holder.webView.registerHandler("openRelateDetail", new BridgeHandler() {
-            @Override
-            public void handler(String data, CallBackFunction function) {
-                function.onCallBack("");
-                Log.e("WebViewBinder", "handler: " );
-            }
-        });
-        holder.webView.setDefaultHandler(new BridgeHandler() {
-            @Override
-            public void handler(String data, CallBackFunction function) {
-                Log.e("WebViewBinder", "handler: " );
             }
         });
 

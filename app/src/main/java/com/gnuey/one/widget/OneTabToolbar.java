@@ -106,7 +106,7 @@ public class OneTabToolbar extends Toolbar {
             @Override
             public void accept(String s) throws Exception {
                 mTvweather.setText(s);
-                RxBus.getInstance().unRegister(OneArticlePresenter.TAG);
+
             }
         });
     }

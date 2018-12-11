@@ -20,6 +20,7 @@ import com.gnuey.one.component.AppComponent;
 
 import com.gnuey.one.component.DaggerFragmentComponent;
 import com.gnuey.one.ui.base.BaseFragment;
+import com.gnuey.one.ui.onepager.article.OneArticlePresenter;
 import com.gnuey.one.ui.onepager.article.OneArticleView;
 
 import com.gnuey.one.utils.AdapterDiffCallBack;
@@ -181,6 +182,7 @@ public class OneTabLayout extends BaseFragment implements FeedsListContract.View
         }
         RxBus.getInstance().unRegister(DateUtils.TAG);
         RxBus.getInstance().unRegister(OneTabLayoutBinder.TAG);
+        RxBus.getInstance().unRegister(OneArticlePresenter.TAG);
         mPresenter.detachView();
         super.onDestroy();
     }
