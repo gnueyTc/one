@@ -2,6 +2,7 @@ package com.gnuey.one.binder.activity;
 
 import android.app.Activity;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 
 import android.support.annotation.NonNull;
@@ -12,27 +13,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.ConsoleMessage;
-import android.webkit.JavascriptInterface;
-
-import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
-
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
-
-import com.github.lzyzsd.jsbridge.BridgeHandler;
-import com.github.lzyzsd.jsbridge.BridgeUtil;
-import com.github.lzyzsd.jsbridge.BridgeWebView;
-import com.github.lzyzsd.jsbridge.CallBackFunction;
-
 import com.gnuey.one.R;
+import com.gnuey.one.bean.ToastBean;
+import com.gnuey.one.bean.activity.read.TopicBean;
 import com.gnuey.one.bean.activity.read.WebBean;
 import com.gnuey.one.ui.activity.read.ReadActivity;
 import com.gnuey.one.utils.Constant;
 import com.gnuey.one.utils.ToastUtils;
+import com.gnuey.one.widget.WVJBWebViewClient;
+import com.google.gson.Gson;
 
 import me.drakeet.multitype.ItemViewBinder;
 
@@ -40,6 +34,7 @@ import me.drakeet.multitype.ItemViewBinder;
  * Created by gnuey on 2018/11/28/028
  */
 public class ReadActivityWebViewBinder extends ItemViewBinder<WebBean,ReadActivityWebViewBinder.ViewHolder> {
+    private static final String TAG = "WebViewBinder";
     private Activity context;
     private final String source = "topic";
 
@@ -55,60 +50,76 @@ public class ReadActivityWebViewBinder extends ItemViewBinder<WebBean,ReadActivi
     protected void onBindViewHolder(@NonNull  ViewHolder holder, @NonNull WebBean item) {
         context = (ReadActivity)holder.itemView.getContext();
         holder.webView.getSettings().setJavaScriptEnabled(true);
-        holder.webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-        holder.webView.loadData(item.getUrl(),item.getMimeType(),item.getEncoding());
-        holder.webView.setWebViewClient(new WebViewClient(){
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                super.onPageStarted(view, url, favicon);
-            }
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                String url = null;
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                    url = request.getUrl().toString();
-                    Log.e("WebViewBinder", "shouldOverrideUrlLoading: "+url);
-                }
-                if(url.contains("article")){
-                        String id = url.substring(url.lastIndexOf("/")).replace("/","");
-                        ReadActivity.startReadDetailActivity(context,new String[]{Constant.getType(Constant.TYPE_READ),id,source,item.getId()});
-                    }else if(url.contains("question")){
-                        String id = url.substring(url.lastIndexOf("/")).replace("/","");
-                        ReadActivity.startReadDetailActivity(context,new String[]{Constant.getType(Constant.TYPE_QA),id,source,item.getId()});
-                    }else if(url.contains("movie")){
-                        String id = url.substring(url.lastIndexOf("/")).replace("/","");
-                        ReadActivity.startReadDetailActivity(context,new String[]{Constant.getType(Constant.TYPE_MOVIE),id,source,item.getId()});
-                    }else if(url.contains("music")){
-                    String id = url.substring(url.lastIndexOf("/")).replace("/","");
-                    ReadActivity.startReadDetailActivity(context,new String[]{Constant.getType(Constant.TYPE_MUSIC),id,source,item.getId()});
-                }
-                return true;
-            }
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-//                BridgeUtil.webViewLoadLocalJs(view,"WebViewJavascriptBridge.js");
-
-            }
-        });
+        String ua = holder.webView.getSettings().getUserAgentString();
+        holder.webView.getSettings().setUserAgentString(ua+"OneApp/4.5.6");
+        holder.webView.loadData(item.getUrl(),item.getMimeType(),null);
+        holder.webView.setWebViewClient(new WebClient(context,holder.webView));
 
     }
-    private boolean isClick;
+    class WebClient extends WVJBWebViewClient {
+        public WebClient(Context context,WebView webView) {
+            super(webView, new WVJBHandler() {
+                @Override
+                public void request(Object data, WVJBResponseCallback callback) {
+                    Log.e(TAG, "ObjC Received message from JS: " + data );
+                    callback.callback("Response for message from ObjC!");
+                }
+            });
+            registerHandler("showToast", new WVJBWebViewClient.WVJBHandler() {
+                @Override
+                public void request(Object data, WVJBResponseCallback callback) {
+                    ToastBean toastBean = new Gson().fromJson(data.toString(),ToastBean.class);
+                    ToastUtils.showSingleToast(toastBean.getText());
+                    Log.e(TAG, "request: showToast" + data );
+                }
+            });
+            registerHandler("openRelateDetail", new WVJBWebViewClient.WVJBHandler() {
+                @Override
+                public void request(Object data, WVJBResponseCallback callback) {
+                    TopicBean topicBean = new Gson().fromJson(data.toString(),TopicBean.class);
+                    ReadActivity.startReadDetailActivity(context,new String[]{
+                            Constant.getType(String.valueOf(topicBean.getCategory()))
+                            ,topicBean.getId()
+                            ,topicBean.getSource()
+                            ,topicBean.getSource_id()
+                    });
+                    Log.e(TAG, "request: " + data );
 
+                }
+            });
+            registerHandler("playRadio", new WVJBWebViewClient.WVJBHandler() {
+                @Override
+                public void request(Object data, WVJBResponseCallback callback) {
+                    Log.e(TAG, "request: playRadio" + data );
 
-    @JavascriptInterface
-    public void click(int id){
-        context.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                isClick = isClick?false:true;
-                ToastUtils.showSingleToast("click "+id);
-            }
-        });
+                }
+            });
+            registerHandler("stopRadio", new WVJBWebViewClient.WVJBHandler() {
+                @Override
+                public void request(Object data, WVJBResponseCallback callback) {
+                    Log.e(TAG, "request: stopRadio" + data );
+
+                }
+            });
+            registerHandler("playMusic", new WVJBWebViewClient.WVJBHandler() {
+                @Override
+                public void request(Object data, WVJBResponseCallback callback) {
+                    Log.e(TAG, "request: playMusic " + data );
+
+                }
+            });
+            registerHandler("stopMusic", new WVJBWebViewClient.WVJBHandler() {
+                @Override
+                public void request(Object data, WVJBResponseCallback callback) {
+                    Log.e(TAG, "request: stopMusic" + data );
+
+                }
+            });
+        }
+
     }
-
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private BridgeWebView webView;
+        private WebView webView;
         public ViewHolder(View itemView) {
             super(itemView);
             this.webView = itemView.findViewById(R.id.wv_webview);

@@ -69,7 +69,7 @@ public class ReadPresenter extends RxPresenter<ReadContract.View> implements Rea
             ReadActivityBean readActivityBean = new ReadActivityBean();
             WebBean webBean = new WebBean();
             webBean.setUrl(parseHtml(oneHtmlContentBean.getData().getHtml_content()));
-            webBean.setMimeType("text/html");
+            webBean.setMimeType("text/html; charset=UTF-8");
             webBean.setEncoding("utf-8");
             webBean.setId(sourceId);
             readActivityBean.setWebBean(webBean);

@@ -77,5 +77,4 @@ dependencies {
         transitive = true
     }
 
-    implementation 'com.github.lzyzsd:jsbridge:1.0.4'
 }

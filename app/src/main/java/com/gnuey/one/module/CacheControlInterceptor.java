@@ -1,11 +1,14 @@
 package com.gnuey.one.module;
 
+import android.util.Log;
+
 import com.gnuey.one.utils.AppUtils;
 import com.gnuey.one.utils.NetWorkUtil;
 
 import java.io.IOException;
 import okhttp3.CacheControl;
 
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -22,6 +25,7 @@ public class CacheControlInterceptor implements Interceptor {
      */
     private boolean isRefresh;//是否刷新
     private final static int CODE = 504;
+    private String defaultUrl = "";//默认请求地址
     public CacheControlInterceptor(){
 
     }
@@ -31,21 +35,24 @@ public class CacheControlInterceptor implements Interceptor {
         request = request.newBuilder()
                 .cacheControl(CacheControl.FORCE_CACHE)
                 .build();
+        HttpUrl url = request.url();
         Response response = chain.proceed(request);
-        if(request.url().encodedPathSegments().contains("0")||
-                request.url().encodedPathSegments().contains("feeds")||
-                request.url().encodedPathSegments().contains("author")||
-                request.url().encodedPathSegments().contains("essay")||
-                request.url().encodedPathSegments().contains("question")||
-                request.url().encodedPathSegments().contains("music")||
-                request.url().encodedPathSegments().contains("movie")||
-                request.url().encodedPathSegments().contains("topic")){
+        Log.e("CacheControlInterceptor", "intercept: "+request.url());
+        if(url.encodedPathSegments().contains("0")||
+                url.encodedPathSegments().contains("feeds")||
+                url.encodedPathSegments().contains("author")||
+                url.encodedPathSegments().contains("essay")||
+                url.encodedPathSegments().contains("question")||
+                url.encodedPathSegments().contains("music")||
+                url.encodedPathSegments().contains("movie")||
+                url.encodedPathSegments().contains("topic")||
+                url.toString().equals(defaultUrl)){
             isRefresh = true;
         }else {
             isRefresh = false;
+            defaultUrl = url.toString();
         }
         if (response.code() == CODE || (isRefresh && NetWorkUtil.isNetworkConnected(AppUtils.getAppContext()))) {
-
             Response originalResponse = chain.proceed(chain.request());
             int maxAge = 10;
             return originalResponse.newBuilder()
