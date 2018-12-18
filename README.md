@@ -42,7 +42,7 @@
 - [OkHttp](https://github.com/square/okhttp)
 - [MultiType](https://github.com/drakeet/MultiType)
 - [UltraViewPager](https://github.com/alibaba/UltraViewPager)
-- [JsBridge](https://github.com/lzyzsd/JsBridge)
+- [WebViewJavascriptBridge](https://github.com/jesse01/WebViewJavascriptBridge)
 
 ## Todo
 - 播放音乐
