@@ -9,9 +9,7 @@ import com.gnuey.one.bean.activity.read.WebBean;
 import com.gnuey.one.ui.base.RxPresenter;
 import com.gnuey.one.utils.Constant;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +18,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.BiFunction;
-import io.reactivex.functions.Consumer;
+
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
@@ -68,7 +65,7 @@ public class ReadPresenter extends RxPresenter<ReadContract.View> implements Rea
         addSubscribe(Observable.zip(observableWeb, observableAuthor, (oneHtmlContentBean, authorBean) -> {
             ReadActivityBean readActivityBean = new ReadActivityBean();
             WebBean webBean = new WebBean();
-            webBean.setUrl(parseHtml(oneHtmlContentBean.getData().getHtml_content()));
+            webBean.setUrl(oneHtmlContentBean.getData().getHtml_content());
             webBean.setMimeType("text/html; charset=UTF-8");
             webBean.setEncoding("utf-8");
             webBean.setId(sourceId);
@@ -93,30 +90,7 @@ public class ReadPresenter extends RxPresenter<ReadContract.View> implements Rea
     public void setCommontAdapter(List<?> list) {
         mView.doSetCommontAdapter(list);
     }
-    private String parseHtml(String HTML){
-        Document document = Jsoup.parse(HTML);
-        Element authorsElement = document.select("div.one-authors-box").first();
-        Element copyrightElement = document.select("div.one-copyright-box").first();
-        Element relatesElement = document.select("div.one-relates-box").first();
-        Element commentsElement = document.select("div.one-comments-box").first();
-        Element readingElement = document.select("div.onevue-readingaudio-box").first();
-        if(authorsElement != null){
-            authorsElement.remove();
-        }
-        if(copyrightElement != null){
-            copyrightElement.remove();
-        }
-        if(relatesElement != null){
-            relatesElement.remove();
-        }
-        if(commentsElement != null){
-            commentsElement.remove();
-        }
-        if(readingElement != null){
-            readingElement.remove();
-        }
-        return document.toString();
-    }
+
 
     @Override
     public void doShowNetError() {

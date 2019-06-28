@@ -2,18 +2,23 @@ package com.gnuey.one.ui.activity.read;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.gnuey.one.InitApp;
 import com.gnuey.one.R;
 import com.gnuey.one.Register;
+import com.gnuey.one.bean.activity.read.PlayAudioBean;
 import com.gnuey.one.bean.activity.read.ReadActivityBean;
+import com.gnuey.one.binder.activity.ReadActivityWebViewBinder;
 import com.gnuey.one.component.DaggerActivityComponent;
 import com.gnuey.one.ui.base.BaseActivity;
+import com.gnuey.one.utils.RxBus;
 import com.gnuey.one.utils.ToastUtils;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
@@ -22,6 +27,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.functions.Consumer;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
@@ -38,11 +46,14 @@ public class ReadActivity extends BaseActivity implements ReadContract.View{
     @BindView(R.id.recycle_view)
     RecyclerView recyclerView;
 
+    @BindView(R.id.iv_play)
+    ImageView imageView;
     private final static String TAG = ReadActivity.class.getSimpleName();
     private MultiTypeAdapter adapter;
     private Items oldItems = new Items();
     private String[] array;
-
+    private Flowable<String> playAudioBeanObservable;
+    private AnimationDrawable animationDrawable;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +74,31 @@ public class ReadActivity extends BaseActivity implements ReadContract.View{
         adapter = new MultiTypeAdapter();
         Register.registerReadActivityItem(adapter);
         recyclerView.setAdapter(adapter);
+        animationDrawable = (AnimationDrawable) getResources().getDrawable(R.drawable.anim_audio_loading);
         initData();
+        playAudioBeanObservable = RxBus.getInstance().register(ReadActivityWebViewBinder.TAG,String.class);
+        playAudioBeanObservable.subscribe(new Consumer<String>() {
+            @Override
+            public void accept(String url){
+                if(url.equals(ReadActivityWebViewBinder.STOP_PLAYING)){
+                    playService.stop();
+                    playImage(false);
+                }else {
+                    playService.play(url);
+                    playImage(true);
+                }
+                Log.e(TAG, "accept: "+ url);
+            }
+        });
+    }
+    private void playImage(boolean isPlaying){
+        if(isPlaying){
+            imageView.setImageDrawable(animationDrawable);
+            animationDrawable.start();
+        }else {
+            imageView.setImageResource(R.drawable.float_player_pause);
+            animationDrawable.stop();
+        }
     }
     private void initData(){
         Bundle bundle = getIntent().getExtras();
@@ -75,7 +110,7 @@ public class ReadActivity extends BaseActivity implements ReadContract.View{
     }
     @Override
     protected int getLayoutId() {
-        return R.layout.base_list;
+        return R.layout.activity_read;
     }
 
 
@@ -144,6 +179,7 @@ public class ReadActivity extends BaseActivity implements ReadContract.View{
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        RxBus.getInstance().unRegisterEach(ReadActivityWebViewBinder.TAG);
         mPresenter.detachView();
     }
 }

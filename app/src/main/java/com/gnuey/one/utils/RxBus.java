@@ -80,10 +80,11 @@ public class RxBus {
             }
         }
     }
-    public void unRegister(Object tag,Flowable flowable){
+    public void unRegisterEach(Object tag){
         List<FlowableProcessor> processorList = processorMapper.get(tag);
         if(null != processorList){
-            processorList.remove(flowable);
+            processorList.get(processorList.size()-1).onComplete();
+            processorList.remove(processorList.size()-1);
             if(processorList.isEmpty()){
                 processorMapper.remove(tag);
             }

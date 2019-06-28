@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:Android="http://schemas.android.com/apk/res/android"
+    Android:oneshot="false">
+    <item Android:duration="30" Android:drawable="@drawable/float_player_play_01"/>
+    <item Android:duration="30" Android:drawable="@drawable/float_player_play_02"/>
+    <item Android:duration="30" Android:drawable="@drawable/float_player_play_03"/>
+    <item Android:duration="30" Android:drawable="@drawable/float_player_play_04"/>
+    <item Android:duration="30" Android:drawable="@drawable/float_player_play_05"/>
+    <item Android:duration="30" Android:drawable="@drawable/float_player_play_06"/>
+    <item Android:duration="30" Android:drawable="@drawable/float_player_play_07"/>
+    <item Android:duration="30" Android:drawable="@drawable/float_player_play_08"/>
+    <item Android:duration="30" Android:drawable="@drawable/float_player_play_09"/>
+    <item Android:duration="30" Android:drawable="@drawable/float_player_play_10"/>
+    <item Android:duration="30" Android:drawable="@drawable/float_player_play_11"/>
+    <item Android:duration="30" Android:drawable="@drawable/float_player_play_12"/>
+    <item Android:duration="30" Android:drawable="@drawable/float_player_play_13"/>
+    <item Android:duration="30" Android:drawable="@drawable/float_player_play_14"/>
+    <item Android:duration="30" Android:drawable="@drawable/float_player_play_15"/>
+    <item Android:duration="30" Android:drawable="@drawable/float_player_play_16"/>
+    <item Android:duration="30" Android:drawable="@drawable/float_player_play_17"/>
+    <item Android:duration="30" Android:drawable="@drawable/float_player_play_18"/>
+    <item Android:duration="30" Android:drawable="@drawable/float_player_play_19"/>
+    <item Android:duration="30" Android:drawable="@drawable/float_player_play_20"/>
+</animation-list>

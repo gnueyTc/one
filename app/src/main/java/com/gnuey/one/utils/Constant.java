@@ -19,6 +19,7 @@ public class Constant {
     public static final String TYPE_QA = "3";
     public static final String TYPE_MUSIC = "4";
     public static final String TYPE_MOVIE = "5";
+    public static final String TYPE_RADIO = "8";
     public static final String TYPE_TOPIC = "11";
 
     public static final String getType(String type){
@@ -38,6 +39,9 @@ public class Constant {
                 break;
             case Constant.TYPE_MOVIE:
                 param = "movie";
+                break;
+            case Constant.TYPE_RADIO:
+                param = "radio";
                 break;
             case Constant.TYPE_TOPIC:
                 param = "topic";
@@ -65,6 +69,9 @@ public class Constant {
             case "movie":
                 param = Constant.TYPE_MOVIE;
                 break;
+            case  "radio":
+                param = Constant.TYPE_RADIO;
+                break;
             case "topic":
                 param = Constant.TYPE_TOPIC;
                 break;
@@ -74,8 +81,4 @@ public class Constant {
         return param;
     }
 
-    public static final String JS_INJECT_CLICK = "javascript:function openRelateCx(e){" +
-            " var index=$(\".one-special-cards-box div div\").index(this);"+
-            " window.listener.click(index);" +
-            "}";
 }
