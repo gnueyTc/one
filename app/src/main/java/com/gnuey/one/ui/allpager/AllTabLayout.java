@@ -1,11 +1,12 @@
 package com.gnuey.one.ui.allpager;
 
 import android.graphics.Typeface;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+
+import androidx.appcompat.widget.Toolbar;
 
 import com.gnuey.one.R;
 import com.gnuey.one.Register;

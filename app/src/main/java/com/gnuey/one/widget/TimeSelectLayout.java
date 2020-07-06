@@ -6,8 +6,6 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -21,6 +19,9 @@ import android.widget.DatePicker;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TimePicker;
+
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.gnuey.one.R;
 import com.gnuey.one.utils.PixelTransformation;

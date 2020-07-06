@@ -1,9 +1,10 @@
 package com.gnuey.one.ui.base;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.View;
+
+
+import androidx.annotation.Nullable;
 
 
 public abstract class LazyLoadFragment extends BaseFragment  {
@@ -24,7 +25,6 @@ public abstract class LazyLoadFragment extends BaseFragment  {
      */
 
     protected boolean isAbleToLoad;
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

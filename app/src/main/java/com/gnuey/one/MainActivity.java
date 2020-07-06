@@ -1,14 +1,16 @@
 package com.gnuey.one;
 
 
+import android.annotation.SuppressLint;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.gnuey.one.binder.activity.ReadActivityWebViewBinder;
 import com.gnuey.one.ui.allpager.AllTabLayout;
@@ -41,6 +43,7 @@ public class MainActivity extends BaseActivity implements OnBottomNavigationSele
     private Fragment mCurrentFragmet;
     private AnimationDrawable animationDrawable;
     private Flowable<String> playAudioBeanObservable;
+    @SuppressLint("AutoDispose")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

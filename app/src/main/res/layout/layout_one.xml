@@ -13,12 +13,12 @@
         android:layout_height="@dimen/toolbar_size">
     </com.gnuey.one.widget.OneTabToolbar>
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:layout_below="@+id/toolbar"
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </android.support.v4.view.ViewPager>
+    </androidx.viewpager.widget.ViewPager>
 
     <com.gnuey.one.widget.TimeSelectLayout
         android:id="@+id/ry_time"

@@ -1,8 +1,9 @@
 package com.gnuey.one.adapter.onepage;
 
-import android.support.annotation.NonNull;
-import android.support.v4.view.ViewPager;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.viewpager.widget.ViewPager;
 
 /**
  * Created by gnuey on 2018/11/21/021

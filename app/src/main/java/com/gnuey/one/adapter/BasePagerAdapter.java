@@ -1,11 +1,13 @@
 package com.gnuey.one.adapter;
 
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
+
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
 
 import java.util.List;
 
@@ -16,7 +18,7 @@ import java.util.List;
  * Created by gnueyTc on 2018/4/27.
  */
 
-public class BasePagerAdapter extends FragmentStatePagerAdapter{
+public class BasePagerAdapter extends FragmentStatePagerAdapter {
 
     private List<Fragment> fragmentList;
 

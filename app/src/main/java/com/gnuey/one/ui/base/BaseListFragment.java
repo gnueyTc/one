@@ -1,8 +1,9 @@
 package com.gnuey.one.ui.base;
 
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.gnuey.one.R;
 import com.gnuey.one.utils.NetWorkUtil;

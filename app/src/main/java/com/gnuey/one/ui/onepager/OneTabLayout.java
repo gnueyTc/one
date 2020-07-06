@@ -2,11 +2,11 @@ package com.gnuey.one.ui.onepager;
 
 
 import android.annotation.SuppressLint;
-import android.support.v4.view.ViewPager;
-
 import android.util.Log;
 import android.view.View;
 
+
+import androidx.viewpager.widget.ViewPager;
 
 import com.gnuey.one.MainActivity;
 import com.gnuey.one.R;

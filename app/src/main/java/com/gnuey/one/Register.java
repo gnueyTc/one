@@ -1,7 +1,8 @@
 package com.gnuey.one;
 
-import android.support.annotation.NonNull;
 
+
+import androidx.annotation.NonNull;
 
 import com.gnuey.one.bean.activity.read.AuthorBean;
 import com.gnuey.one.bean.activity.read.CommentBean;

@@ -1,5 +1,7 @@
 package com.gnuey.one.ui.base;
 
+
+
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -7,10 +9,11 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.gnuey.one.service.PlayService;
 
@@ -36,7 +39,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 初始化 Toolbar
      */
-    protected void initToolBar(Toolbar toolbar,String title){
+    protected void initToolBar(Toolbar toolbar, String title){
         toolbar.setTitle(title);
         setSupportActionBar(toolbar);
 
@@ -54,7 +57,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         bindService(intent,playServiceConnection,Context.BIND_AUTO_CREATE);
     }
 
-    class PlayServiceConnection implements ServiceConnection{
+    class PlayServiceConnection implements ServiceConnection {
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -66,7 +69,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         }
     }
-    class PlayReceiver extends BroadcastReceiver{
+    class PlayReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
 

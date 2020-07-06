@@ -1,11 +1,13 @@
 package com.gnuey.one.adapter.onepage;
 
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+
 import android.util.Log;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.gnuey.one.ui.onepager.article.OneArticleView;
 
@@ -16,7 +18,7 @@ import java.util.ArrayList;
  */
 public class InfiniteFragmentAdapter extends FragmentPagerAdapter {
     private ArrayList<OneArticleView> fragmentsList;
-    public InfiniteFragmentAdapter(FragmentManager fm,ArrayList<OneArticleView> fragmentsList) {
+    public InfiniteFragmentAdapter(FragmentManager fm, ArrayList<OneArticleView> fragmentsList) {
         super(fm);
         this.fragmentsList = fragmentsList;
     }

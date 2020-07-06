@@ -1,14 +1,16 @@
 package com.gnuey.one.ui.activity.read;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ImageView;
+
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.gnuey.one.InitApp;
 import com.gnuey.one.R;
@@ -54,6 +56,7 @@ public class ReadActivity extends BaseActivity implements ReadContract.View{
     private String[] array;
     private Flowable<String> playAudioBeanObservable;
     private AnimationDrawable animationDrawable;
+    @SuppressLint("AutoDispose")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

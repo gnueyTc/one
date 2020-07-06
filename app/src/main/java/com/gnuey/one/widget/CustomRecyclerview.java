@@ -2,12 +2,14 @@ package com.gnuey.one.widget;
 
 import android.content.Context;
 import android.graphics.Rect;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by gnuey on 2018/11/17/017
@@ -75,7 +77,7 @@ public class CustomRecyclerview extends RecyclerView {
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, State state) {
             super.getItemOffsets(outRect, view, parent, state);
-            if(layoutManager instanceof GridLayoutManager ){
+            if(layoutManager instanceof GridLayoutManager){
                 outRect.bottom = 80;
                 if (parent.getChildLayoutPosition(view) % 2 == 0) {
                     outRect.left = 50;
